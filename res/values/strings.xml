@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_id">302258396626501</string>
+    <string name="app_name">Surkus</string>
+    <string name="facebook_user_msg">We will not post anything to your account without permission.</string>
+    <string name="user_what_are_you_msg">We\'ve Revolutionized The Way That The Movers Communicate With The Shakers. </string>
+    <string name="what_are_you">What Are You?</string>
+    <string name="ring_master">ringMASTER</string>
+    <string name="ring_master_msg">individuals looking to \'cast\' the perfect crowd and pack their parties.</string>
+    <string name="cast_your_crowd">Cast Your Crowd</string>
+    <string name="surkus_goer">SURKUSgoer</string>
+    <string name="surkus_goer_msg">individuals looking to go out, have fun and get paid.</string>
+    <string name="associate_your_facebook_account">Associate your Facebook account.</string>
+    <string name="facebook_authenticated_msg">You\'ve successfully authenticated with Facebook Please enter your phone number below and click the Register button to finish logging in.</string>
+    <string name="push_notification_msg">Please allow SURKUS to send you \'Push Notifications\' and use your \'Current Location\'</string>
+    <string name="complete_registration">Complete Registration</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_emailid">Email ID</string>
+    <string name="hint_gender">Gender</string>
+    <string name="hint_dob">DOB</string>
+    <string name="hint_phone_number">Phone Number</string>
+    <string name="go_to_profile">Go To Profile</string>
+    <string name="register_thank_you_msg">Thank You For Submitting \n Your Registration.</string>
+    <string name="now_it_pays_to_play">Now it Pays To Play&#8230;</string>
+    <string name="almost">ALMOST</string>
+     <string name="enable_push_msg">Next enable \"Push Notifications\" to start receiving invitations and payment offers to visit upcoming social events at fun local spots.</string>
+
+</resources>

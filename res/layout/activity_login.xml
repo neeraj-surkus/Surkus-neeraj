@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <ImageView
+        android:id="@+id/login_logo_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_50"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/login_logo" />
+
+    <RelativeLayout
+        android:id="@+id/about_surkus_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/facebook_login_layout"
+        android:layout_below="@+id/login_logo_imageview"
+          >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/about_surkus_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+          />
+
+        <com.surkus.android.entity.CirclePageIndicator
+            android:id="@+id/indicator"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:padding="@dimen/margin_5" 
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/facebook_login_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_100"
+        android:layout_alignParentBottom="true"
+        android:background="@color/navy_blue" >
+
+        <ImageView
+            android:id="@+id/triangle_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/triangle_red" />
+
+        <Button
+            android:id="@+id/facebook_login_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/facebook_login" />
+    </RelativeLayout>
+
+</RelativeLayout>
