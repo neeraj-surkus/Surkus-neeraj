@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.surkus.android.R;
-import com.surkus.android.fragment.FSRSurkusGoerDashboardApprovalPendingFragment;
+import com.surkus.android.fragment.FSRSurkusGoerApprovalPendingFragment;
 
 public class ASRSurkusGoerDashboardActivity extends FragmentActivity {
 
@@ -14,7 +14,7 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity {
 		setContentView(R.layout.activity_sukurs_goer_dashboard);
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new FSRSurkusGoerDashboardApprovalPendingFragment()).commit();
+					.add(R.id.container, new FSRSurkusGoerApprovalPendingFragment()).commit();
 		}
 	}
 }
