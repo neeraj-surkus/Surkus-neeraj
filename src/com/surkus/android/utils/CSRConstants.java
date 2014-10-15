@@ -10,6 +10,8 @@ public class CSRConstants {
 	public static String USER_EMAIL_ID = "email";
 	public static String USER_GENDER = "gender";
 	public static String USER_DOB = "user_birthday";
-	public static String USER_ACCESS_TOKEN = "Access token";
+	public static String USER_ACCESS_TOKEN = "Access token";    
+	public static String SURKUS_APP_PREFERENCE = "SURKUS_APP_PREFERENCE";
 	
+	public static String SURKUS_TOKEN_SHARED_PREFERENCE_KEY = "surkus_token_shared_preference_key";
 }
