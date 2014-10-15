@@ -52,7 +52,9 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/app_icon" />
+                    android:src="@drawable/app_icon"
+                    android:contentDescription="@string/app_name"
+                     />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -73,7 +75,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5"
-                        android:text="@string/test_email"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/text_size_14" />
 
@@ -82,7 +83,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5"
-                        android:text="@string/test_phoneno"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/text_size_14" />
 
@@ -91,7 +91,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5"
-                        android:text="@string/test_address"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/text_size_14" />
                 </LinearLayout>

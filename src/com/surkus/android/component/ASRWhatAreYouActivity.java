@@ -5,6 +5,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -85,7 +88,8 @@ public class ASRWhatAreYouActivity extends Activity {
 				if (bIsUserLoggedInToFacebook) {
 
 					// asynchronusFacebookUserInformationRequest();
-					new CreateSurkusUserAndGenerateToken(true,0).execute(session.getAccessToken());
+					new CreateSurkusUserAndGenerateToken(true, 0)
+							.execute(session.getAccessToken());
 					bIsUserLoggedInToFacebook = false;
 				}
 			}
@@ -105,22 +109,23 @@ public class ASRWhatAreYouActivity extends Activity {
 
 	private class CreateSurkusUserAndGenerateToken extends
 			AsyncTask<String, Integer, CSRSurkusApiResponse> {
-		
+
 		boolean mbIsNewSurkusUser;
 		int miStatusCode;
-		
-		CreateSurkusUserAndGenerateToken(boolean bIsNewSurkusUser,int statusCode)
-		{
-			  mbIsNewSurkusUser = bIsNewSurkusUser;
-			  miStatusCode = statusCode;
+
+		CreateSurkusUserAndGenerateToken(boolean bIsNewSurkusUser,
+				int statusCode) {
+			mbIsNewSurkusUser = bIsNewSurkusUser;
+			miStatusCode = statusCode;
 		}
 
 		@Override
 		protected CSRSurkusApiResponse doInBackground(String... args) {
 
-			String accessToken = args[0]; 
+			String accessToken = args[0];
 
-			return webServiceSingletonObject.getSurkusToken(accessToken,mbIsNewSurkusUser);
+			return webServiceSingletonObject.getSurkusToken(accessToken,
+					mbIsNewSurkusUser);
 
 		}
 
@@ -128,42 +133,110 @@ public class ASRWhatAreYouActivity extends Activity {
 		protected void onPostExecute(CSRSurkusApiResponse surkusTokenResponse) {
 			super.onPostExecute(surkusTokenResponse);
 
-			if (surkusTokenResponse.getStatusCode()== CSRWebConstants.STATUS_CODE_400) {
-				new CreateSurkusUserAndGenerateToken(false,CSRWebConstants.STATUS_CODE_400).execute(Session.getActiveSession().getAccessToken());				
+			if (surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_400) {
+				new CreateSurkusUserAndGenerateToken(false,
+						CSRWebConstants.STATUS_CODE_400).execute(Session
+						.getActiveSession().getAccessToken());
+			} else if (surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_401) {
+				facebookLogout();
+				facebookLogin();
 			}
-			else
-				if (surkusTokenResponse.getStatusCode()== CSRWebConstants.STATUS_CODE_401) {
-					facebookLogout();
-					facebookLogin();				
-				}
-			
-			else
-			 if (surkusTokenResponse.getResponseData()
-					.equalsIgnoreCase(CSRWebConstants.NO_REPONSE_FROM_SERVER)) {
-				
-				 CSRUtils.showAlertDialog(ASRWhatAreYouActivity.this,
+
+			else if (surkusTokenResponse.getResponseData().equalsIgnoreCase(
+					CSRWebConstants.NO_RESPONSE_FROM_SERVER)) {
+
+				CSRUtils.showAlertDialog(ASRWhatAreYouActivity.this,
 						CSRWebConstants.SERVER_ERROR,
-						CSRWebConstants.NO_REPONSE_FROM_SERVER);
-				 
+						CSRWebConstants.NO_RESPONSE_FROM_SERVER);
+
 			} else {
-				CSRUtils.createStringSharedPref(ASRWhatAreYouActivity.this,CSRConstants.SURKUS_TOKEN_SHARED_PREFERENCE_KEY, surkusTokenResponse.getResponseData());	
-				
-				if (miStatusCode == CSRWebConstants.STATUS_CODE_400)
-				{										
-					Intent surkusGoerRegistrationIntent = new Intent(ASRWhatAreYouActivity.this,ASRSurkusGoerDashboardActivity.class);
-					startActivity(surkusGoerRegistrationIntent);
-				}
-				else{
-										
-					Intent surkusGoerRegistrationIntent = new Intent(ASRWhatAreYouActivity.this,ASRSurkusGoerRegistrationActivity.class);
-					startActivity(surkusGoerRegistrationIntent);
-				}
+				CSRUtils.createStringSharedPref(ASRWhatAreYouActivity.this,
+						CSRConstants.SURKUS_TOKEN_SHARED_PREFERENCE_KEY,
+						surkusTokenResponse.getResponseData());
+
+				new RegistetSurkusUserContactInfo("07980", "123456789",surkusTokenResponse.getResponseData()).execute();				
+			    new GetSurkusUserInfo(surkusTokenResponse.getResponseData()).execute();
+
+				  if (miStatusCode == CSRWebConstants.STATUS_CODE_400)
+				  {
+                         Intent surkusGoerRegistrationIntent = new Intent(ASRWhatAreYouActivity.this,ASRSurkusGoerDashboardActivity.class);
+				          startActivity(surkusGoerRegistrationIntent); 
+				   }
+				  else 
+				  {
+				  
+				    Intent surkusGoerRegistrationIntent = new Intent(ASRWhatAreYouActivity.this, ASRSurkusGoerRegistrationActivity.class);
+				    startActivity(surkusGoerRegistrationIntent); 
+				   }				 
+			      }
+		}
+	}
+
+	private class RegistetSurkusUserContactInfo extends
+			AsyncTask<String, Integer, CSRSurkusApiResponse> {
+
+		String mCellPhoneNumber;
+		String mZipCode;
+		String mSurkusToken;
+
+		RegistetSurkusUserContactInfo(String zipCode, String cellPhoneNumber,
+				String surkusToken) {// zipCode
+			mCellPhoneNumber = cellPhoneNumber;
+			mZipCode = zipCode;
+			mSurkusToken = surkusToken;
+		}
+
+		@Override
+		protected CSRSurkusApiResponse doInBackground(String... args) {
+			try {
+				JSONObject jObject = new JSONObject();
+				jObject.put(CSRWebConstants.ZIPCODE_KEY, mZipCode);
+				jObject.put(CSRWebConstants.CELL_PHONE_KEY, mCellPhoneNumber);
+				webServiceSingletonObject.registerSurkusUser(mSurkusToken,
+						jObject.toString());
+
+			} catch (JSONException e) {
 
 			}
+
+			return null;
+
+		}
+
+		@Override
+		protected void onPostExecute(CSRSurkusApiResponse surkusTokenResponse) {
 
 		}
 	}
 
+	private class GetSurkusUserInfo extends
+			AsyncTask<String, Integer, CSRSurkusApiResponse> {
+
+		String mSurkusToken;
+
+		GetSurkusUserInfo(String surkusToken) {
+			mSurkusToken = surkusToken;
+		}
+
+		@Override
+		protected CSRSurkusApiResponse doInBackground(String... args) {
+			try {
+		
+				CSRSurkusUser surkusUser = webServiceSingletonObject.getSurkusUserInfo(mSurkusToken);
+
+			} catch (Exception e) {
+
+			}
+
+			return null;
+
+		}
+
+		@Override
+		protected void onPostExecute(CSRSurkusApiResponse surkusTokenResponse) {
+
+		}
+	}
 
 	void facebookLogout() {
 		Session mSession = Session.getActiveSession();
@@ -238,8 +311,8 @@ public class ASRWhatAreYouActivity extends Activity {
 		// if a session is already open then issue a request using the available
 		// session. Otherwise ask for user credentials.
 		if (currentSession.isOpened()) {
-			new CreateSurkusUserAndGenerateToken(true,0).execute(currentSession
-					.getAccessToken());
+			new CreateSurkusUserAndGenerateToken(true, 0)
+					.execute(currentSession.getAccessToken());
 			bIsUserLoggedInToFacebook = false;
 			// meFbSignIn();
 		} else {

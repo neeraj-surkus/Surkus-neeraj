@@ -9,8 +9,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.surkus.android.R;
+import com.surkus.android.adapter.CSRAboutSurkusAdapter;
 import com.surkus.android.entity.CirclePageIndicator;
-import com.surkus.android.model.CSRAboutSurkusAdapter;
 import com.surkus.android.utils.CSRConstants;
 
 public class ASRLoginActivity extends FragmentActivity{
