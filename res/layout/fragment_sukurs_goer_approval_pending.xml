@@ -1,0 +1,137 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_gray"
+    tools:context="com.surkus.android.ASRSukursGoerDashboardActivity$PlaceholderFragment" >
+
+    <RelativeLayout
+        android:id="@+id/login_logo_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_50"
+        android:background="@drawable/top_navigation"
+        android:orientation="vertical" >
+
+        <Button
+            android:layout_width="@dimen/margin_40"
+            android:layout_height="@dimen/margin_40"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/menubtn" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/account_pending_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_logo_imageview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_20"
+        android:text="@string/account_pending"
+        android:textColor="@color/pink"
+        android:textSize="@dimen/text_size_18" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/social_share_layout"
+        android:layout_below="@+id/account_pending_textview"
+        android:layout_marginTop="@dimen/margin_20" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_20"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/app_icon" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_20"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/user_name_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/test_name"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size_18" />
+
+                    <TextView
+                        android:id="@+id/user_emailid_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:text="@string/test_email"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <TextView
+                        android:id="@+id/user_phone_number_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:text="@string/test_phoneno"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <TextView
+                        android:id="@+id/user_address_number_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_5"
+                        android:text="@string/test_address"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size_14" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:gravity="center_horizontal"
+                android:text="@string/account_pending_msg"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_14" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_80"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/pink_background"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/thank_you_tell_us_more"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_14" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/social_share_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_100"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/blue_background_top_arrow"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+</RelativeLayout>

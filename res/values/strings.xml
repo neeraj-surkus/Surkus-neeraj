@@ -24,6 +24,18 @@
     <string name="register_thank_you_msg">Thank You For Submitting \n Your Registration.</string>
     <string name="now_it_pays_to_play">Now it Pays To Play&#8230;</string>
     <string name="almost">ALMOST</string>
-     <string name="enable_push_msg">Next enable \"Push Notifications\" to start receiving invitations and payment offers to visit upcoming social events at fun local spots.</string>
+    <string name="enable_push_msg">Next enable \"Push Notifications\" to start receiving invitations and payment offers to visit upcoming social events at fun local spots.</string>
+    <string name="account_pending">ACCOUNT PENDING</string>
+    <string name="account_pending_msg">Your account is pending.\n We\'ll text you when your account is approved.</string>
+    <string name="thank_you_tell_us_more">Thank You for Connecting with SURKUS.\n Please tell us more about youreself.</string>
+    <string name="favorite_times_to_socialize">Favorite Times To Socialize?</string>
+    <string name="favorite_spots_to_socialize">Favorite Spots To Socialize?</string>
+    <string name="favorite_music">Favorite Music?</string>
+
+    <!-- Test values -->
+    <string name="test_name">ABC</string>
+    <string name="test_email">abc@gmail.com</string>
+    <string name="test_phoneno">123-456-7890</string>
+    <string name="test_address">Newyork,USA</string>
 
 </resources>

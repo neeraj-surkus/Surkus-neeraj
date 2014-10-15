@@ -11,7 +11,7 @@
         android:layout_height="@dimen/margin_50"
         android:background="@drawable/top_navigation"
         android:orientation="vertical" />
-    
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -39,6 +39,57 @@
             android:text="@string/what_are_you"
             android:textColor="@color/navy_blue"
             android:textSize="@dimen/text_size_16" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_weight="0.35"
+            android:background="@drawable/blue_background_top_arrow"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_20"
+                android:text="@string/ring_master"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_20" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_20"
+                android:layout_marginRight="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_5"
+                android:text="@string/ring_master_msg"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_14" />
+
+            <Button
+                android:id="@+id/Button01"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_30"
+                android:layout_marginLeft="@dimen/margin_20"
+                android:layout_marginRight="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_10"
+                android:background="@drawable/cast_now_btn" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_10"
+                android:text="@string/cast_your_crowd"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_14"
+                android:textStyle="bold" />
+        </LinearLayout>
     </RelativeLayout>
 
     <LinearLayout
@@ -62,7 +113,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-           android:layout_marginLeft="@dimen/margin_20"
+            android:layout_marginLeft="@dimen/margin_20"
             android:layout_marginRight="@dimen/margin_20"
             android:layout_marginTop="@dimen/margin_5"
             android:text="@string/ring_master_msg"
@@ -116,7 +167,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-         android:layout_marginLeft="@dimen/margin_20"
+            android:layout_marginLeft="@dimen/margin_20"
             android:layout_marginRight="@dimen/margin_20"
             android:layout_marginTop="@dimen/margin_5"
             android:text="@string/surkus_goer_msg"
