@@ -7,12 +7,15 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.provider.SyncStateContract.Constants;
 import android.util.Base64;
 import android.util.Log;
 
@@ -65,5 +68,17 @@ public class CSRUtils {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void createStringSharedPref(Context context,String key,String value){
+		SharedPreferences appShPref = context.getSharedPreferences(CSRConstants.SURKUS_APP_PREFERENCE, Context.MODE_PRIVATE);
+		Editor mEditor = appShPref.edit();
+		mEditor.putString(key, value);
+		mEditor.commit();
+	}
+	
+	public static String getStringSharedPref(Context context,String key) {
+		SharedPreferences appShPref = context.getSharedPreferences(CSRConstants.SURKUS_APP_PREFERENCE, context.MODE_PRIVATE);
+		return appShPref.getString(key, "");
 	}
 }
