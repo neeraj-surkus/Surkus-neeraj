@@ -12,11 +12,8 @@ public class ASRSurkusGoerRegistrationActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_user_registration); //CSRWebConstants.SURKUS_USER
-		
+		setContentView(R.layout.activity_user_registration); 		
 		FSRSurkusGoerRegistrationFragment surkusGoerRegisterFragment =  new FSRSurkusGoerRegistrationFragment();
-		surkusGoerRegisterFragment.setArguments(getIntent().getExtras());
 		getSupportFragmentManager().beginTransaction().add(R.id.container, surkusGoerRegisterFragment).commit();
-
 	}
 }
