@@ -12,7 +12,7 @@
     <string name="surkus_goer">SURKUSgoer</string>
     <string name="surkus_goer_msg">individuals looking to go out, have fun and get paid.</string>
     <string name="associate_your_facebook_account">Associate your Facebook account.</string>
-    <string name="facebook_authenticated_msg">You\'ve successfully authenticated with Facebook Please enter your phone number below and click the Register button to finish logging in.</string>
+    <string name="facebook_authenticated_msg">You\'ve successfully authenticated with Facebook Please enter your zip code and phone number below to complete registration.</string>
     <string name="push_notification_msg">Please allow SURKUS to send you \'Push Notifications\' and use your \'Current Location\'</string>
     <string name="complete_registration">Complete Registration</string>
     <string name="hint_name">Name</string>
@@ -20,6 +20,10 @@
     <string name="hint_gender">Gender</string>
     <string name="hint_dob">DOB</string>
     <string name="hint_phone_number">Phone Number</string>
+    
+    <string name="hint_zipcode_postalcode">Zip Code/ Postal Code</string>
+    <string name="hint_mobile_phone_number">Mobile Phone Number</string>
+       
     <string name="go_to_profile">Go To Profile</string>
     <string name="register_thank_you_msg">Thank You For Submitting \n Your Registration.</string>
     <string name="now_it_pays_to_play">Now it Pays To Play&#8230;</string>
@@ -31,11 +35,11 @@
     <string name="favorite_times_to_socialize">Favorite Times To Socialize?</string>
     <string name="favorite_spots_to_socialize">Favorite Spots To Socialize?</string>
     <string name="favorite_music">Favorite Music?</string>
-
-    <!-- Test values -->
-    <string name="test_name">ABC</string>
-    <string name="test_email">abc@gmail.com</string>
-    <string name="test_phoneno">123-456-7890</string>
-    <string name="test_address">Newyork,USA</string>
+    
+    <!-- Alert message values -->
+    <string name="error">Error</string>
+    <string name="input_field_warning_msg">Please fill all field values.</string>
+    <string name="registering_user">Registering with Surkus&#8230;</string>
+     <string name="loading">Loading&#8230;</string>
 
 </resources>

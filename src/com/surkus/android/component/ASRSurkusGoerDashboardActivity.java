@@ -12,9 +12,7 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sukurs_goer_dashboard);
-		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new FSRSurkusGoerApprovalPendingFragment()).commit();
-		}
+	    getSupportFragmentManager().beginTransaction().add(R.id.container,new FSRSurkusGoerApprovalPendingFragment()).commit();	    
+		
 	}
 }

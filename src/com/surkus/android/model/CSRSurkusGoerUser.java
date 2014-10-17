@@ -1,10 +1,8 @@
 package com.surkus.android.model;
 
-import java.io.Serializable;
 
-public class CSRSurkusUser implements Serializable {
+public class CSRSurkusGoerUser  {
 
-	private static final long serialVersionUID = 1L;
 
 	private String id;
 	private String fbID;

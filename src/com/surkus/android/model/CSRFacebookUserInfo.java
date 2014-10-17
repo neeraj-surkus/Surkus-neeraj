@@ -2,12 +2,11 @@ package com.surkus.android.model;
 
 import java.io.Serializable;
 
-public class CSRFacebookUserInfo implements Serializable {
+public class CSRFacebookUserInfo  {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	private String id;
 	private String email;
 	private String firstName;

@@ -21,7 +21,7 @@ import android.util.Log;
 
 import com.surkus.android.model.CSRFacebookUserInfo;
 import com.surkus.android.model.CSRSurkusApiResponse;
-import com.surkus.android.model.CSRSurkusUser;
+import com.surkus.android.model.CSRSurkusGoerUser;
 import com.surkus.android.model.CSRSurkusUserAddress;
 
 public class CSRWebServices {
@@ -211,8 +211,10 @@ public class CSRWebServices {
 
 	}
 
-	public CSRSurkusUser getSurkusUserInfo(String surkusToken) {
+	public CSRSurkusGoerUser getSurkusUserInfo(String surkusToken) {
 
+		CSRSurkusGoerUser surkusUser = new CSRSurkusGoerUser();
+		
 		String userInfoJsonReponse = getDataFromSurkus(SURKUS_USER_URL
 				+ surkusToken);
 		if (userInfoJsonReponse.equalsIgnoreCase("")) {
@@ -221,9 +223,9 @@ public class CSRWebServices {
 
 			try {
 
-				CSRSurkusUser surkusUser = new CSRSurkusUser();
-				JSONObject userInfoJsonObject = new JSONObject(
-						userInfoJsonReponse);
+
+				JSONObject userInfoJsonObject = new JSONObject(userInfoJsonReponse);
+
 
 				if (userInfoJsonObject.has(CSRWebConstants._ID_KEY))
 					surkusUser.setId(userInfoJsonObject.getString(CSRWebConstants._ID_KEY));
@@ -316,14 +318,15 @@ public class CSRWebServices {
 					if (addressJsonObject.has(CSRWebConstants.STATUS_KEY)) {
 						surkusUserAddress.setStatus(addressJsonObject.getString(CSRWebConstants.STATUS_KEY));
 					}
-					surkusUser.setAddress(surkusUserAddress);
+				     surkusUser.setAddress(surkusUserAddress);
 				}
-					return surkusUser;
+					//return surkusUser;
 			} catch (JSONException e) {
-				e.printStackTrace();
-				Log.d("Exception", "e: "+e.getMessage());
-				return null;
+		     	Log.e("Surkus", "Surkus exception: "+e.getMessage());
+
 			}
 		}
+		
+		return surkusUser;
 	}
 }

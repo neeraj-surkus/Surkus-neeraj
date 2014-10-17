@@ -2,12 +2,11 @@ package com.surkus.android.model;
 
 import java.io.Serializable;
 
-public class CSRSurkusUserAddress implements Serializable {
+public class CSRSurkusUserAddress {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	private String city;
 	private String country;
 	private String state;
