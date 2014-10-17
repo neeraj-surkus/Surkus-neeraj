@@ -37,17 +37,17 @@
         
         
          <activity
-            android:name=".component.ASRSurkusGoerRegistrationActivity"
+            android:name=".surkusgoer.component.ASRSurkusGoerRegistrationActivity"
             android:screenOrientation="portrait" >
         </activity>
         
         <activity
-            android:name=".component.ASRSurkusGoerDashboardActivity"
+            android:name=".surkusgoer.component.ASRSurkusGoerDashboardActivity"
             android:screenOrientation="portrait" >
         </activity>
         
              <activity
-            android:name=".component.ASRSurkusGoerProfileActivity"
+            android:name=".surkusgoer.component.ASRSurkusGoerProfileActivity"
             android:screenOrientation="portrait" >
         </activity>
         

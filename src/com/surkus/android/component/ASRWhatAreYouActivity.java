@@ -22,8 +22,11 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
 import com.surkus.android.R;
 import com.surkus.android.model.CSRSurkusApiResponse;
+import com.surkus.android.model.CSRSurkusGoerUser;
 import com.surkus.android.networking.CSRWebConstants;
 import com.surkus.android.networking.CSRWebServices;
+import com.surkus.android.surkusgoer.component.ASRSurkusGoerDashboardActivity;
+import com.surkus.android.surkusgoer.component.ASRSurkusGoerRegistrationActivity;
 import com.surkus.android.utils.CSRConstants;
 import com.surkus.android.utils.CSRUtils;
 
@@ -59,45 +62,40 @@ public class ASRWhatAreYouActivity extends Activity {
 
 				if (bIsUserLoggedInToFacebook) {
 					displayGetSurkusGoerTokenDialog();
-					new CreateSurkusUserAndGenerateTokenTask(true, 0).execute(session.getAccessToken());
+					new CreateSurkusUserAndGenerateTokenTask(true, 0)
+							.execute(session.getAccessToken());
 					bIsUserLoggedInToFacebook = false;
 				}
 			}
 
 		}
 	};
-	
-	void displayGetSurkusGoerTokenDialog()
-	{
-	  try
-	 {
-		mGetSurkusGoerTokenDialog = new ProgressDialog(this);
-		mGetSurkusGoerTokenDialog.setMessage(getResources().getString(R.string.loading));
-		mGetSurkusGoerTokenDialog.setCancelable(false);
-		mGetSurkusGoerTokenDialog.setCanceledOnTouchOutside(false);
-		mGetSurkusGoerTokenDialog.setIndeterminate(true);
-		mGetSurkusGoerTokenDialog.show();
-	   }
-		catch(Exception e)
-		{
-			
+
+	void displayGetSurkusGoerTokenDialog() {
+		try {
+			mGetSurkusGoerTokenDialog = new ProgressDialog(this);
+			mGetSurkusGoerTokenDialog.setMessage(getResources().getString(
+					R.string.loading));
+			mGetSurkusGoerTokenDialog.setCancelable(false);
+			mGetSurkusGoerTokenDialog.setCanceledOnTouchOutside(false);
+			mGetSurkusGoerTokenDialog.setIndeterminate(true);
+			mGetSurkusGoerTokenDialog.show();
+		} catch (Exception e) {
+
 		}
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		
-	}
-	
-	void dismissFetchSurkusGoerInfoDialog()
-	{
-	    if(mGetSurkusGoerTokenDialog != null )
-	    {
-	       mGetSurkusGoerTokenDialog.dismiss();
-	    }
+
 	}
 
+	void dismissFetchSurkusGoerInfoDialog() {
+		if (mGetSurkusGoerTokenDialog != null) {
+			mGetSurkusGoerTokenDialog.dismiss();
+		}
+	}
 
 	private class CreateSurkusUserAndGenerateTokenTask extends
 			AsyncTask<String, Integer, CSRSurkusApiResponse> {
@@ -126,7 +124,9 @@ public class ASRWhatAreYouActivity extends Activity {
 			super.onPostExecute(surkusTokenResponse);
 
 			if (surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_400) {
-				new CreateSurkusUserAndGenerateTokenTask(false,CSRWebConstants.STATUS_CODE_400).execute(Session.getActiveSession().getAccessToken());
+				new CreateSurkusUserAndGenerateTokenTask(false,
+						CSRWebConstants.STATUS_CODE_400).execute(Session
+						.getActiveSession().getAccessToken());
 			} else if (surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_401) {
 				dismissFetchSurkusGoerInfoDialog();
 				facebookLogout();
@@ -136,28 +136,36 @@ public class ASRWhatAreYouActivity extends Activity {
 			else if (surkusTokenResponse.getResponseData().equalsIgnoreCase(
 					CSRWebConstants.NO_RESPONSE_FROM_SERVER)) {
 				dismissFetchSurkusGoerInfoDialog();
-				CSRUtils.showAlertDialog(ASRWhatAreYouActivity.this,CSRWebConstants.SERVER_ERROR,CSRWebConstants.NO_RESPONSE_FROM_SERVER);
+				CSRUtils.showAlertDialog(ASRWhatAreYouActivity.this,
+						CSRWebConstants.SERVER_ERROR,
+						CSRWebConstants.NO_RESPONSE_FROM_SERVER);
 
 			} else {
 				dismissFetchSurkusGoerInfoDialog();
-				       //Storing Surkus token for future API calls.
-				CSRUtils.createStringSharedPref(ASRWhatAreYouActivity.this,CSRConstants.SURKUS_TOKEN_SHARED_PREFERENCE_KEY,surkusTokenResponse.getResponseData());
+				// Storing Surkus token for future API calls.
+				CSRUtils.createStringSharedPref(ASRWhatAreYouActivity.this,
+						CSRConstants.SURKUS_TOKEN_SHARED_PREFERENCE_KEY,
+						surkusTokenResponse.getResponseData()); 
+																
 
-				  if (miStatusCode == CSRWebConstants.STATUS_CODE_400)
-				  {
-                        Intent surkusGoerRegistrationIntent = new Intent(ASRWhatAreYouActivity.this,ASRSurkusGoerDashboardActivity.class);
-					 // Intent surkusGoerRegistrationIntent = new Intent(ASRWhatAreYouActivity.this, ASRSurkusGoerRegistrationActivity.class);
-				         startActivity(surkusGoerRegistrationIntent); 
-				   }
-				  else 
-				  {				  
-				    Intent surkusGoerRegistrationIntent = new Intent(ASRWhatAreYouActivity.this, ASRSurkusGoerRegistrationActivity.class);
-				    startActivity(surkusGoerRegistrationIntent); 
-				  }				 
-			 }
+				if (miStatusCode == CSRWebConstants.STATUS_CODE_400) {
+					Intent surkusGoerRegistrationIntent = new Intent(
+							ASRWhatAreYouActivity.this,
+							ASRSurkusGoerDashboardActivity.class);
+					// Intent surkusGoerRegistrationIntent = new
+					// Intent(ASRWhatAreYouActivity.this,
+					// ASRSurkusGoerRegistrationActivity.class);
+					startActivity(surkusGoerRegistrationIntent);
+				} else {
+					Intent surkusGoerRegistrationIntent = new Intent(
+							ASRWhatAreYouActivity.this,
+							ASRSurkusGoerRegistrationActivity.class);
+					startActivity(surkusGoerRegistrationIntent);
+				}
+			}
 		}
 	}
-
+	
 	void facebookLogout() {
 		Session mSession = Session.getActiveSession();
 		if (mSession != null) {
@@ -200,15 +208,19 @@ public class ASRWhatAreYouActivity extends Activity {
 					@Override
 					public void onError(FacebookDialog.PendingCall pendingCall,
 							Exception error, Bundle data) {
-						Log.e("Activity",String.format("Error: %s", error.toString()));
-						Toast.makeText(ASRWhatAreYouActivity.this,"Error: %s" + error.toString(),Toast.LENGTH_SHORT).show();
+						Log.e("Activity",
+								String.format("Error: %s", error.toString()));
+						Toast.makeText(ASRWhatAreYouActivity.this,
+								"Error: %s" + error.toString(),
+								Toast.LENGTH_SHORT).show();
 					}
 
 					@Override
 					public void onComplete(
 							FacebookDialog.PendingCall pendingCall, Bundle data) {
 						Log.i("Activity", "Success!");
-						Toast.makeText(ASRWhatAreYouActivity.this, "Success!",Toast.LENGTH_SHORT).show();
+						Toast.makeText(ASRWhatAreYouActivity.this, "Success!",
+								Toast.LENGTH_SHORT).show();
 					}
 				});
 	}
@@ -228,7 +240,8 @@ public class ASRWhatAreYouActivity extends Activity {
 		// session. Otherwise ask for user credentials.
 		if (currentSession.isOpened()) {
 			displayGetSurkusGoerTokenDialog();
-			new CreateSurkusUserAndGenerateTokenTask(true, 0).execute(currentSession.getAccessToken());
+			new CreateSurkusUserAndGenerateTokenTask(true, 0)
+					.execute(currentSession.getAccessToken());
 			bIsUserLoggedInToFacebook = false;
 			// meFbSignIn();
 		} else {

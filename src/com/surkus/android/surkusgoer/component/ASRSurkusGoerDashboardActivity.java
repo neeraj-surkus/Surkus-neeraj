@@ -1,10 +1,10 @@
-package com.surkus.android.component;
+package com.surkus.android.surkusgoer.component;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.surkus.android.R;
-import com.surkus.android.fragment.FSRSurkusGoerApprovalPendingFragment;
+import com.surkus.android.surkusgoer.fragment.FSRSurkusGoerApprovalPendingFragment;
 
 public class ASRSurkusGoerDashboardActivity extends FragmentActivity {
 

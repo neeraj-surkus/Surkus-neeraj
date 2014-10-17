@@ -37,6 +37,7 @@ public class CSRWebConstants {
 	// Surkus Token
 	public static String SURKUS_TOKEN__OUATH0_KEY = "ouath0";	
 	public static String SURKUS_TOKEN_OAUTH0_KEY = "oauth0";	
+	public static String SURKUS_TOKEN_AUTH0_KEY = "auth0";
 	
 	// Surkus user creation constants
 	public static String ZIPCODE_KEY = "zip";

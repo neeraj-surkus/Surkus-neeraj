@@ -7,8 +7,10 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -49,6 +51,7 @@ public class CSRWebServices {
 			HttpResponse serverDataResponse = null;
 			serverDataResponse = httpClient.execute(httpGet);
 			System.out.println(serverDataResponse.getStatusLine());
+			Log.d("Status code", "getDataFromSurkus : "+serverDataResponse.getStatusLine().getStatusCode());
 			HttpEntity entity2 = serverDataResponse.getEntity();
 			BufferedReader bufferReader = null;
 			bufferReader = new BufferedReader(new InputStreamReader(
@@ -83,7 +86,7 @@ public class CSRWebServices {
 			httpPost.setEntity(new StringEntity(postData));
 			HttpResponse serverDataResponse = httpClient.execute(httpPost);
 			statusCode = serverDataResponse.getStatusLine().getStatusCode();
-			Log.d("Status code", statusCode + "");
+			Log.d("Status code", "postDataToSurkus : "+serverDataResponse.getStatusLine().getStatusCode());
 			HttpEntity entity = serverDataResponse.getEntity();
 			BufferedReader newbrp = null;
 			newbrp = new BufferedReader(new InputStreamReader(
@@ -135,7 +138,7 @@ public class CSRWebServices {
 			put.setEntity(new StringEntity(putData));
 			HttpResponse serverDataResponse = client.execute(put);
 			statusCode = serverDataResponse.getStatusLine().getStatusCode();
-			Log.d("Status code", statusCode + "");
+			Log.d("Status code", "putDataToSurkus : "+serverDataResponse.getStatusLine().getStatusCode());
 			HttpEntity entity = serverDataResponse.getEntity();
 			BufferedReader newbrp = null;
 			newbrp = new BufferedReader(new InputStreamReader(
@@ -171,7 +174,7 @@ public class CSRWebServices {
 
 		return surkusAPIResponse;
 	}
-
+	
 	public CSRSurkusApiResponse getSurkusToken(String fbToken,boolean bIsNewSurkusUser) {
 		
 		CSRSurkusApiResponse surkusAPIResponse;
@@ -193,8 +196,12 @@ public class CSRWebServices {
 				if(surkusTokenJsonObject.has(CSRWebConstants.SURKUS_TOKEN__OUATH0_KEY))
 					surkusAPIResponse.setResponseData(surkusTokenJsonObject.getString(CSRWebConstants.SURKUS_TOKEN__OUATH0_KEY));
 				else
+					if(surkusTokenJsonObject.has(CSRWebConstants.SURKUS_TOKEN_OAUTH0_KEY))
+						surkusAPIResponse.setResponseData(surkusTokenJsonObject.getString(CSRWebConstants.SURKUS_TOKEN_OAUTH0_KEY));
+				else
+					if(surkusTokenJsonObject.has(CSRWebConstants.SURKUS_TOKEN_AUTH0_KEY))
+				surkusAPIResponse.setResponseData(surkusTokenJsonObject.getString(CSRWebConstants.SURKUS_TOKEN_AUTH0_KEY));
 				
-				surkusAPIResponse.setResponseData(surkusTokenJsonObject.getString(CSRWebConstants.SURKUS_TOKEN_OAUTH0_KEY));
 			} catch (JSONException e) {
 
 			}
@@ -215,8 +222,7 @@ public class CSRWebServices {
 
 		CSRSurkusGoerUser surkusUser = new CSRSurkusGoerUser();
 		
-		String userInfoJsonReponse = getDataFromSurkus(SURKUS_USER_URL
-				+ surkusToken);
+		String userInfoJsonReponse = getDataFromSurkus(SURKUS_USER_URL+ surkusToken);
 		if (userInfoJsonReponse.equalsIgnoreCase("")) {
 			return null;
 		} else {
