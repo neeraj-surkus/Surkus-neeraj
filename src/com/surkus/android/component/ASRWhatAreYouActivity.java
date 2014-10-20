@@ -142,6 +142,7 @@ public class ASRWhatAreYouActivity extends Activity {
 
 			} else {
 				dismissFetchSurkusGoerInfoDialog();
+				//new DeleteSurkusUserTask(surkusTokenResponse.getResponseData()).execute();
 				// Storing Surkus token for future API calls.
 				CSRUtils.createStringSharedPref(ASRWhatAreYouActivity.this,
 						CSRConstants.SURKUS_TOKEN_SHARED_PREFERENCE_KEY,
@@ -165,7 +166,38 @@ public class ASRWhatAreYouActivity extends Activity {
 			}
 		}
 	}
-	
+
+	private class DeleteSurkusUserTask extends
+			AsyncTask<String, Integer, CSRSurkusGoerUser> {
+
+		String mSurkusToken;
+
+		DeleteSurkusUserTask(String surkusToken) {
+			mSurkusToken = surkusToken;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+
+		}
+
+		@Override
+		protected CSRSurkusGoerUser doInBackground(String... args) {
+			
+		        webServiceSingletonObject.deleteSurkusUser(mSurkusToken);
+       
+                return null;
+
+		}
+
+		@Override
+		protected void onPostExecute(CSRSurkusGoerUser surkusGoerUser) {
+
+		}
+	}
+
 	void facebookLogout() {
 		Session mSession = Session.getActiveSession();
 		if (mSession != null) {

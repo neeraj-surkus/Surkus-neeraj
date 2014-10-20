@@ -9,7 +9,7 @@ import com.surkus.android.surkusgoer.fragment.FSRSurkusGoerApprovalPendingFragme
 public class ASRSurkusGoerDashboardActivity extends FragmentActivity {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sukurs_goer_dashboard);
 	    getSupportFragmentManager().beginTransaction().add(R.id.container,new FSRSurkusGoerApprovalPendingFragment()).commit();	    

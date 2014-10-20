@@ -13,6 +13,7 @@
         android:orientation="vertical" >
 
         <Button
+            android:id="@+id/menu_btn"
             android:layout_width="@dimen/margin_40"
             android:layout_height="@dimen/margin_40"
             android:layout_alignParentRight="true"
@@ -30,7 +31,7 @@
         android:text="@string/account_pending"
         android:textColor="@color/pink"
         android:textSize="@dimen/text_size_18"
-       />
+        android:visibility="gone" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -43,9 +44,9 @@
             android:id="@+id/user_info_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="vertical" 
          
-             >
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,10 +56,10 @@
 
                 <ImageView
                     android:id="@+id/user_profile_imageview"
-                    android:src="@drawable/app_icon"
                     android:layout_width="@dimen/margin_100"
                     android:layout_height="@dimen/margin_100"
-                    android:contentDescription="@string/app_name" />
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_launcher" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -71,8 +72,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size_18" 
                         android:text="ABC"
-                        android:textSize="@dimen/text_size_18" />
+                        android:layout_marginTop="@dimen/margin_20"
+                        />
 
                     <TextView
                         android:id="@+id/user_emailid_textview"
@@ -103,6 +106,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/margin_20"
                 android:gravity="center_horizontal"
                 android:text="@string/account_pending_msg"
@@ -124,6 +128,71 @@
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/text_size_14" />
             </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_20"
+                android:gravity="center_horizontal"
+                android:text="@string/select_the_one_that_most_matches_you"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_14" />
+
+            <EditText
+                android:id="@+id/favorite_social_time_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/input_box_white"
+                android:hint="@string/favorite_times_to_socialize"
+                android:inputType="textNoSuggestions"
+                android:padding="@dimen/margin_5"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <EditText
+                android:id="@+id/favorite_sports_time_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/input_box_white"
+                android:hint="@string/favorite_times_to_socialize"
+                android:inputType="textNoSuggestions"
+                android:padding="@dimen/margin_5"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <EditText
+                android:id="@+id/favorite_music"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/input_box_white"
+                android:hint="@string/favorite_times_to_socialize"
+                android:inputType="textNoSuggestions"
+                android:padding="@dimen/margin_5"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_16" />
+
+            <Button
+                android:id="@+id/submit_favorites_btn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_30"
+                android:layout_margin="@dimen/margin_5"
+                android:background="@drawable/submitbtn"
+                android:padding="@dimen/margin_10"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_18" />
         </LinearLayout>
     </ScrollView>
 
@@ -134,7 +203,7 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/blue_background_top_arrow"
         android:orientation="vertical"
-        android:visibility="gone" >
+        >
     </LinearLayout>
 
 </RelativeLayout>

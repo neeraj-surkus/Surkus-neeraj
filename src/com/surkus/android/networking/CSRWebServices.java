@@ -174,6 +174,27 @@ public class CSRWebServices {
 
 		return surkusAPIResponse;
 	}
+
+	public void deleteSurkusUser(String surkusToken)
+	{
+		    	DefaultHttpClient httpclient = new DefaultHttpClient();
+		        HttpDelete httpdelete = new HttpDelete(SURKUS_USER_URL+ surkusToken);
+		 
+		        try {  
+//		        	httpdelete.setHeader("Accept", "application/json");
+//		        	httpdelete.setHeader("Content-type", "application/json");
+//				 
+					HttpResponse response = (HttpResponse) httpclient.execute(httpdelete);
+					int statusCode = response.getStatusLine().getStatusCode();
+					Log.d("Status code", "Delete Surkus user response : "+statusCode);
+				} catch (ClientProtocolException e) {
+					e.printStackTrace();
+				}
+		        catch (IOException e) {
+		        	e.printStackTrace();
+				}
+
+	}
 	
 	public CSRSurkusApiResponse getSurkusToken(String fbToken,boolean bIsNewSurkusUser) {
 		

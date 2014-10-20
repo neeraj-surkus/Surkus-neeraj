@@ -20,12 +20,11 @@
     <string name="hint_gender">Gender</string>
     <string name="hint_dob">DOB</string>
     <string name="hint_phone_number">Phone Number</string>
-    
     <string name="hint_zipcode_postalcode">Zip Code/ Postal Code</string>
     <string name="hint_mobile_phone_number">Mobile Phone Number</string>
-       
     <string name="go_to_profile">Go To Profile</string>
     <string name="register_thank_you_msg">Thank You For Submitting \n Your Registration.</string>
+       <string name="pays_to_play">Now it Pays To Play</string>
     <string name="now_it_pays_to_play">Now it Pays To Play&#8230;</string>
     <string name="almost">ALMOST</string>
     <string name="enable_push_msg">Next enable \"Push Notifications\" to start receiving invitations and payment offers to visit upcoming social events at fun local spots.</string>
@@ -35,11 +34,26 @@
     <string name="favorite_times_to_socialize">Favorite Times To Socialize?</string>
     <string name="favorite_spots_to_socialize">Favorite Spots To Socialize?</string>
     <string name="favorite_music">Favorite Music?</string>
-    
+
     <!-- Alert message values -->
     <string name="error">Error</string>
     <string name="input_field_warning_msg">Please fill all field values.</string>
     <string name="registering_user">Registering with Surkus&#8230;</string>
-     <string name="loading">Loading&#8230;</string>
+    <string name="loading">Loading&#8230;</string>
+
+    <!-- SurkusGoer Menu -->
+    <string-array name="surkusgoer_menu">
+        <item>Profile</item>
+        <item>Payment</item>
+        <item>Share</item>
+        <item>About</item>
+        <item>Legal</item>
+    </string-array>
+    
+    <!-- Surkusgoer account pending -->
+    <string name="select_the_one_that_most_matches_you">Select the one that most matches you.</string>
+
+    
+    <string name="logout">Logout</string>
 
 </resources>
