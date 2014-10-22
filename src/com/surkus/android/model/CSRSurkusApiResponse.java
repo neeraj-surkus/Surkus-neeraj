@@ -2,8 +2,8 @@ package com.surkus.android.model;
 
 public class CSRSurkusApiResponse {
 
-	int statusCode;
-	String responseData;
+   private int statusCode;
+   private String surkusAPIResponse;
 	
 	public int getStatusCode() {
 		return statusCode;
@@ -11,11 +11,11 @@ public class CSRSurkusApiResponse {
 	public void setStatusCode(int statusCode) {
 		this.statusCode = statusCode;
 	}
-	public String getResponseData() {
-		return responseData;
+	public String getSurkusAPIResponse() {
+		return surkusAPIResponse;
 	}
-	public void setResponseData(String responseData) {
-		this.responseData = responseData;
+	public void setSurkusAPIResponse(String surkusAPIResponse) {
+		this.surkusAPIResponse = surkusAPIResponse;
 	}
 	
 }

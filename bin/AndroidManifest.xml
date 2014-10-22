@@ -40,12 +40,16 @@
         
          <activity
             android:name=".surkusgoer.component.ASRSurkusGoerRegistrationActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+             >
         </activity>
         
         <activity
             android:name=".surkusgoer.component.ASRSurkusGoerDashboardActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+             >
         </activity>
         
              <activity

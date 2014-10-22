@@ -24,7 +24,7 @@
     <string name="hint_mobile_phone_number">Mobile Phone Number</string>
     <string name="go_to_profile">Go To Profile</string>
     <string name="register_thank_you_msg">Thank You For Submitting \n Your Registration.</string>
-       <string name="pays_to_play">Now it Pays To Play</string>
+    <string name="pays_to_play">Now it Pays To Play</string>
     <string name="now_it_pays_to_play">Now it Pays To Play&#8230;</string>
     <string name="almost">ALMOST</string>
     <string name="enable_push_msg">Next enable \"Push Notifications\" to start receiving invitations and payment offers to visit upcoming social events at fun local spots.</string>
@@ -37,7 +37,12 @@
 
     <!-- Alert message values -->
     <string name="error">Error</string>
-    <string name="input_field_warning_msg">Please fill all field values.</string>
+    <string name="zipcode_server_error_msg">Provide valid zipcode.</string>
+    <string name="invalid_token_server_error_msg">Invalid Token.</string>
+    <string name="server_error_msg">Server Error.</string>
+    <string name="input_field_registration_warning_msg">Please provide 5 digit zipcode and 10 digit Mobile Phone Number.</string>
+    <string name="input_field_zipcode_warning_msg">Please provide 5 digit zipcode.</string>
+    <string name="input_field_phoneno_warning_msg">Please provide 10 digit Mobile Phone Number.</string>
     <string name="registering_user">Registering with Surkus&#8230;</string>
     <string name="loading">Loading&#8230;</string>
 
@@ -49,11 +54,9 @@
         <item>About</item>
         <item>Legal</item>
     </string-array>
-    
+
     <!-- Surkusgoer account pending -->
     <string name="select_the_one_that_most_matches_you">Select the one that most matches you.</string>
-
-    
     <string name="logout">Logout</string>
 
 </resources>

@@ -18,7 +18,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.surkus.android.R;
+import com.surkus.android.component.ASRLoginActivity;
 import com.surkus.android.model.CSRSurkusApiResponse;
+import com.surkus.android.model.CSRSurkusGoerSurkusToken;
 import com.surkus.android.networking.CSRWebConstants;
 import com.surkus.android.networking.CSRWebServices;
 import com.surkus.android.utils.CSRConstants;
@@ -126,35 +128,72 @@ public class FSRSurkusGoerRegistrationFragment extends Fragment implements OnCli
 
 		@Override
 		protected CSRSurkusApiResponse doInBackground(String... args) {
+			
+			CSRSurkusApiResponse surkusApiResponse = null;
 			try {
 				
 				JSONObject jObject = new JSONObject();
 				jObject.put(CSRWebConstants.ZIPCODE_KEY, mZipCode);
 				jObject.put(CSRWebConstants.CELL_PHONE_KEY, mCellPhoneNumber);
-				webServiceSingletonObject.registerSurkusUser(mSurkusToken,jObject.toString());
+				surkusApiResponse = webServiceSingletonObject.registerSurkusUser(mSurkusToken,jObject.toString());
 
 			} catch (JSONException e) {
 
 			}
 
-			return null;
+			return surkusApiResponse;
 
 		}
 
 		@Override
 		protected void onPostExecute(CSRSurkusApiResponse surkusTokenResponse) {
 			dismissRegisterSurkusGoerDiloag();	
-			getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new FSRSurkusGoerRegistrationThankYouFragment()).commit();			
+			
+			if(surkusTokenResponse == null)
+			{
+				CSRUtils.showAlertDialog(getActivity(),
+						CSRWebConstants.SERVER_ERROR,
+						CSRWebConstants.NO_RESPONSE_FROM_SERVER);
+			}
+			else if((surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_401))
+			{
+				CSRUtils.showAlertDialog(getActivity(),
+						CSRWebConstants.SERVER_ERROR,
+						getString(R.string.invalid_token_server_error_msg));
+			}	else if((surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_400))
+			{CSRUtils.showAlertDialog(getActivity(),
+					CSRWebConstants.SERVER_ERROR,
+					getString(R.string.zipcode_server_error_msg));
+				
+			}	else if((surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_500))
+			{
+				CSRUtils.showAlertDialog(getActivity(),
+						CSRWebConstants.SERVER_ERROR,
+						getString(R.string.server_error_msg));
+			}
+			else
+			{
+				getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new FSRSurkusGoerRegistrationThankYouFragment()).commit();	
+			}
+			
 		}
 	}
 
-	private boolean isInputFieldsValid()
+	private String isInputFieldsValid()
 	{
-
-		if(TextUtils.isEmpty(mZipOrPostalCodeEditText.getText()) || TextUtils.isEmpty(mPhoneNoEditText.getText()))
-			return false;
+		String errorMessage ="";
+		
+		if(TextUtils.isEmpty(mZipOrPostalCodeEditText.getText()) && TextUtils.isEmpty(mPhoneNoEditText.getText()))
+			errorMessage = getString(R.string.input_field_registration_warning_msg);
 		else
-			return true;
+		if(TextUtils.isEmpty(mZipOrPostalCodeEditText.getText()) || mZipOrPostalCodeEditText.getText().length() <5)
+			errorMessage = getString(R.string.input_field_zipcode_warning_msg);
+		else
+		if(TextUtils.isEmpty(mPhoneNoEditText.getText()) || mPhoneNoEditText.getText().length()<10)
+			errorMessage = getString(R.string.input_field_phoneno_warning_msg);
+		
+	   return errorMessage;
+
 		
 	}
 
@@ -165,17 +204,16 @@ public class FSRSurkusGoerRegistrationFragment extends Fragment implements OnCli
 	   
 	   switch (viewID) {
 	     case R.id.surkus_goer_register_btn:
-	    	
-	    	if(isInputFieldsValid())
+	    	 String errorMessage = isInputFieldsValid();
+	    	if(TextUtils.isEmpty(errorMessage))
 	    	{			    
 	    		mRegisterSurkusUserContactInfoTask = new RegisterSurkusUserContactInfoTask(mZipOrPostalCodeEditText.getText().toString(), mPhoneNoEditText.getText().toString(),mSurkusToken); //"07980", "123456789"
 	    		mRegisterSurkusUserContactInfoTask.execute();
 	    	}
 	    	else
 	    	{
-	    		CSRUtils.showAlertDialog(getActivity(), getString(R.string.error), getString(R.string.input_field_warning_msg));
+	    		CSRUtils.showAlertDialog(getActivity(), getString(R.string.error), errorMessage);
 	    	}
-
 	    	
 		break;
 

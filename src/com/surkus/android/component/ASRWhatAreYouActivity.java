@@ -21,8 +21,8 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
 import com.surkus.android.R;
-import com.surkus.android.model.CSRSurkusApiResponse;
-import com.surkus.android.model.CSRSurkusGoerUser;
+import com.surkus.android.model.CSRSurkusGoerSurkusToken;
+import com.surkus.android.model.CSRSurkusGoer;
 import com.surkus.android.networking.CSRWebConstants;
 import com.surkus.android.networking.CSRWebServices;
 import com.surkus.android.surkusgoer.component.ASRSurkusGoerDashboardActivity;
@@ -98,7 +98,7 @@ public class ASRWhatAreYouActivity extends Activity {
 	}
 
 	private class CreateSurkusUserAndGenerateTokenTask extends
-			AsyncTask<String, Integer, CSRSurkusApiResponse> {
+			AsyncTask<String, Integer, CSRSurkusGoerSurkusToken> {
 
 		boolean mbIsNewSurkusUser;
 		int miStatusCode;
@@ -110,7 +110,7 @@ public class ASRWhatAreYouActivity extends Activity {
 		}
 
 		@Override
-		protected CSRSurkusApiResponse doInBackground(String... args) {
+		protected CSRSurkusGoerSurkusToken doInBackground(String... args) {
 
 			String accessToken = args[0];
 
@@ -120,7 +120,7 @@ public class ASRWhatAreYouActivity extends Activity {
 		}
 
 		@Override
-		protected void onPostExecute(CSRSurkusApiResponse surkusTokenResponse) {
+		protected void onPostExecute(CSRSurkusGoerSurkusToken surkusTokenResponse) {
 			super.onPostExecute(surkusTokenResponse);
 
 			if (surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_400) {
@@ -133,7 +133,7 @@ public class ASRWhatAreYouActivity extends Activity {
 				facebookLogin();
 			}
 
-			else if (surkusTokenResponse.getResponseData().equalsIgnoreCase(
+			else if (surkusTokenResponse.getSurkusToken().equalsIgnoreCase(
 					CSRWebConstants.NO_RESPONSE_FROM_SERVER)) {
 				dismissFetchSurkusGoerInfoDialog();
 				CSRUtils.showAlertDialog(ASRWhatAreYouActivity.this,
@@ -146,16 +146,16 @@ public class ASRWhatAreYouActivity extends Activity {
 				// Storing Surkus token for future API calls.
 				CSRUtils.createStringSharedPref(ASRWhatAreYouActivity.this,
 						CSRConstants.SURKUS_TOKEN_SHARED_PREFERENCE_KEY,
-						surkusTokenResponse.getResponseData()); 
+						surkusTokenResponse.getSurkusToken()); 
 																
 
 				if (miStatusCode == CSRWebConstants.STATUS_CODE_400) {
 					Intent surkusGoerRegistrationIntent = new Intent(
 							ASRWhatAreYouActivity.this,
 							ASRSurkusGoerDashboardActivity.class);
-					// Intent surkusGoerRegistrationIntent = new
-					// Intent(ASRWhatAreYouActivity.this,
-					// ASRSurkusGoerRegistrationActivity.class);
+					/* Intent surkusGoerRegistrationIntent = new
+					 Intent(ASRWhatAreYouActivity.this,
+					 ASRSurkusGoerRegistrationActivity.class);*/
 					startActivity(surkusGoerRegistrationIntent);
 				} else {
 					Intent surkusGoerRegistrationIntent = new Intent(
@@ -168,7 +168,7 @@ public class ASRWhatAreYouActivity extends Activity {
 	}
 
 	private class DeleteSurkusUserTask extends
-			AsyncTask<String, Integer, CSRSurkusGoerUser> {
+			AsyncTask<String, Integer, CSRSurkusGoer> {
 
 		String mSurkusToken;
 
@@ -184,7 +184,7 @@ public class ASRWhatAreYouActivity extends Activity {
 		}
 
 		@Override
-		protected CSRSurkusGoerUser doInBackground(String... args) {
+		protected CSRSurkusGoer doInBackground(String... args) {
 			
 		        webServiceSingletonObject.deleteSurkusUser(mSurkusToken);
        
@@ -193,7 +193,7 @@ public class ASRWhatAreYouActivity extends Activity {
 		}
 
 		@Override
-		protected void onPostExecute(CSRSurkusGoerUser surkusGoerUser) {
+		protected void onPostExecute(CSRSurkusGoer surkusGoerUser) {
 
 		}
 	}

@@ -1,7 +1,7 @@
 package com.surkus.android.model;
 
 
-public class CSRSurkusGoerUser  {
+public class CSRSurkusGoer  {
 
 
 	private String id;

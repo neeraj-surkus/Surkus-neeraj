@@ -52,11 +52,14 @@
             android:src="@drawable/triangle_red" />
 
         <Button
-            android:id="@+id/facebook_login_btn"
+            android:id="@+id/facebook_signup_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@drawable/facebook_login" />
+            android:background="@drawable/facebook_signup" 
+            android:layout_margin="@dimen/margin_20"
+            
+            />
     </RelativeLayout>
 
 </RelativeLayout>
