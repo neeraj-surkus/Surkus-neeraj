@@ -31,8 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone"
-             >
+            android:visibility="gone" >
 
             <TextView
                 android:id="@+id/account_status_textview"
@@ -40,7 +39,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/margin_20"
-                android:text="@string/account_pending"
                 android:textColor="@color/pink"
                 android:textSize="@dimen/text_size_18" />
 
@@ -120,82 +118,172 @@
                     android:layout_centerInParent="true"
                     android:text="@string/thank_you_tell_us_more"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_14" />
+                    android:textSize="@dimen/text_size_18" />
             </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/margin_20"
                 android:layout_marginTop="@dimen/margin_20"
-                android:gravity="center_horizontal"
-                android:text="@string/select_the_one_that_most_matches_you"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/text_size_14" />
-
-            <EditText
-                android:id="@+id/favorite_social_time_edittext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10"
-                android:layout_marginRight="@dimen/margin_10"
-                android:layout_marginTop="@dimen/margin_20"
-                android:background="@drawable/input_box_white"
-                android:hint="@string/favorite_times_to_socialize"
-                android:inputType="textNoSuggestions"
-                android:padding="@dimen/margin_5"
-                android:singleLine="true"
+                android:text="@string/dashboard_msg_title"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_size_16" />
-
-            <EditText
-                android:id="@+id/favorite_sports_time_edittext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10"
-                android:layout_marginRight="@dimen/margin_10"
-                android:layout_marginTop="@dimen/margin_20"
-                android:background="@drawable/input_box_white"
-                android:hint="@string/favorite_times_to_socialize"
-                android:inputType="textNoSuggestions"
-                android:padding="@dimen/margin_5"
-                android:singleLine="true"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/text_size_16" />
-
-            <EditText
-                android:id="@+id/favorite_music"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_10"
-                android:layout_marginRight="@dimen/margin_10"
-                android:layout_marginTop="@dimen/margin_20"
-                android:background="@drawable/input_box_white"
-                android:hint="@string/favorite_times_to_socialize"
-                android:inputType="textNoSuggestions"
-                android:padding="@dimen/margin_5"
-                android:singleLine="true"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/text_size_16" />
-
-            <Button
-                android:id="@+id/submit_favorites_btn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_30"
-                android:layout_margin="@dimen/margin_5"
-                android:background="@drawable/submitbtn"
-                android:padding="@dimen/margin_10"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_18" />
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_20"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/one" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:text="@string/dashboard_msg_1"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/vertical_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/two" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:text="@string/dashboard_msg_2"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/vertical_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/three" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:text="@string/dashboard_msg_3"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/vertical_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/four" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:text="@string/dashboard_msg_4"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16" />
+            </LinearLayout>
+
+            <RelativeLayout
                 android:id="@+id/social_share_layout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_100"
-                android:background="@drawable/blue_background_top_arrow"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_30"
+                android:background="@drawable/blue_backgrond_with_top_arrow"
                 android:orientation="vertical"
-              >
-            </LinearLayout>
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/dashboard_friends_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:text="@string/dashboard_friends_msg"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/dashboard_friends_msg"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginRight="@dimen/margin_10"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/facbook_share_left" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/twitter_share_right" />
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

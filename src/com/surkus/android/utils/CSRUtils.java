@@ -2,11 +2,14 @@ package com.surkus.android.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
@@ -15,9 +18,11 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.provider.SyncStateContract.Constants;
+import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
+
+import com.facebook.Session;
 
 public class CSRUtils {
 
@@ -33,6 +38,14 @@ public class CSRUtils {
 		}
 
 		return false;
+	}
+	
+	public static void facebookLogout() {
+		Session mSession = Session.getActiveSession();
+		if (mSession != null) {
+			mSession.closeAndClearTokenInformation();
+			Session.setActiveSession(null);
+		}
 	}
 
 	public static void getHashKey(Context inContext) {
@@ -80,4 +93,21 @@ public class CSRUtils {
 		SharedPreferences appShPref = context.getSharedPreferences(CSRConstants.SURKUS_APP_PREFERENCE, context.MODE_PRIVATE);
 		return appShPref.getString(key, "");
 	}
+	
+	public static String getUSFormattedMobileNumber(Double mobileNumber)
+	{
+		DecimalFormatSymbols unusualSymbols = new DecimalFormatSymbols();
+		unusualSymbols.setGroupingSeparator(CSRConstants.US_MOBILE_NUMBER_SEPRATOR);	
+		DecimalFormat formatter = new DecimalFormat(CSRConstants.US_MOBILE_NUMBER_PATTERN,unusualSymbols);
+		return  formatter.format(mobileNumber);
+
+	}
+	
+	public static void openURLInBrowser(Context context,String URL)
+	{
+		Intent i = new Intent(Intent.ACTION_VIEW);
+		i.setData(Uri.parse(URL));
+		context.startActivity(i);
+	}
+	
 }

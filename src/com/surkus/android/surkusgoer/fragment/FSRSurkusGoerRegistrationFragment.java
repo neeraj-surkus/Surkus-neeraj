@@ -4,10 +4,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.telephony.TelephonyManager;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +23,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.surkus.android.R;
-import com.surkus.android.component.ASRLoginActivity;
 import com.surkus.android.model.CSRSurkusApiResponse;
-import com.surkus.android.model.CSRSurkusGoerSurkusToken;
 import com.surkus.android.networking.CSRWebConstants;
 import com.surkus.android.networking.CSRWebServices;
+import com.surkus.android.surkusgoer.component.ASRSurkusGoerDashboardActivity;
 import com.surkus.android.utils.CSRConstants;
 import com.surkus.android.utils.CSRUtils;
 
@@ -48,6 +52,11 @@ public class FSRSurkusGoerRegistrationFragment extends Fragment implements OnCli
 		mSurkusGoerRegistationParentView = inflater.inflate(R.layout.fragment_user_registration, container, false);
 		mZipOrPostalCodeEditText = (EditText) mSurkusGoerRegistationParentView.findViewById(R.id.zipcode_edittext);
 		mPhoneNoEditText = (EditText) mSurkusGoerRegistationParentView.findViewById(R.id.mobile_phoneno_edittext);
+		mPhoneNoEditText.addTextChangedListener(mMobileNumberFormatterWathcher);
+		
+		String phoneNo = getUserMobileNumber();
+		if(phoneNo != null && !TextUtils.isEmpty(phoneNo))
+			mPhoneNoEditText.setText(phoneNo);
 		
 		mSurkusGoerRegisterButton = (Button)mSurkusGoerRegistationParentView.findViewById(R.id.surkus_goer_register_btn);
 		mSurkusGoerRegisterButton.setOnClickListener(this);
@@ -55,6 +64,35 @@ public class FSRSurkusGoerRegistrationFragment extends Fragment implements OnCli
         return mSurkusGoerRegistationParentView;
 	}
 	
+	private String getUserMobileNumber()
+	{
+		TelephonyManager tMgr = (TelephonyManager)getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+		return tMgr.getLine1Number();
+	}
+	
+    TextWatcher mMobileNumberFormatterWathcher = new TextWatcher() {
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			String phoneNumber = s.toString().trim().replaceAll("-", "");
+			if (!phoneNumber.equalsIgnoreCase("")) {
+				mPhoneNoEditText.removeTextChangedListener(this);
+				mPhoneNoEditText.setText("");
+				mPhoneNoEditText.append(CSRUtils.getUSFormattedMobileNumber(Double.parseDouble(phoneNumber)));
+				mPhoneNoEditText.addTextChangedListener(this);
+			}
+		}
+	};
 	
 	@Override
 	public void onStart() {
@@ -130,6 +168,7 @@ public class FSRSurkusGoerRegistrationFragment extends Fragment implements OnCli
 		protected CSRSurkusApiResponse doInBackground(String... args) {
 			
 			CSRSurkusApiResponse surkusApiResponse = null;
+
 			try {
 				
 				JSONObject jObject = new JSONObject();
@@ -173,7 +212,10 @@ public class FSRSurkusGoerRegistrationFragment extends Fragment implements OnCli
 			}
 			else
 			{
-				getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new FSRSurkusGoerRegistrationThankYouFragment()).commit();	
+				//getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new FSRSurkusGoerRegistrationThankYouFragment()).commit();
+				  Intent surkusGoerRegistrationIntent = new Intent(getActivity(),ASRSurkusGoerDashboardActivity.class);
+				  startActivity(surkusGoerRegistrationIntent); 
+				  getActivity().finish();
 			}
 			
 		}

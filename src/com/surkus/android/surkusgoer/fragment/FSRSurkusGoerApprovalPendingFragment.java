@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -40,7 +40,7 @@ public class FSRSurkusGoerApprovalPendingFragment extends Fragment implements On
 	private TextView mSurkusGoerUserPhoneNoTextview;
 	private TextView mSurkusGoerUserAddressTextview;	
 	private LinearLayout mSurkusGoerInfoLayout;
-	private LinearLayout mSocialShareLayout;	
+	private RelativeLayout mSocialShareLayout;	
 	private Button mMenuButton;
 	private FragmentManager fragmentManager;
 	
@@ -61,7 +61,7 @@ public class FSRSurkusGoerApprovalPendingFragment extends Fragment implements On
 		mSurkusGoerUserPhoneNoTextview = (TextView)rootView.findViewById(R.id.user_phone_number_textview);
 		mSurkusGoerUserAddressTextview = (TextView)rootView.findViewById(R.id.user_address_number_textview);				
 		mSurkusGoerInfoLayout = (LinearLayout)rootView.findViewById(R.id.user_info_layout);
-		mSocialShareLayout = (LinearLayout)rootView.findViewById(R.id.social_share_layout);
+		mSocialShareLayout = (RelativeLayout)rootView.findViewById(R.id.social_share_layout);
 		
 		mMenuButton = (Button)rootView.findViewById(R.id.menu_btn);
 		mMenuButton.setOnClickListener(this);
@@ -81,6 +81,11 @@ public class FSRSurkusGoerApprovalPendingFragment extends Fragment implements On
 
 void initiailzeUIFields(CSRSurkusGoer surkusGoerUser)
 {
+	String accountStatus = "ACCOUNT ";
+	if(surkusGoerUser.getStatus() != null)
+	accountStatus = "ACCOUNT "+surkusGoerUser.getStatus();
+	
+	mSurkusGoerUserAccountStatusTextview.setText(accountStatus.toUpperCase());
 	mImageLoader.displayImage(surkusGoerUser.getProfilePicture(), mSurkusGoerProfileImageview);
 	mSurkusGoerUserNameTextview.setText(surkusGoerUser.getFacebookUserInfo().getName())	;
 	mSurkusGoerUserEmailIDTextview.setText(surkusGoerUser.getFacebookUserInfo().getEmail())	;
@@ -89,7 +94,7 @@ void initiailzeUIFields(CSRSurkusGoer surkusGoerUser)
 	StringBuilder address = new StringBuilder();
 	address.append(surkusGoerUser.getAddress().getCity());
 	address.append(", "+surkusGoerUser.getAddress().getState());
-	address.append(", "+surkusGoerUser.getAddress().getCountry());
+	address.append(", "+surkusGoerUser.getAddress().getZipCode());
 	mSurkusGoerUserAddressTextview.setText(address.toString());
 	
 	dismissFetchSurkusGoerInfoDialog();
@@ -169,8 +174,7 @@ void dismissFetchSurkusGoerInfoDialog()
 		protected CSRSurkusGoer doInBackground(String... args) {
 
 			CSRSurkusGoer surkusUser = mWebServiceSingletonObject.getSurkusUserInfo(mSurkusToken);
-			Log.e("Surkus","Surkus user info : " + surkusUser.getProfilePicture());
-			Log.e("Surkus", "Surkus user info : " + surkusUser.toString());
+
 			return surkusUser;
 
 		}

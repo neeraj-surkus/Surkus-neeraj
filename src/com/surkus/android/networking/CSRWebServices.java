@@ -27,8 +27,12 @@ import com.surkus.android.parser.CSRSurkusGoerSurkusTokenParser;
 public class CSRWebServices {
 
 	// Development URLS
-	private static String SURKUS_USER_URL = "https://devapi.surkus.com/v1/user/";
-	private static String REGISTER_SURKUS_USER_ZIP_CELL_URL = SURKUS_USER_URL+ "contact-info/zip-cell/"; //  /user/contact-info/zip-cell/
+	private String SURKUS_USER_URL = "https://devapi.surkus.com/v1/user/";
+	private String REGISTER_SURKUS_USER_ZIP_CELL_URL = SURKUS_USER_URL+ "contact-info/zip-cell/"; 
+	public static  String PAYMENT_URL = "https://devapp.surkus.com/coming-soon/";
+	public static String TERMS_AND_CONDITION_URL = "https://www.surkus.com/terms-and-conditions";
+	public static  String PRIVACY_URL = "https://www.surkus.com/privacy-policy";
+	public static  String ABOUT_SURKUS_URL = "https://www.surkus.com/";
 
 	private static CSRWebServices mSingletonRef;
 

@@ -30,13 +30,18 @@
     <string name="enable_push_msg">Next enable \"Push Notifications\" to start receiving invitations and payment offers to visit upcoming social events at fun local spots.</string>
     <string name="account_pending">ACCOUNT PENDING</string>
     <string name="account_pending_msg">Your account is pending.\n We\'ll text you when your account is approved.</string>
-    <string name="thank_you_tell_us_more">Thank You for Connecting with SURKUS.\n Please tell us more about youreself.</string>
+    <string name="thank_you_tell_us_more">Thank You for Connecting with SURKUS.\n Your selections have been saved.</string>
     <string name="favorite_times_to_socialize">Favorite Times To Socialize?</string>
     <string name="favorite_spots_to_socialize">Favorite Spots To Socialize?</string>
     <string name="favorite_music">Favorite Music?</string>
-
+    <string name="dashboard_msg_title">What to expect after your account has been approved!</string>
+    <string name="dashboard_msg_1">Receive Invitation &amp; Payment offer to Events that Matches Your Preferences</string>
+    <string name="dashboard_msg_2">Accept or Decline Invite and your Payment Offer</string>
+    <string name="dashboard_msg_3">Check Into Event with Your Phone via SURKUS Upon Arrival</string>
+    <string name="dashboard_msg_4">Get Paid Once Your Check In Has Been Confirmed</string>
+    <string name="dashboard_friends_msg">Get friends involved. Tell them about SURKUS.</string>
     <!-- Alert message values -->
-    <string name="error">Error</string>
+    <string name="error">Alert</string>
     <string name="zipcode_server_error_msg">Provide valid zipcode.</string>
     <string name="invalid_token_server_error_msg">Invalid Token.</string>
     <string name="server_error_msg">Server Error.</string>
@@ -52,7 +57,7 @@
         <item>Payment</item>
         <item>Share</item>
         <item>About</item>
-        <item>Legal</item>
+        <item>Terms</item>
     </string-array>
 
     <!-- Surkusgoer account pending -->

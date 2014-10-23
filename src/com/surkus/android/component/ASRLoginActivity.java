@@ -149,7 +149,7 @@ public class ASRLoginActivity extends FragmentActivity {
 						.getActiveSession().getAccessToken());
 			} else if (surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_401) {
 				dismissFetchSurkusGoerInfoDialog();
-				facebookLogout();
+				CSRUtils.facebookLogout();
 				facebookLogin();
 			}
 
@@ -249,14 +249,6 @@ public class ASRLoginActivity extends FragmentActivity {
 		@Override
 		protected void onPostExecute(CSRSurkusGoer surkusGoerUser) {
 
-		}
-	}
-
-	void facebookLogout() {
-		Session mSession = Session.getActiveSession();
-		if (mSession != null) {
-			mSession.closeAndClearTokenInformation();
-			Session.setActiveSession(null);
 		}
 	}
 

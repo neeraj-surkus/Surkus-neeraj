@@ -1,7 +1,7 @@
 package com.surkus.android.networking;
 
 public class CSRWebConstants {
-	public static String SERVER_ERROR = "Server Error";
+	public static String SERVER_ERROR = "Alert";
 	public static String NO_RESPONSE_FROM_SERVER = "No response from server.";
 	
 	//       Surkus user keys
