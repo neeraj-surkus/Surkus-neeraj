@@ -4,7 +4,9 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -30,12 +32,12 @@ public class FSRSurkusGoerMenuListFragment extends ListFragment implements
 	private int selectedFragmentPosition = 0;
 	JSONObject mObject;
 	private FragmentManager fragmentManager;
+	
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
 		View rootView = inflater.inflate(R.layout.slider_list, null);
-
 		String userName = getArguments().getString(CSRConstants.USER_NAME);
 
 		if (userName != null && !TextUtils.isEmpty(userName))
@@ -53,6 +55,9 @@ public class FSRSurkusGoerMenuListFragment extends ListFragment implements
 				.setOnClickListener(this);
 
 		fragmentManager = getActivity().getSupportFragmentManager();
+		
+		if(getArguments() != null)
+			selectedFragmentPosition = getArguments().getInt(CSRConstants.SURKUS_USER_MENU_INDEX, 0);
 
 		return rootView;
 	}
@@ -66,25 +71,54 @@ public class FSRSurkusGoerMenuListFragment extends ListFragment implements
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
+		fragmentManager.popBackStack();		
+		Bundle currentMenuPositionBundle = new Bundle();
 		if (position != selectedFragmentPosition)
 			switch (position) {
+			
+			case 0:
+				//selectedFragmentPosition = 0;
+
+				currentMenuPositionBundle.putInt(CSRConstants.SURKUS_USER_MENU_INDEX, 0);
+				FSRSurkusGoerApprovalPendingFragment surkusGoerDashboardFragment = new FSRSurkusGoerApprovalPendingFragment();	
+				surkusGoerDashboardFragment.setArguments(currentMenuPositionBundle);
+				fragmentManager.beginTransaction().replace(R.id.container, surkusGoerDashboardFragment).addToBackStack("1").commit();
+				break;
 
 			case 1:
-				fragmentManager.popBackStack();
-				CSRUtils.openURLInBrowser(getActivity(),
-						CSRWebServices.PAYMENT_URL);
+				//selectedFragmentPosition = 1;
+	
+				currentMenuPositionBundle.putInt(CSRConstants.SURKUS_USER_MENU_INDEX, 1);
+				FSRSurkusGoerPaymentFragment surkusGoerPaymentFragment = new FSRSurkusGoerPaymentFragment();	
+				surkusGoerPaymentFragment.setArguments(currentMenuPositionBundle);
+				fragmentManager.beginTransaction().replace(R.id.container, surkusGoerPaymentFragment).addToBackStack("1").commit();
+				break;
+				
+			case 2:		
+				//selectedFragmentPosition = 2;
+				currentMenuPositionBundle.putInt(CSRConstants.SURKUS_USER_MENU_INDEX, 2);
+				FSRSurkusGoerShareFragment surkusGoerShareFragment = new FSRSurkusGoerShareFragment();		
+				surkusGoerShareFragment.setArguments(currentMenuPositionBundle);
+				fragmentManager.beginTransaction().replace(R.id.container, surkusGoerShareFragment).addToBackStack("1").commit();
+					
 				break;
 
 			case 3:
-				fragmentManager.popBackStack();
+				//selectedFragmentPosition = -1;
 				CSRUtils.openURLInBrowser(getActivity(),
 						CSRWebServices.ABOUT_SURKUS_URL);
 				break;
 
 			case 4:
-				fragmentManager.popBackStack();
+				//selectedFragmentPosition = -1;
 				CSRUtils.openURLInBrowser(getActivity(),
 						CSRWebServices.TERMS_AND_CONDITION_URL);
+				break;
+				
+			case 5:
+				//selectedFragmentPosition = -1;
+				CSRUtils.openURLInBrowser(getActivity(),
+						CSRWebServices.PRIVACY_URL);
 				break;
 
 			}

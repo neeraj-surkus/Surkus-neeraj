@@ -70,7 +70,7 @@
             android:layout_marginRight="@dimen/margin_10"
             android:layout_marginTop="@dimen/margin_10"
             android:background="@drawable/input_box_navy_blue"
-            android:digits="0123456789-"
+            android:digits="0123456789-()"
             android:hint="@string/hint_mobile_phone_number"
             android:inputType="number|text|textNoSuggestions"
             android:maxLength="12"

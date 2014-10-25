@@ -20,11 +20,13 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.surkus.android.R;
+import com.surkus.android.component.ASRLoginActivity;
 import com.surkus.android.model.CSRSurkusGoer;
 import com.surkus.android.networking.CSRWebServices;
 import com.surkus.android.utils.CSRConstants;
 import com.surkus.android.utils.CSRImageLoader;
 import com.surkus.android.utils.CSRUtils;
+import com.surkus.android.utils.CSRUtils.ShareOnFacebookInterface;
 
 public class FSRSurkusGoerApprovalPendingFragment extends Fragment implements OnClickListener{
 	
@@ -44,9 +46,13 @@ public class FSRSurkusGoerApprovalPendingFragment extends Fragment implements On
 	private Button mMenuButton;
 	private FragmentManager fragmentManager;
 	
+	ImageView mFacebookShareImageview;
+	ImageView mTwitterShareImageview;
+	
 	CSRSurkusGoer mSurkusGoerUser;
 	
-
+	private int selectedFragmentPosition = 0;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		
@@ -65,6 +71,12 @@ public class FSRSurkusGoerApprovalPendingFragment extends Fragment implements On
 		
 		mMenuButton = (Button)rootView.findViewById(R.id.menu_btn);
 		mMenuButton.setOnClickListener(this);
+		
+		mFacebookShareImageview = (ImageView)rootView.findViewById(R.id.facebook_share_imageview);
+		mFacebookShareImageview.setOnClickListener(this);
+		
+		mTwitterShareImageview = (ImageView)rootView.findViewById(R.id.twitter_share_imageview);
+		mTwitterShareImageview.setOnClickListener(this);
 			
 		mImageLoader = CSRImageLoader.getSingletonRef(getActivity()).getImageLoader();
 		mWebServiceSingletonObject = CSRWebServices.getSingletonRef();
@@ -74,6 +86,9 @@ public class FSRSurkusGoerApprovalPendingFragment extends Fragment implements On
 		mGetSurkusGoerInfoTask.execute();
 		
 		fragmentManager = getActivity().getSupportFragmentManager();
+		
+		if(getArguments() != null)
+			selectedFragmentPosition = getArguments().getInt(CSRConstants.SURKUS_USER_MENU_INDEX, 0);
 		
 		return rootView;
 	}
@@ -100,7 +115,8 @@ void initiailzeUIFields(CSRSurkusGoer surkusGoerUser)
 	dismissFetchSurkusGoerInfoDialog();
 	mSurkusGoerInfoLayout.setVisibility(View.VISIBLE);
 	
-	mSurkusGoerUser = surkusGoerUser;
+	mSurkusGoerUser = surkusGoerUser;	
+	CSRUtils.createStringSharedPref(getActivity(),CSRConstants.SURKUS_USER_NAME,surkusGoerUser.getFacebookUserInfo().getName());
 }
 	
     
@@ -189,17 +205,27 @@ void dismissFetchSurkusGoerInfoDialog()
 
 
 	@Override
-	public void onClick(View v) {		
-		Bundle userInfoBundle = new Bundle();
-		userInfoBundle.putString(CSRConstants.USER_NAME, mSurkusGoerUser.getFacebookUserInfo().getName());		
-		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		transaction.setCustomAnimations(R.anim.right_to_left_slide_in,R.anim.right_to_left_slide_out, R.anim.left_to_right_slide_in, R.anim.left_to_right_slide_out);
-		Fragment surkusGoerMenuFragment = new FSRSurkusGoerMenuListFragment();	
-		surkusGoerMenuFragment.setArguments(userInfoBundle);
-		transaction.add(R.id.container, surkusGoerMenuFragment );
-		transaction.addToBackStack("");
-		transaction.commit();
+	public void onClick(View v) {			
+	   int viewID = v.getId();		   
+	   switch (viewID) {
+	   
+	 
+	    case R.id.menu_btn:
+		 Bundle userInfoBundle = new Bundle();
+		 userInfoBundle.putInt(CSRConstants.SURKUS_USER_MENU_INDEX, selectedFragmentPosition);
+		 userInfoBundle.putString(CSRConstants.USER_NAME, mSurkusGoerUser.getFacebookUserInfo().getName());		
+		 FragmentTransaction transaction = fragmentManager.beginTransaction();
+		 transaction.setCustomAnimations(R.anim.right_to_left_slide_in,R.anim.right_to_left_slide_out, R.anim.left_to_right_slide_in, R.anim.left_to_right_slide_out);
+		 Fragment surkusGoerMenuFragment = new FSRSurkusGoerMenuListFragment();	
+		 surkusGoerMenuFragment.setArguments(userInfoBundle);
+		 transaction.add(R.id.container, surkusGoerMenuFragment );
+		 transaction.addToBackStack("");
+		 transaction.commit();
+		break;
+		
+	
+		}
+	   
 	}
-
 
 }

@@ -14,6 +14,8 @@ public class CSRConstants {
 	public static String SURKUS_APP_PREFERENCE = "SURKUS_APP_PREFERENCE";
 	
 	public static String SURKUS_TOKEN_SHARED_PREFERENCE_KEY = "surkus_token_shared_preference_key";
+	public static String SURKUS_USER_NAME = "surkus_user_name";
+	public static String SURKUS_USER_MENU_INDEX = "surkus_menu_index";
 	
 	// US Mobile number pattern
 	public static String US_MOBILE_NUMBER_PATTERN = "###,###,####";

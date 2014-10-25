@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
+import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,6 +26,13 @@ import android.util.Log;
 import com.facebook.Session;
 
 public class CSRUtils {
+	
+	public interface ShareOnFacebookInterface
+	{
+		public void shareOnFacebook();
+	}
+	
+	
 
 	public static boolean isNetworkOn(Context context) {
 		if (context == null)
@@ -109,5 +117,27 @@ public class CSRUtils {
 		i.setData(Uri.parse(URL));
 		context.startActivity(i);
 	}
+	
+	public static void sendEmail(Activity activity,String shareMessage)
+	{
+		String mailTo="";
+		Intent email_intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",mailTo, null)); 
+		email_intent.putExtra(android.content.Intent.EXTRA_SUBJECT, ""); 
+		email_intent.putExtra(android.content.Intent.EXTRA_TEXT, shareMessage); 
+//		email_intent.putExtra(android.content.Intent.EXTRA_TEXT,"This is awesome property near by Gurgaon must visit."); 
+//		activity.startActivity(Intent.createChooser(email_intent, "Send email..."));
+		activity.startActivity(email_intent);
+		
+	}
+	
+	
+	public static void shareOnTwitterEmail(Activity activity,String shareMessage)
+	{
+		  Intent twitterShareIntent = new Intent(Intent.ACTION_VIEW);
+		  String twitterShareURL="https://twitter.com/intent/tweet?url=" +shareMessage ;//https://twitter.com/intent/tweet?url=
+		  twitterShareIntent.setData(Uri.parse(twitterShareURL));
+		  activity.startActivity(twitterShareIntent);
+	}
+	
 	
 }

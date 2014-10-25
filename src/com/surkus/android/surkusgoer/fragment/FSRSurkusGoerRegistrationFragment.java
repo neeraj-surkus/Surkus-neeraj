@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -29,6 +30,7 @@ import com.surkus.android.networking.CSRWebServices;
 import com.surkus.android.surkusgoer.component.ASRSurkusGoerDashboardActivity;
 import com.surkus.android.utils.CSRConstants;
 import com.surkus.android.utils.CSRUtils;
+import com.surkus.android.utils.MobileNumberPatternFilter;
 
 public class FSRSurkusGoerRegistrationFragment extends Fragment implements OnClickListener{
 	
@@ -52,11 +54,13 @@ public class FSRSurkusGoerRegistrationFragment extends Fragment implements OnCli
 		mSurkusGoerRegistationParentView = inflater.inflate(R.layout.fragment_user_registration, container, false);
 		mZipOrPostalCodeEditText = (EditText) mSurkusGoerRegistationParentView.findViewById(R.id.zipcode_edittext);
 		mPhoneNoEditText = (EditText) mSurkusGoerRegistationParentView.findViewById(R.id.mobile_phoneno_edittext);
-		mPhoneNoEditText.addTextChangedListener(mMobileNumberFormatterWathcher);
+	    mPhoneNoEditText.addTextChangedListener(mMobileNumberFormatterWathcher);
 		
 		String phoneNo = getUserMobileNumber();
 		if(phoneNo != null && !TextUtils.isEmpty(phoneNo))
 			mPhoneNoEditText.setText(phoneNo);
+		
+		//mPhoneNoEditText.setFilters( new InputFilter[] { new MobileNumberPatternFilter("\\(\\d{3}\\)\\d{3}\\-\\d{2}\\-\\d{2}")}  );  
 		
 		mSurkusGoerRegisterButton = (Button)mSurkusGoerRegistationParentView.findViewById(R.id.surkus_goer_register_btn);
 		mSurkusGoerRegisterButton.setOnClickListener(this);
