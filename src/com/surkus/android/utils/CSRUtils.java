@@ -98,8 +98,15 @@ public class CSRUtils {
 	}
 	
 	public static String getStringSharedPref(Context context,String key) {
-		SharedPreferences appShPref = context.getSharedPreferences(CSRConstants.SURKUS_APP_PREFERENCE, context.MODE_PRIVATE);
+		SharedPreferences appShPref = context.getSharedPreferences(CSRConstants.SURKUS_APP_PREFERENCE, Context.MODE_PRIVATE);
 		return appShPref.getString(key, "");
+	}
+	
+	public static void logoutSurkusUser(Context context) {
+		SharedPreferences appShPref = context.getSharedPreferences(CSRConstants.SURKUS_APP_PREFERENCE, Context.MODE_PRIVATE);
+		Editor mEditor = appShPref.edit();
+		mEditor.clear();
+		mEditor.commit();
 	}
 	
 	public static String getUSFormattedMobileNumber(Double mobileNumber)
@@ -118,26 +125,39 @@ public class CSRUtils {
 		context.startActivity(i);
 	}
 	
-	public static void sendEmail(Activity activity,String shareMessage)
+	public static void sendEmail(Activity activity,String shareMessage,String imagePath)
 	{
 		String mailTo="";
 		Intent email_intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",mailTo, null)); 
-		email_intent.putExtra(android.content.Intent.EXTRA_SUBJECT, ""); 
-		email_intent.putExtra(android.content.Intent.EXTRA_TEXT, shareMessage); 
+		//Intent email_intent = new Intent(Intent.ACTION_SEND); 
+		email_intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "SURKUS – Get Paid to Party");  // file:///android_asset/
+		email_intent.putExtra(android.content.Intent.EXTRA_TEXT, "SURKUS is a mobile platform that connects you to local hot spots and events where you are paid to simply attend and become part of their crowd.  We call it CrowdCasting."); 
 //		email_intent.putExtra(android.content.Intent.EXTRA_TEXT,"This is awesome property near by Gurgaon must visit."); 
 //		activity.startActivity(Intent.createChooser(email_intent, "Send email..."));
+		
+	//	email_intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(imagePath));
+	//	email_intent.setType("image/*");
 		activity.startActivity(email_intent);
 		
 	}
 	
 	
-	public static void shareOnTwitterEmail(Activity activity,String shareMessage)
+	public static void shareOnTwitterEmail(Activity activity,String description,String shareMessage)
 	{
 		  Intent twitterShareIntent = new Intent(Intent.ACTION_VIEW);
-		  String twitterShareURL="https://twitter.com/intent/tweet?url=" +shareMessage ;//https://twitter.com/intent/tweet?url=
+		  String twitterShareURL="https://twitter.com/intent/tweet?"+"text="+description+"&url=" +shareMessage ;//https://twitter.com/intent/tweet?url=
 		  twitterShareIntent.setData(Uri.parse(twitterShareURL));
 		  activity.startActivity(twitterShareIntent);
 	}
+	
+	public static void sendMessage(Activity activity,String shareMessage)
+	{
+		Intent sendIntent = new Intent(Intent.ACTION_VIEW);         
+		sendIntent.setData(Uri.parse("sms:"));
+		sendIntent.putExtra("sms_body", shareMessage); 
+		activity.startActivity(sendIntent);
+	}
+	
 	
 	
 }

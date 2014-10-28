@@ -153,9 +153,7 @@ public class ASRWhatAreYouActivity extends Activity {
 					Intent surkusGoerRegistrationIntent = new Intent(
 							ASRWhatAreYouActivity.this,
 							ASRSurkusGoerDashboardActivity.class);
-					/* Intent surkusGoerRegistrationIntent = new
-					 Intent(ASRWhatAreYouActivity.this,
-					 ASRSurkusGoerRegistrationActivity.class);*/
+				
 					startActivity(surkusGoerRegistrationIntent);
 				} else {
 					Intent surkusGoerRegistrationIntent = new Intent(

@@ -77,13 +77,26 @@ public class FSRSurkusGoerShareFragment extends Fragment implements OnClickListe
 	 		transaction.commit();
 	    	 
 		break;
-		    	 
-	     case R.id.share_text_layout:
+		
+	     case R.id.share_facbook_layout:
+	   
+	    	 ((ShareOnFacebookInterface)getActivity()).shareOnFacebook();	
+	   
+	    	break;
 	    	 
+	     case R.id.share_twitter_layout:
+	    	 CSRUtils.shareOnTwitterEmail(getActivity(),"Get Paid to Party with SURKUS! — ", CSRWebServices.SHARE_URL);
+	    	 break;
+	    	 
+	     case R.id.share_email_layout:
+	    	 CSRUtils.sendEmail(getActivity(), CSRWebServices.SHARE_URL,"file:///android_asset/surkus_share_image.jpg");
+	    	 break;
+	    	 
+	     case R.id.share_text_layout:
+	    	 CSRUtils.sendMessage(getActivity(), "Get Paid to Party with SURKUS! — "+CSRWebServices.SHARE_URL);
 	    	 break; 	 
 	    	 
-
-	    	 
+    	 
 	default:
 		break;
 	}

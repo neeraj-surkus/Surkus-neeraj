@@ -223,7 +223,16 @@ void dismissFetchSurkusGoerInfoDialog()
 		 transaction.commit();
 		break;
 		
-	
+	    case R.id.facebook_share_imageview:
+	    	 ((ShareOnFacebookInterface)getActivity()).shareOnFacebook();
+	          break;
+	    
+	    case R.id.twitter_share_imageview:
+	    	 CSRUtils.shareOnTwitterEmail(getActivity(),"Get Paid to Party with SURKUS! — ", CSRWebServices.SHARE_URL);    	
+		     break;
+	     
+	    default:
+			break;
 		}
 	   
 	}

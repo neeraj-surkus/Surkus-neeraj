@@ -4,9 +4,7 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -25,6 +23,7 @@ import com.surkus.android.component.ASRLoginActivity;
 import com.surkus.android.networking.CSRWebServices;
 import com.surkus.android.utils.CSRConstants;
 import com.surkus.android.utils.CSRUtils;
+import com.surkus.android.utils.DeleteSurkusUserTask;
 
 public class FSRSurkusGoerMenuListFragment extends ListFragment implements
 		OnClickListener {
@@ -138,7 +137,7 @@ public class FSRSurkusGoerMenuListFragment extends ListFragment implements
 
 			break;
 		case R.id.surkusgoer_logout_button:
-			launchLoginActivity();
+			clearUserDataAndLaunchLoginActivity();
 
 			break;
 
@@ -148,8 +147,10 @@ public class FSRSurkusGoerMenuListFragment extends ListFragment implements
 
 	}
 
-	void launchLoginActivity() {
+	void clearUserDataAndLaunchLoginActivity() {
 		CSRUtils.facebookLogout();
+		CSRUtils.logoutSurkusUser(getActivity());
+		//new  DeleteSurkusUserTask(CSRUtils.getStringSharedPref(getActivity(), CSRConstants.SURKUS_TOKEN_SHARED_PREFERENCE_KEY)).execute();
 		Intent loginIntent = new Intent(getActivity(), ASRLoginActivity.class);
 		loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(loginIntent);

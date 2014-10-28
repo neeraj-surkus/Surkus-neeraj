@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone"
+           android:visibility="gone"
              >
 
             <TextView
@@ -119,7 +119,7 @@
                     android:layout_centerInParent="true"
                     android:text="@string/thank_you_tell_us_more"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_18" />
+                    android:textSize="@dimen/text_size_16" />
             </RelativeLayout>
 
             <TextView

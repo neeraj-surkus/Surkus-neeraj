@@ -33,7 +33,8 @@ public class CSRWebServices {
 	public static String TERMS_AND_CONDITION_URL = "https://www.surkus.com/terms-and-conditions";
 	public static  String PRIVACY_URL = "https://www.surkus.com/privacy-policy";
 	public static  String ABOUT_SURKUS_URL = "https://www.surkus.com/";
-	public static String SHARE_URL = "http://www.surkus.com";
+	public static String SHARE_URL = "https://app.surkus.com";
+	public static String SOCIAL_SHARING_URL = "https://dl.dropbox.com/s/3zno441vbn0zrku/Surkus-Share%20-Image.jpg";
 
 	private static CSRWebServices mSingletonRef;
 

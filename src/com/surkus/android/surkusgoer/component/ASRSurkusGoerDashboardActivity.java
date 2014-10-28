@@ -60,7 +60,9 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements 
 	void shareURLOnFacebook() {
 
 		Bundle params = new Bundle();
-    	params.putString("link", CSRWebServices.SHARE_URL);
+		params.putString("name", "SURKUS – Get Paid to Party");
+    	params.putString("picture", CSRWebServices.SOCIAL_SHARING_URL);
+        params.putString("description","SURKUS is a mobile platform that connects you to local hot spots and events where you are paid to simply attend and become part of their crowd.  We call it CrowdCasting.");
     	WebDialog feedDialog = (new WebDialog.FeedDialogBuilder(this, Session.getActiveSession(), params)).setOnCompleteListener(new OnCompleteListener() {
     	                      
     	@Override

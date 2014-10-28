@@ -161,8 +161,7 @@ public class ASRLoginActivity extends FragmentActivity {
 						CSRWebConstants.NO_RESPONSE_FROM_SERVER);
 
 			} else {
-				dismissFetchSurkusGoerInfoDialog();
-				// new
+			    //dismissFetchSurkusGoerInfoDialog();
 				//new  DeleteSurkusUserTask(surkusTokenResponse.getSurkusToken()).execute();
 				// Storing Surkus token for future API calls.
 				CSRUtils.createStringSharedPref(ASRLoginActivity.this,
@@ -173,6 +172,7 @@ public class ASRLoginActivity extends FragmentActivity {
 					new GetSurkusGoerInfoTask(surkusTokenResponse.getSurkusToken()).execute();											
 					
 				} else {
+					dismissFetchSurkusGoerInfoDialog();
 					Intent surkusGoerRegistrationIntent = new Intent(
 							ASRLoginActivity.this,
 							ASRSurkusGoerRegistrationActivity.class);
@@ -205,7 +205,7 @@ public class ASRLoginActivity extends FragmentActivity {
 
 		@Override
 		protected void onPostExecute(CSRSurkusGoer surkusGoerUser) {	
-			
+			dismissFetchSurkusGoerInfoDialog();
 			if(surkusGoerUser == null || (surkusGoerUser != null && (surkusGoerUser.getCellPhone() == null || TextUtils.isEmpty(surkusGoerUser.getCellPhone()) || surkusGoerUser.getAddress().getZipCode() == null || TextUtils.isEmpty(surkusGoerUser.getAddress().getZipCode()))))
 			{
 				Intent surkusGoerRegistrationIntent = new Intent(ASRLoginActivity.this,ASRSurkusGoerRegistrationActivity.class);
@@ -220,37 +220,6 @@ public class ASRLoginActivity extends FragmentActivity {
 		}
 	}
 
-	
-	private class DeleteSurkusUserTask extends
-			AsyncTask<String, Integer, CSRSurkusGoer> {
-
-		String mSurkusToken;
-
-		DeleteSurkusUserTask(String surkusToken) {
-			mSurkusToken = surkusToken;
-		}
-
-		@Override
-		protected void onPreExecute() {
-			// TODO Auto-generated method stub
-			super.onPreExecute();
-
-		}
-
-		@Override
-		protected CSRSurkusGoer doInBackground(String... args) {
-
-			webServiceSingletonObject.deleteSurkusUser(mSurkusToken);
-
-			return null;
-
-		}
-
-		@Override
-		protected void onPostExecute(CSRSurkusGoer surkusGoerUser) {
-
-		}
-	}
 
 	@Override
 	protected void onResume() {
