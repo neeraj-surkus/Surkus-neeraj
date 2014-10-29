@@ -3,8 +3,10 @@ package com.surkus.android.surkusgoer.component;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.widget.Toast;
 
 import com.facebook.FacebookException;
+import com.facebook.FacebookOperationCanceledException;
 import com.facebook.Session;
 import com.facebook.Session.StatusCallback;
 import com.facebook.SessionState;
@@ -59,9 +61,10 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements 
 	
 	void shareURLOnFacebook() {
 
-		Bundle params = new Bundle();
+		Bundle params = new Bundle();	
 		params.putString("name", "SURKUS – Get Paid to Party");
-    	params.putString("picture", CSRWebServices.SOCIAL_SHARING_URL);
+    	//params.putString("picture", ""); //CSRWebServices.SOCIAL_SHARING_URL
+		  params.putString("link", CSRWebServices.SHARE_URL);
         params.putString("description","SURKUS is a mobile platform that connects you to local hot spots and events where you are paid to simply attend and become part of their crowd.  We call it CrowdCasting.");
     	WebDialog feedDialog = (new WebDialog.FeedDialogBuilder(this, Session.getActiveSession(), params)).setOnCompleteListener(new OnCompleteListener() {
     	                      
@@ -75,6 +78,7 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements 
 	
 		mbIsOpenedShareDialog = false;
 	}
+	
 	
 	@Override
 	protected void onResume() {

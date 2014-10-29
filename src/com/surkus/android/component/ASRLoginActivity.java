@@ -35,6 +35,7 @@ import com.surkus.android.surkusgoer.component.ASRSurkusGoerDashboardActivity;
 import com.surkus.android.surkusgoer.component.ASRSurkusGoerRegistrationActivity;
 import com.surkus.android.utils.CSRConstants;
 import com.surkus.android.utils.CSRUtils;
+import com.surkus.android.utils.DeleteSurkusUserTask;
 
 public class ASRLoginActivity extends FragmentActivity {
 
@@ -147,7 +148,7 @@ public class ASRLoginActivity extends FragmentActivity {
 				new CreateSurkusUserAndGenerateTokenTask(false,
 						CSRWebConstants.STATUS_CODE_400).execute(Session
 						.getActiveSession().getAccessToken());
-			} else if (surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_401) {
+			} else if (surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_401 || surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_500) {
 				dismissFetchSurkusGoerInfoDialog();
 				CSRUtils.facebookLogout();
 				facebookLogin();
@@ -160,7 +161,8 @@ public class ASRLoginActivity extends FragmentActivity {
 						CSRWebConstants.SERVER_ERROR,
 						CSRWebConstants.NO_RESPONSE_FROM_SERVER);
 
-			} else {
+			} else if (surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_200) 
+			{
 			    //dismissFetchSurkusGoerInfoDialog();
 				//new  DeleteSurkusUserTask(surkusTokenResponse.getSurkusToken()).execute();
 				// Storing Surkus token for future API calls.

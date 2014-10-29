@@ -90,6 +90,9 @@ public class CSRWebServices {
 			httpPost.setEntity(new StringEntity(postData));
 			HttpResponse serverDataResponse = httpClient.execute(httpPost);
 			statusCode = serverDataResponse.getStatusLine().getStatusCode();
+
+			
+			
 			Log.d("Status code", "postDataToSurkus : "+serverDataResponse.getStatusLine().getStatusCode());
 			HttpEntity entity = serverDataResponse.getEntity();
 			BufferedReader newbrp = null;
