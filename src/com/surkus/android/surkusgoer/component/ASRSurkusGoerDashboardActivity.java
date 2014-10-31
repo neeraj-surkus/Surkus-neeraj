@@ -3,10 +3,9 @@ package com.surkus.android.surkusgoer.component;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.widget.Toast;
+import android.support.v4.app.FragmentManager;
 
 import com.facebook.FacebookException;
-import com.facebook.FacebookOperationCanceledException;
 import com.facebook.Session;
 import com.facebook.Session.StatusCallback;
 import com.facebook.SessionState;
@@ -19,67 +18,82 @@ import com.surkus.android.networking.CSRWebServices;
 import com.surkus.android.surkusgoer.fragment.FSRSurkusGoerApprovalPendingFragment;
 import com.surkus.android.utils.CSRUtils.ShareOnFacebookInterface;
 
-
-
-
-
-public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements ShareOnFacebookInterface{
+public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements
+		ShareOnFacebookInterface {
 	private UiLifecycleHelper uiHelper;
 	boolean mbIsOpenedShareDialog;
 	boolean bIsFacebookShare;
 	Session mSession;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sukurs_goer_dashboard);
-	    getSupportFragmentManager().beginTransaction().add(R.id.container,new FSRSurkusGoerApprovalPendingFragment()).commit();	  
-	    
-		 uiHelper = new UiLifecycleHelper(this, staus);
-		 uiHelper.onCreate(savedInstanceState);		
-		
-	}
-	
-	StatusCallback staus = new StatusCallback() {
+		getSupportFragmentManager()
+				.beginTransaction()
+				.add(R.id.container, new FSRSurkusGoerApprovalPendingFragment())
+				.commit();
 
+		uiHelper = new UiLifecycleHelper(this, staus);
+		uiHelper.onCreate(savedInstanceState);
+
+	}
+
+	StatusCallback staus = new StatusCallback() {
 
 		@Override
 		public void call(Session session, SessionState state,
 				Exception exception) {
-			if (session != null && !mbIsOpenedShareDialog && session.isOpened())
-			{
+			if (session != null && !mbIsOpenedShareDialog && session.isOpened()) {
 				mbIsOpenedShareDialog = true;
-				if(bIsFacebookShare)
-				{					
+				if (bIsFacebookShare) {
 					shareURLOnFacebook();
-				   bIsFacebookShare = false;
+					bIsFacebookShare = false;
 				}
 			}
-			
+
 		}
 	};
-	
+
 	void shareURLOnFacebook() {
 
-		Bundle params = new Bundle();	
-		params.putString("name", "SURKUS – Get Paid to Party");
-    	//params.putString("picture", ""); //CSRWebServices.SOCIAL_SHARING_URL
-		  params.putString("link", CSRWebServices.SHARE_URL);
-        params.putString("description","SURKUS is a mobile platform that connects you to local hot spots and events where you are paid to simply attend and become part of their crowd.  We call it CrowdCasting.");
-    	WebDialog feedDialog = (new WebDialog.FeedDialogBuilder(this, Session.getActiveSession(), params)).setOnCompleteListener(new OnCompleteListener() {
-    	                      
-    	@Override
-    	public void onComplete(Bundle values,FacebookException error) {
-    							
-    	}
+		if (FacebookDialog.canPresentShareDialog(getApplicationContext(),FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) 
+		{
+			// Publish the post using the Share Dialog
+			FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(this)
+			.setName("SURKUS – Get Paid to Party")
+			//.setPicture(CSRWebServices.SOCIAL_SHARING_URL)
+		    .setLink(CSRWebServices.SOCIAL_SHARING_URL)
+		    .setDescription("SURKUS is a mobile platform that connects you to local hot spots and events where you are paid to simply attend and become part of their crowd.  We call it CrowdCasting.")
+					.build();
+			uiHelper.trackPendingDialogCall(shareDialog.present());
 
-    	}).build();
-        feedDialog.show();
-	
+		} else {
+
+			Bundle params = new Bundle();
+			params.putString("name", "SURKUS – Get Paid to Party");
+			params.putString("picture", CSRWebServices.SOCIAL_SHARING_URL); // CSRWebServices.SOCIAL_SHARING_URL
+			// params.putString("link", CSRWebServices.SHARE_URL);
+			params.putString(
+					"description",
+					"SURKUS is a mobile platform that connects you to local hot spots and events where you are paid to simply attend and become part of their crowd.  We call it CrowdCasting.");
+			WebDialog feedDialog = (new WebDialog.FeedDialogBuilder(this,
+					Session.getActiveSession(), params)).setOnCompleteListener(
+					new OnCompleteListener() {
+
+						@Override
+						public void onComplete(Bundle values,
+								FacebookException error) {
+
+						}
+
+					}).build();
+			feedDialog.show();
+		}
+
 		mbIsOpenedShareDialog = false;
 	}
-	
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -104,7 +118,7 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements 
 		super.onDestroy();
 		uiHelper.onDestroy();
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -114,30 +128,51 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements 
 					@Override
 					public void onError(FacebookDialog.PendingCall pendingCall,
 							Exception error, Bundle data) {
-					
+
 					}
 
 					@Override
 					public void onComplete(
 							FacebookDialog.PendingCall pendingCall, Bundle data) {
-					
+
 					}
 				});
 	}
 
 	@Override
+	public void onBackPressed() {	
+		try
+		{
+			FragmentManager fm = getSupportFragmentManager();
+			int count = fm.getBackStackEntryCount();	
+			
+			if(count > 0)
+			{
+				super.onBackPressed();
+			}
+			else
+			{
+				
+			}
+			
+		}
+		catch (Exception e) {
+		}
+	
+	
+	}
+	
+	@Override
 	public void shareOnFacebook() {
 
-		 mSession = Session.openActiveSession(this, true, staus);
-		 bIsFacebookShare = true;
-		
-		 if (mSession != null && mSession.isOpened())
-		 {
-			 shareURLOnFacebook();
-			 bIsFacebookShare = false;			 
-		 }
-	
-		
+		mSession = Session.openActiveSession(this, true, staus);
+		bIsFacebookShare = true;
+
+		if (mSession != null && mSession.isOpened()) {
+			shareURLOnFacebook();
+			bIsFacebookShare = false;
+		}
+
 	}
 
 }

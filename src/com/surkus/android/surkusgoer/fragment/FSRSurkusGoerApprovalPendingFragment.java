@@ -150,7 +150,7 @@ void displayFetchSurkusGoerInfoDialog()
  {
 	mFetchSurkusGoerInfoDialog = new ProgressDialog(getActivity());
 	mFetchSurkusGoerInfoDialog.setMessage(getActivity().getResources().getString(R.string.loading));
-	mFetchSurkusGoerInfoDialog.setCancelable(true);
+	mFetchSurkusGoerInfoDialog.setCancelable(false);
 	mFetchSurkusGoerInfoDialog.setCanceledOnTouchOutside(false);
 	mFetchSurkusGoerInfoDialog.setIndeterminate(true);
 	mFetchSurkusGoerInfoDialog.show();

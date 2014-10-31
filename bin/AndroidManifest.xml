@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.surkus.android"
-    android:versionCode="1"
-    android:versionName="1.0"
     android:installLocation="auto"
-     >
+    android:versionCode="1"
+    android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -12,7 +11,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/> 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
 
     <application
         android:allowBackup="true"
@@ -37,29 +38,20 @@
             android:name=".component.ASRWhatAreYouActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
-        
-         <activity
+        <activity
             android:name=".surkusgoer.component.ASRSurkusGoerRegistrationActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-             >
+            android:windowSoftInputMode="stateHidden" >
         </activity>
-        
         <activity
             android:name=".surkusgoer.component.ASRSurkusGoerDashboardActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-             >
+            android:windowSoftInputMode="stateHidden" >
         </activity>
-        
-             <activity
+        <activity
             android:name=".surkusgoer.component.ASRSurkusGoerProfileActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
-        
-        
         <activity
             android:name="com.facebook.LoginActivity"
             android:label="@string/app_name"
@@ -68,8 +60,6 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/app_id" />
-
-
     </application>
 
 </manifest>

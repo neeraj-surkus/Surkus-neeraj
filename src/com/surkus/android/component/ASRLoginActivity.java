@@ -67,15 +67,14 @@ public class ASRLoginActivity extends FragmentActivity {
 
 			@Override
 			public void onClick(View arg0) {
-
 				facebookLogin();
 
 			}
 		});
 
 		uiHelper = new UiLifecycleHelper(this, staus);
-		uiHelper.onCreate(savedInstanceState);
-
+		uiHelper.onCreate(savedInstanceState);		
+	//	CSRUtils.getHashKey(this);
 		webServiceSingletonObject = CSRWebServices.getSingletonRef();
 	}
 
@@ -150,7 +149,7 @@ public class ASRLoginActivity extends FragmentActivity {
 						.getActiveSession().getAccessToken());
 			} else if (surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_401 || surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_500) {
 				dismissFetchSurkusGoerInfoDialog();
-				CSRUtils.facebookLogout();
+				CSRUtils.facebookLogout(ASRLoginActivity.this);
 				facebookLogin();
 			}
 
@@ -297,12 +296,12 @@ public class ASRLoginActivity extends FragmentActivity {
 			// Ask for username and password
 			OpenRequest op = new Session.OpenRequest((Activity) this);
 			// don't use SSO.
-			op.setLoginBehavior(SessionLoginBehavior.SUPPRESS_SSO);
+			op.setLoginBehavior(SessionLoginBehavior.SSO_WITH_FALLBACK);
 			// no callback needed.
 			op.setCallback(null);
 			// set permissions.
 			List<String> permissions = new ArrayList<String>();
-			permissions.add("email,user_birthday");
+			permissions.add("email"); //user_birthday
 			/*
 			 * permissions.add("user_birthday");
 			 * permissions.add("user_location"); permissions.add("user_likes");

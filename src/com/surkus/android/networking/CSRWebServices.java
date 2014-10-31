@@ -34,7 +34,7 @@ public class CSRWebServices {
 	public static  String PRIVACY_URL = "https://www.surkus.com/privacy-policy";
 	public static  String ABOUT_SURKUS_URL = "https://www.surkus.com/";
 	public static String SHARE_URL = "https://app.surkus.com";
-	public static String SOCIAL_SHARING_URL = "https://dl.dropbox.com/s/3zno441vbn0zrku/Surkus-Share%20-Image.jpg";
+	public static String SOCIAL_SHARING_URL = "http://www.surkus.com/images/SurkusFBDialog.jpg";
 
 	private static CSRWebServices mSingletonRef;
 
@@ -89,10 +89,7 @@ public class CSRWebServices {
 			httpPost.addHeader("content-type", "application/json");
 			httpPost.setEntity(new StringEntity(postData));
 			HttpResponse serverDataResponse = httpClient.execute(httpPost);
-			statusCode = serverDataResponse.getStatusLine().getStatusCode();
-
-			
-			
+			statusCode = serverDataResponse.getStatusLine().getStatusCode();			
 			Log.d("Status code", "postDataToSurkus : "+serverDataResponse.getStatusLine().getStatusCode());
 			HttpEntity entity = serverDataResponse.getEntity();
 			BufferedReader newbrp = null;

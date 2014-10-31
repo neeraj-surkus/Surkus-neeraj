@@ -24,6 +24,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.facebook.Session;
+import com.surkus.android.networking.CSRWebServices;
 
 public class CSRUtils {
 	
@@ -48,12 +49,36 @@ public class CSRUtils {
 		return false;
 	}
 	
-	public static void facebookLogout() {
-		Session mSession = Session.getActiveSession();
-		if (mSession != null) {
+	public static void facebookLogout(Context inContext) {
+		final Session mSession = Session.getActiveSession();
+		if (mSession != null ) {
 			mSession.closeAndClearTokenInformation();
-			Session.setActiveSession(null);
+			mSession.close();
+			Session.setActiveSession(null);				
+	/*		mSession = new Session(inContext);
+		    Session.setActiveSession(mSession);
+		    mSession.closeAndClearTokenInformation();*/
+			
+			//SessionStore.clearFacebookInformation(Activity.this);
 		}
+		
+		
+	/*	 if (mSession != null || mSession.getState().isClosed()) {
+			 mSession.removeCallback(mSession.);
+             Session session = new Session.Builder(inContext).setApplicationId(inContext.getString(R.string.app_id)).build();
+             Session.setActiveSession(session);
+             mSession = session;
+         }*/
+		
+	/*	 AccountManager accountManager = (AccountManager) inContext.getSystemService(Context.ACCOUNT_SERVICE);
+		 Account[] accountsList = accountManager.getAccountsByType("com.facebook.auth.login"); 
+		 if(accountsList != null && accountsList.length > 0)
+		 {
+		   for(int i=0;i<accountsList.length;i++)
+		   {
+		      accountManager.removeAccount(accountsList[i], null, null);
+		   }
+		 }*/
 	}
 
 	public static void getHashKey(Context inContext) {
@@ -63,7 +88,7 @@ public class CSRUtils {
 			for (Signature signature : info.signatures) {
 				MessageDigest md = MessageDigest.getInstance("SHA");
 				md.update(signature.toByteArray());
-				Log.d("KeyHash:",Base64.encodeToString(md.digest(), Base64.DEFAULT));
+				Log.d("KeyHash:","KeyHash is : "+Base64.encodeToString(md.digest(), Base64.DEFAULT));
 			}
 		} catch (NameNotFoundException e) {
 
