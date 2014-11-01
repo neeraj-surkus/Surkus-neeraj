@@ -56,21 +56,20 @@
         <item>Profile</item>
         <item>Payment</item>
         <item>Share</item>
-        <item>About</item>
+        <item>Notification</item>
         <item>Terms</item>
+        <item>Privacy</item>
     </string-array>
 
     <!-- Surkusgoer account pending -->
     <string name="select_the_one_that_most_matches_you">Select the one that most matches you.</string>
     <string name="logout">Logout</string>
-    
+
     <!-- Payment -->
     <string name="coming_soon">Coming Soon</string>
     <string name="coming_soon_msg1">Please stand by while we expand the functionality of the SURKUS platform.</string>
     <string name="coming_soon_msg2">Check back very soon. We move fast!</string>
     <string name="coming_soon_msg3"> © 2014 - SURKUS</string>
     <string name="coming_soon_warning">Coming Soon!</string>
-    
-    
 
 </resources>

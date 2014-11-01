@@ -48,4 +48,6 @@ public class CSRWebConstants {
 	public static int STATUS_CODE_401 = 401;
 	public static int STATUS_CODE_500 = 500;
 	
+	// URL
+	public static String USER_INFO_URL_KEY = "user_info_url";
 }

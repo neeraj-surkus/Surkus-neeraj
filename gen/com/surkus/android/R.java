@@ -786,7 +786,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int com_facebook_usersettingsfragment_profile_name=0x7f050031;
         public static final int container=0x7f050016;
         public static final int dashboard_friends_msg=0x7f050041;
-        public static final int dismiss_surkus_goer_menu=0x7f050053;
+        public static final int dismiss_surkus_goer_menu=0x7f050054;
         public static final int facebook_login_layout=0x7f050011;
         public static final int facebook_share_imageview=0x7f050042;
         public static final int facebook_signup_btn=0x7f050015;
@@ -794,16 +794,16 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int go_to_profile_layout=0x7f050036;
         public static final int header_imageview=0x7f050034;
         public static final int header_layout=0x7f050044;
-        public static final int hide_menu_layout=0x7f050050;
+        public static final int hide_menu_layout=0x7f050051;
         public static final int indicator=0x7f050013;
         public static final int inline=0x7f050007;
         public static final int large=0x7f050002;
         public static final int left=0x7f05000a;
         public static final int login_logo_imageview=0x7f05000f;
         public static final int menu_btn=0x7f050038;
-        public static final int menu_frame=0x7f05004e;
-        public static final int menu_headerLayout=0x7f050051;
-        public static final int menu_item_textview=0x7f05004f;
+        public static final int menu_frame=0x7f05004f;
+        public static final int menu_headerLayout=0x7f050052;
+        public static final int menu_item_textview=0x7f050050;
         public static final int mobile_phoneno_edittext=0x7f05004c;
         public static final int none=0x7f05000c;
         public static final int normal=0x7f050001;
@@ -819,9 +819,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int small=0x7f050000;
         public static final int social_share_layout=0x7f050040;
         public static final int standard=0x7f050003;
-        public static final int surkus_goer_name=0x7f050052;
+        public static final int surkus_goer_name=0x7f050053;
         public static final int surkus_goer_register_btn=0x7f05004d;
-        public static final int surkusgoer_logout_button=0x7f050054;
+        public static final int surkusgoer_logout_button=0x7f050055;
         public static final int top=0x7f050008;
         public static final int triangle=0x7f05000d;
         public static final int triangle_imageview=0x7f050014;
@@ -830,6 +830,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int user_address_number_textview=0x7f05003f;
         public static final int user_emailid_textview=0x7f05003d;
         public static final int user_info_layout=0x7f050039;
+        public static final int user_info_webview=0x7f05004e;
         public static final int user_name_textview=0x7f05003c;
         public static final int user_phone_number_textview=0x7f05003e;
         public static final int user_profile_imageview=0x7f05003b;
@@ -870,9 +871,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int fragment_sukurs_goer_payment=0x7f030018;
         public static final int fragment_sukurs_goer_share=0x7f030019;
         public static final int fragment_user_registration=0x7f03001a;
-        public static final int menu_frame=0x7f03001b;
-        public static final int menu_list_item=0x7f03001c;
-        public static final int slider_list=0x7f03001d;
+        public static final int fragment_web_operation=0x7f03001b;
+        public static final int menu_frame=0x7f03001c;
+        public static final int menu_list_item=0x7f03001d;
+        public static final int slider_list=0x7f03001e;
     }
     public static final class menu {
         public static final int main=0x7f0d0000;

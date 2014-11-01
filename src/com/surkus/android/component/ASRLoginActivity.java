@@ -1,6 +1,7 @@
 package com.surkus.android.component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.app.Activity;
@@ -35,7 +36,6 @@ import com.surkus.android.surkusgoer.component.ASRSurkusGoerDashboardActivity;
 import com.surkus.android.surkusgoer.component.ASRSurkusGoerRegistrationActivity;
 import com.surkus.android.utils.CSRConstants;
 import com.surkus.android.utils.CSRUtils;
-import com.surkus.android.utils.DeleteSurkusUserTask;
 
 public class ASRLoginActivity extends FragmentActivity {
 
@@ -87,9 +87,10 @@ public class ASRLoginActivity extends FragmentActivity {
 
 				if (bIsUserLoggedInToFacebook) {
 					displayGetSurkusGoerTokenDialog();
-					new CreateSurkusUserAndGenerateTokenTask(true, 0)
-							.execute(session.getAccessToken());
-					bIsUserLoggedInToFacebook = false;
+				/*	new CreateSurkusUserAndGenerateTokenTask(true, 0)
+							.execute(session.getAccessToken());*/
+					registerSurkusUser();
+					//bIsUserLoggedInToFacebook = false;
 				}
 			}
 
@@ -272,7 +273,29 @@ public class ASRLoginActivity extends FragmentActivity {
 					}
 				});
 	}
-
+	
+	
+	void registerSurkusUser()
+	{		
+		 Session session = Session.getActiveSession();
+		 String[] PERMISSION_ARRAY_READ = {"email"};
+		 List<String> permissionList = Arrays.asList(PERMISSION_ARRAY_READ);
+		// If all required permissions are available...
+		 bIsUserLoggedInToFacebook = false;
+		if(session.getPermissions().containsAll(permissionList))
+		{
+			
+	        new CreateSurkusUserAndGenerateTokenTask(true, 0).execute(Session.getActiveSession().getAccessToken());           	 
+		}
+		else
+		{
+			dismissFetchSurkusGoerInfoDialog();
+			bIsUserLoggedInToFacebook = true;
+			session.requestNewReadPermissions(new Session.NewPermissionsRequest(this, permissionList)); 
+		}		
+	}
+	
+	
 	void facebookLogin() {
 		Session currentSession = Session.getActiveSession();
 		if (currentSession == null || currentSession.getState().isClosed()) {
@@ -288,9 +311,10 @@ public class ASRLoginActivity extends FragmentActivity {
 		// session. Otherwise ask for user credentials.
 		if (currentSession.isOpened()) {
 			displayGetSurkusGoerTokenDialog();
-			new CreateSurkusUserAndGenerateTokenTask(true, 0)
-					.execute(currentSession.getAccessToken());
-			bIsUserLoggedInToFacebook = false;
+		/*	new CreateSurkusUserAndGenerateTokenTask(true, 0)
+					.execute(currentSession.getAccessToken());*/
+			registerSurkusUser();
+		//	bIsUserLoggedInToFacebook = false;
 			// meFbSignIn();
 		} else {
 			// Ask for username and password
@@ -313,5 +337,11 @@ public class ASRLoginActivity extends FragmentActivity {
 
 		}
 	}
+@Override
+public void onBackPressed() {
+	super.onBackPressed();
+   
+	bIsUserLoggedInToFacebook = false;
+}
 
 }

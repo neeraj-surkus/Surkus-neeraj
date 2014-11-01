@@ -20,10 +20,10 @@ import android.widget.TextView;
 import com.surkus.android.R;
 import com.surkus.android.adapter.CSRSurkusGoerMenuAdapter;
 import com.surkus.android.component.ASRLoginActivity;
+import com.surkus.android.networking.CSRWebConstants;
 import com.surkus.android.networking.CSRWebServices;
 import com.surkus.android.utils.CSRConstants;
 import com.surkus.android.utils.CSRUtils;
-import com.surkus.android.utils.DeleteSurkusUserTask;
 
 public class FSRSurkusGoerMenuListFragment extends ListFragment implements
 		OnClickListener {
@@ -104,20 +104,35 @@ public class FSRSurkusGoerMenuListFragment extends ListFragment implements
 
 			case 3:
 				//selectedFragmentPosition = -1;
-				CSRUtils.openURLInBrowser(getActivity(),
-						CSRWebServices.ABOUT_SURKUS_URL);
+			/*	CSRUtils.openURLInBrowser(getActivity(),
+						CSRWebServices.ABOUT_SURKUS_URL);*/
 				break;
 
 			case 4:
 				//selectedFragmentPosition = -1;
-				CSRUtils.openURLInBrowser(getActivity(),
-						CSRWebServices.TERMS_AND_CONDITION_URL);
+				/*CSRUtils.openURLInBrowser(getActivity(),
+						CSRWebServices.TERMS_AND_CONDITION_URL);*/
+				
+				currentMenuPositionBundle.putInt(CSRConstants.SURKUS_USER_MENU_INDEX, 4);
+				currentMenuPositionBundle.putString(CSRWebConstants.USER_INFO_URL_KEY , CSRWebServices.TERMS_AND_CONDITION_URL);
+				FSRSurkusGoerWebOperationFragment surkusGoerWebOperationFragment = new FSRSurkusGoerWebOperationFragment();		
+				surkusGoerWebOperationFragment.setArguments(currentMenuPositionBundle);
+				fragmentManager.beginTransaction().replace(R.id.container, surkusGoerWebOperationFragment).addToBackStack("1").commit();
+				
+				
 				break;
 				
 			case 5:
 				//selectedFragmentPosition = -1;
-				CSRUtils.openURLInBrowser(getActivity(),
-						CSRWebServices.PRIVACY_URL);
+		/*		CSRUtils.openURLInBrowser(getActivity(),
+						CSRWebServices.PRIVACY_URL);*/
+				
+				currentMenuPositionBundle.putInt(CSRConstants.SURKUS_USER_MENU_INDEX, 5);
+				currentMenuPositionBundle.putString(CSRWebConstants.USER_INFO_URL_KEY , CSRWebServices.PRIVACY_URL);
+				FSRSurkusGoerWebOperationFragment surkusGoerWebOperationPrivacyFragment = new FSRSurkusGoerWebOperationFragment();		
+				surkusGoerWebOperationPrivacyFragment.setArguments(currentMenuPositionBundle);
+				fragmentManager.beginTransaction().replace(R.id.container, surkusGoerWebOperationPrivacyFragment).addToBackStack("1").commit();
+				
 				break;
 
 			}

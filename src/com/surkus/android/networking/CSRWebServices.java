@@ -30,8 +30,8 @@ public class CSRWebServices {
 	private String SURKUS_USER_URL = "https://devapi.surkus.com/v1/user/";
 	private String REGISTER_SURKUS_USER_ZIP_CELL_URL = SURKUS_USER_URL+ "contact-info/zip-cell/"; 
 	public static  String PAYMENT_URL = "https://devapp.surkus.com/coming-soon/";
-	public static String TERMS_AND_CONDITION_URL = "https://www.surkus.com/terms-and-conditions";
-	public static  String PRIVACY_URL = "https://www.surkus.com/privacy-policy";
+	public static String TERMS_AND_CONDITION_URL = "https://www.surkus.com/app-terms-and-conditions";
+	public static  String PRIVACY_URL = "https://www.surkus.com/app-privacy-policy";
 	public static  String ABOUT_SURKUS_URL = "https://www.surkus.com/";
 	public static String SHARE_URL = "https://app.surkus.com";
 	public static String SOCIAL_SHARING_URL = "http://www.surkus.com/images/SurkusFBDialog.jpg";
