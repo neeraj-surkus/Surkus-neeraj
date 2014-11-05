@@ -1,0 +1,147 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/login_logo_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/margin_50"
+        android:background="@drawable/top_navigation"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/menu_btn"
+            android:layout_width="@dimen/margin_40"
+            android:layout_height="@dimen/margin_40"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/menubtn" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/rating_questions_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/submit_rating_btn"
+        android:layout_below="@+id/login_logo_imageview"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/account_status_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_20"
+            android:text="@string/account_pending"
+            android:textColor="@color/pink"
+            android:textSize="@dimen/text_size_18" />
+
+        <TextView
+            android:id="@+id/account_status_msg_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_5"
+            android:text="@string/account_status_msg"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_14" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_50"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@drawable/pink_background"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/thank_you_tell_us_more"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_16" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/rating_questions_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submit_rating_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/social_share_layout"
+        android:layout_margin="@dimen/margin_10"
+        android:background="@drawable/pink_rounded_background"
+        android:gravity="center"
+        android:text="@string/submit"
+        android:textColor="@color/white"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/social_share_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/blue_backgrond_with_top_arrow"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/dashboard_friends_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_20"
+            android:text="@string/dashboard_friends_msg"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dashboard_friends_msg"
+            android:layout_marginTop="@dimen/margin_20" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/facebook_share_imageview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/facbook_share_left" />
+
+                <ImageView
+                    android:id="@+id/twitter_share_imageview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/twitter_share_right" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="or"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
