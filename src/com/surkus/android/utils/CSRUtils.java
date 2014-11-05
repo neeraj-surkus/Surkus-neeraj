@@ -155,8 +155,8 @@ public class CSRUtils {
 		String mailTo="";
 		Intent email_intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",mailTo, null)); 
 		//Intent email_intent = new Intent(Intent.ACTION_SEND); 
-		email_intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "SURKUS – Get Paid to Party");  // file:///android_asset/
-		email_intent.putExtra(android.content.Intent.EXTRA_TEXT, "SURKUS is a mobile platform that connects you to local hot spots and events where you are paid to simply attend and become part of their crowd.  We call it CrowdCasting."); 
+		email_intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Get Paid to Party with SURKUS!");  // file:///android_asset/
+		email_intent.putExtra(android.content.Intent.EXTRA_TEXT, "Here's an exclusive invite for you to join SURKUS so you can get paid to party too! Sign-up at https://app.surkus.com"); 
 //		email_intent.putExtra(android.content.Intent.EXTRA_TEXT,"This is awesome property near by Gurgaon must visit."); 
 //		activity.startActivity(Intent.createChooser(email_intent, "Send email..."));
 		
@@ -170,7 +170,7 @@ public class CSRUtils {
 	public static void shareOnTwitterEmail(Activity activity,String description,String shareMessage)
 	{
 		  Intent twitterShareIntent = new Intent(Intent.ACTION_VIEW);
-		  String twitterShareURL="https://twitter.com/intent/tweet?"+"text="+description+"&url=" +shareMessage ;//https://twitter.com/intent/tweet?url=
+		  String twitterShareURL="https://twitter.com/intent/tweet?"+"text="+description; //+"&url=" +shareMessage ;
 		  twitterShareIntent.setData(Uri.parse(twitterShareURL));
 		  activity.startActivity(twitterShareIntent);
 	}

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -18,9 +19,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.util.Log;
 
+import com.surkus.android.model.CSRRatingQuestion;
 import com.surkus.android.model.CSRSurkusApiResponse;
 import com.surkus.android.model.CSRSurkusGoer;
 import com.surkus.android.model.CSRSurkusGoerSurkusToken;
+import com.surkus.android.parser.CSRRatingQuestionsParser;
 import com.surkus.android.parser.CSRSurkusGoerParser;
 import com.surkus.android.parser.CSRSurkusGoerSurkusTokenParser;
 
@@ -35,6 +38,8 @@ public class CSRWebServices {
 	public static  String ABOUT_SURKUS_URL = "https://www.surkus.com/";
 	public static String SHARE_URL = "https://app.surkus.com";
 	public static String SOCIAL_SHARING_URL = "http://www.surkus.com/images/SurkusFBDialog.jpg";
+	
+	private String RATING_QUESTIONS_URL = SURKUS_USER_URL+ "category/"; 
 
 	private static CSRWebServices mSingletonRef;
 
@@ -241,5 +246,18 @@ public class CSRWebServices {
 		   CSRSurkusGoerParser surkusGoerParser = new CSRSurkusGoerParser();
 		   return surkusGoerParser.parseSurkusGoerInfo(userInfoJsonReponse);
 		}
+	}
+	
+	public ArrayList<CSRRatingQuestion> getRatingQuestions(String surkusToken) {
+		
+		String userInfoJsonReponse = getDataFromSurkus(RATING_QUESTIONS_URL+ surkusToken+"?displaytype=app-self-register");
+		
+		if (userInfoJsonReponse.equalsIgnoreCase("")) {
+			return null;
+		} else {			
+			CSRRatingQuestionsParser surkusGoerParser = new CSRRatingQuestionsParser();
+		    return surkusGoerParser.parseRatingQuestions(userInfoJsonReponse);
+		}
+
 	}
 }

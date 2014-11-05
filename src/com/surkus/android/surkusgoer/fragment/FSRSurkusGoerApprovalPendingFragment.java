@@ -208,8 +208,7 @@ void dismissFetchSurkusGoerInfoDialog()
 	public void onClick(View v) {			
 	   int viewID = v.getId();		   
 	   switch (viewID) {
-	   
-	 
+	    
 	    case R.id.menu_btn:
 		 Bundle userInfoBundle = new Bundle();
 		 userInfoBundle.putInt(CSRConstants.SURKUS_USER_MENU_INDEX, selectedFragmentPosition);

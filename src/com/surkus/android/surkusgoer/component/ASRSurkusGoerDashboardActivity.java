@@ -16,6 +16,7 @@ import com.facebook.widget.WebDialog.OnCompleteListener;
 import com.surkus.android.R;
 import com.surkus.android.networking.CSRWebServices;
 import com.surkus.android.surkusgoer.fragment.FSRSurkusGoerApprovalPendingFragment;
+import com.surkus.android.surkusgoer.fragment.FSRSurkusGoerRatingQuestionsFragment;
 import com.surkus.android.utils.CSRUtils.ShareOnFacebookInterface;
 
 public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements
@@ -31,7 +32,7 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_sukurs_goer_dashboard);
 		getSupportFragmentManager()
 				.beginTransaction()
-				.add(R.id.container, new FSRSurkusGoerApprovalPendingFragment())
+				.add(R.id.container, new FSRSurkusGoerRatingQuestionsFragment()) // new FSRSurkusGoerApprovalPendingFragment(
 				.commit();
 
 		uiHelper = new UiLifecycleHelper(this, staus);
@@ -61,22 +62,22 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements
 		{
 			// Publish the post using the Share Dialog
 			FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(this)
-			.setName("SURKUS – Get Paid to Party")
+			.setName("Get Paid to Party with SURKUS!")
 			//.setPicture(CSRWebServices.SOCIAL_SHARING_URL)
 		    .setLink(CSRWebServices.SOCIAL_SHARING_URL)
-		    .setDescription("SURKUS is a mobile platform that connects you to local hot spots and events where you are paid to simply attend and become part of their crowd.  We call it CrowdCasting.")
+		    .setDescription("Here's an exclusive invite for you to join SURKUS so you can get paid to party too! Sign-up at https://app.surkus.com")
 					.build();
 			uiHelper.trackPendingDialogCall(shareDialog.present());
 
 		} else {
 
 			Bundle params = new Bundle();
-			params.putString("name", "SURKUS – Get Paid to Party");
+			params.putString("name", "Get Paid to Party with SURKUS!");
 			params.putString("picture", CSRWebServices.SOCIAL_SHARING_URL); // CSRWebServices.SOCIAL_SHARING_URL
 			// params.putString("link", CSRWebServices.SHARE_URL);
 			params.putString(
 					"description",
-					"SURKUS is a mobile platform that connects you to local hot spots and events where you are paid to simply attend and become part of their crowd.  We call it CrowdCasting.");
+					"Here's an exclusive invite for you to join SURKUS so you can get paid to party too! Sign-up at https://app.surkus.com");
 			WebDialog feedDialog = (new WebDialog.FeedDialogBuilder(this,
 					Session.getActiveSession(), params)).setOnCompleteListener(
 					new OnCompleteListener() {

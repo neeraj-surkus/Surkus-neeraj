@@ -85,7 +85,7 @@ public class FSRSurkusGoerShareFragment extends Fragment implements OnClickListe
 	    	break;
 	    	 
 	     case R.id.share_twitter_layout:
-	    	 CSRUtils.shareOnTwitterEmail(getActivity(),"Get Paid to Party with SURKUS! — ", CSRWebServices.SHARE_URL);
+	    	 CSRUtils.shareOnTwitterEmail(getActivity(),"Get Paid to Party with SURKUS! \n Here's an exclusive invite for you to join SURKUS so you can get paid to party too! Sign-up at https://app.surkus.com", CSRWebServices.SHARE_URL);
 	    	 break;
 	    	 
 	     case R.id.share_email_layout:
@@ -93,7 +93,8 @@ public class FSRSurkusGoerShareFragment extends Fragment implements OnClickListe
 	    	 break;
 	    	 
 	     case R.id.share_text_layout:
-	    	 CSRUtils.sendMessage(getActivity(), "Get Paid to Party with SURKUS! — "+CSRWebServices.SHARE_URL);
+	    	// CSRUtils.sendMessage(getActivity(), "Get Paid to Party with SURKUS! — "+CSRWebServices.SHARE_URL);
+	    	 CSRUtils.sendMessage(getActivity(), "Get Paid to Party with SURKUS! \n Here's an exclusive invite for you to join SURKUS so you can get paid to party too! Sign-up at https://app.surkus.com");
 	    	 break; 	 
 	    	 
     	 
