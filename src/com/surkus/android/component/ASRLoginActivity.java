@@ -216,6 +216,7 @@ public class ASRLoginActivity extends FragmentActivity {
 			else
 			{
 				Intent surkusGoerDashboardIntent = new Intent(ASRLoginActivity.this,ASRSurkusGoerDashboardActivity.class);
+				surkusGoerDashboardIntent.putExtra(CSRConstants.IS_CATEGORY_AVAILABLE, surkusGoerUser.isHasCategories());				
 				startActivity(surkusGoerDashboardIntent);
 			}
 

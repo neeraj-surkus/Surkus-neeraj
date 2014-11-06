@@ -25,24 +25,27 @@
             android:id="@+id/row_rate_1_imageview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/star_unselected" />
+            android:src="@drawable/ratingbar" />
 
         <ImageView
             android:id="@+id/row_rate_2_imageview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_5"
+            android:clickable="true"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/star_unselected" />
+            android:src="@drawable/ratingbar" />
 
         <ImageView
             android:id="@+id/row_rate_3_imageview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_5"
+            android:clickable="true"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/star_unselected" />
+            android:src="@drawable/ratingbar" />
     </LinearLayout>
 
 </RelativeLayout>

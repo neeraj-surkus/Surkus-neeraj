@@ -20,4 +20,6 @@ public class CSRConstants {
 	// US Mobile number pattern
 	public static String US_MOBILE_NUMBER_PATTERN = "###,###,####";
 	public static char US_MOBILE_NUMBER_SEPRATOR = '-';
+	
+	public static String IS_CATEGORY_AVAILABLE = "is_category_available";
 }

@@ -112,6 +112,13 @@ public class CSRSurkusGoerParser {
 				}
 			     surkusUser.setAddress(surkusUserAddress);
 			}
+			
+			if (surkusGoerJSONObject.has(CSRWebConstants.CATEGORY_KEY))
+			{
+				if(surkusGoerJSONObject.getJSONArray(CSRWebConstants.CATEGORY_KEY) != null && surkusGoerJSONObject.getJSONArray(CSRWebConstants.CATEGORY_KEY).length() > 0)
+					surkusUser.setHasCategories(true);
+					
+			}
 				//return surkusUser;
 		} catch (JSONException e) {
 	     	Log.e("Surkus", "Surkus exception: "+e.getMessage());

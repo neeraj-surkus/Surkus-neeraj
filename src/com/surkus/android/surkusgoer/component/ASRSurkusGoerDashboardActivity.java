@@ -17,6 +17,7 @@ import com.surkus.android.R;
 import com.surkus.android.networking.CSRWebServices;
 import com.surkus.android.surkusgoer.fragment.FSRSurkusGoerApprovalPendingFragment;
 import com.surkus.android.surkusgoer.fragment.FSRSurkusGoerRatingQuestionsFragment;
+import com.surkus.android.utils.CSRConstants;
 import com.surkus.android.utils.CSRUtils.ShareOnFacebookInterface;
 
 public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements
@@ -25,19 +26,42 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements
 	boolean mbIsOpenedShareDialog;
 	boolean bIsFacebookShare;
 	Session mSession;
+	boolean mbHasCategoriesAvailable;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sukurs_goer_dashboard);
-		getSupportFragmentManager()
-				.beginTransaction()
-				.add(R.id.container, new FSRSurkusGoerRatingQuestionsFragment()) // new FSRSurkusGoerApprovalPendingFragment(
-				.commit();
+		
+		getSupportFragmentManager().beginTransaction().add(R.id.container, new FSRSurkusGoerRatingQuestionsFragment()).commit(); // new FSRSurkusGoerApprovalPendingFragment(
+				
 
 		uiHelper = new UiLifecycleHelper(this, staus);
 		uiHelper.onCreate(savedInstanceState);
+		
+		mbHasCategoriesAvailable = getIntent().getBooleanExtra(CSRConstants.IS_CATEGORY_AVAILABLE,false);
+		
+		if(mbHasCategoriesAvailable)
+		{
+			getSupportFragmentManager().beginTransaction().add(R.id.container, new FSRSurkusGoerApprovalPendingFragment()).commit(); // new FSRSurkusGoerApprovalPendingFragment(
+			
+		}
+		else
+		{
+			getSupportFragmentManager().beginTransaction().add(R.id.container, new FSRSurkusGoerRatingQuestionsFragment()).commit(); // new FSRSurkusGoerApprovalPendingFragment(
+			
+		}
 
+	}
+	
+	public void setHasCategories(boolean isCategoriesAvailable)
+	{
+		mbHasCategoriesAvailable = isCategoriesAvailable;
+	}
+	
+	public boolean getHasCategories()
+	{
+		return mbHasCategoriesAvailable;
 	}
 
 	StatusCallback staus = new StatusCallback() {

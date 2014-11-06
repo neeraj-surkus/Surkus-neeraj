@@ -22,6 +22,7 @@ import com.surkus.android.adapter.CSRSurkusGoerMenuAdapter;
 import com.surkus.android.component.ASRLoginActivity;
 import com.surkus.android.networking.CSRWebConstants;
 import com.surkus.android.networking.CSRWebServices;
+import com.surkus.android.surkusgoer.component.ASRSurkusGoerDashboardActivity;
 import com.surkus.android.utils.CSRConstants;
 import com.surkus.android.utils.CSRUtils;
 
@@ -76,30 +77,42 @@ public class FSRSurkusGoerMenuListFragment extends ListFragment implements
 			switch (position) {
 			
 			case 0:
-				//selectedFragmentPosition = 0;
-
 				currentMenuPositionBundle.putInt(CSRConstants.SURKUS_USER_MENU_INDEX, 0);
-				FSRSurkusGoerApprovalPendingFragment surkusGoerDashboardFragment = new FSRSurkusGoerApprovalPendingFragment();	
-				surkusGoerDashboardFragment.setArguments(currentMenuPositionBundle);
-				fragmentManager.beginTransaction().replace(R.id.container, surkusGoerDashboardFragment).addToBackStack("1").commit();
+				
+				if(((ASRSurkusGoerDashboardActivity)getActivity()).getHasCategories())
+				{
+					FSRSurkusGoerApprovalPendingFragment surkusGoerApprovalPendingFragment = new FSRSurkusGoerApprovalPendingFragment();	
+					surkusGoerApprovalPendingFragment.setArguments(currentMenuPositionBundle);
+					//fragmentManager.beginTransaction().replace(R.id.container, surkusGoerDashboardFragment).addToBackStack("1").commit();
+					fragmentManager.beginTransaction().replace(R.id.container, surkusGoerApprovalPendingFragment).commit();				
+				}
+				else
+				{
+					FSRSurkusGoerRatingQuestionsFragment surkusGoerrRatingQuestionsFragment = new FSRSurkusGoerRatingQuestionsFragment();	
+					surkusGoerrRatingQuestionsFragment.setArguments(currentMenuPositionBundle);
+					//fragmentManager.beginTransaction().replace(R.id.container, surkusGoerDashboardFragment).addToBackStack("1").commit();
+					fragmentManager.beginTransaction().replace(R.id.container, surkusGoerrRatingQuestionsFragment).commit();
+				}
+				
 				break;
 
 			case 1:
-				//selectedFragmentPosition = 1;
+			
 	
 				currentMenuPositionBundle.putInt(CSRConstants.SURKUS_USER_MENU_INDEX, 1);
 				FSRSurkusGoerPaymentFragment surkusGoerPaymentFragment = new FSRSurkusGoerPaymentFragment();	
 				surkusGoerPaymentFragment.setArguments(currentMenuPositionBundle);
-				fragmentManager.beginTransaction().replace(R.id.container, surkusGoerPaymentFragment).addToBackStack("1").commit();
+			//	fragmentManager.beginTransaction().replace(R.id.container, surkusGoerPaymentFragment).addToBackStack("1").commit();
+				fragmentManager.beginTransaction().replace(R.id.container, surkusGoerPaymentFragment).commit();
 				break;
 				
 			case 2:		
-				//selectedFragmentPosition = 2;
+				
 				currentMenuPositionBundle.putInt(CSRConstants.SURKUS_USER_MENU_INDEX, 2);
 				FSRSurkusGoerShareFragment surkusGoerShareFragment = new FSRSurkusGoerShareFragment();		
 				surkusGoerShareFragment.setArguments(currentMenuPositionBundle);
-				fragmentManager.beginTransaction().replace(R.id.container, surkusGoerShareFragment).addToBackStack("1").commit();
-					
+				//fragmentManager.beginTransaction().replace(R.id.container, surkusGoerShareFragment).addToBackStack("1").commit();
+				fragmentManager.beginTransaction().replace(R.id.container, surkusGoerShareFragment).commit();	
 				break;
 
 			case 3:
@@ -117,8 +130,8 @@ public class FSRSurkusGoerMenuListFragment extends ListFragment implements
 				currentMenuPositionBundle.putString(CSRWebConstants.USER_INFO_URL_KEY , CSRWebServices.TERMS_AND_CONDITION_URL);
 				FSRSurkusGoerWebOperationFragment surkusGoerWebOperationFragment = new FSRSurkusGoerWebOperationFragment();		
 				surkusGoerWebOperationFragment.setArguments(currentMenuPositionBundle);
-				fragmentManager.beginTransaction().replace(R.id.container, surkusGoerWebOperationFragment).addToBackStack("1").commit();
-				
+				//fragmentManager.beginTransaction().replace(R.id.container, surkusGoerWebOperationFragment).addToBackStack("1").commit();
+				fragmentManager.beginTransaction().replace(R.id.container, surkusGoerWebOperationFragment).commit();
 				
 				break;
 				
@@ -131,7 +144,8 @@ public class FSRSurkusGoerMenuListFragment extends ListFragment implements
 				currentMenuPositionBundle.putString(CSRWebConstants.USER_INFO_URL_KEY , CSRWebServices.PRIVACY_URL);
 				FSRSurkusGoerWebOperationFragment surkusGoerWebOperationPrivacyFragment = new FSRSurkusGoerWebOperationFragment();		
 				surkusGoerWebOperationPrivacyFragment.setArguments(currentMenuPositionBundle);
-				fragmentManager.beginTransaction().replace(R.id.container, surkusGoerWebOperationPrivacyFragment).addToBackStack("1").commit();
+				//fragmentManager.beginTransaction().replace(R.id.container, surkusGoerWebOperationPrivacyFragment).addToBackStack("1").commit();
+				fragmentManager.beginTransaction().replace(R.id.container, surkusGoerWebOperationPrivacyFragment).commit();
 				
 				break;
 

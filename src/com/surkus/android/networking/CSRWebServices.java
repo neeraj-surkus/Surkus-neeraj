@@ -260,4 +260,10 @@ public class CSRWebServices {
 		}
 
 	}
+	
+	public CSRSurkusApiResponse postQuestionOptionRating(String surkusToken, String questionOptionRatingJSONData) {
+		CSRSurkusApiResponse surkusAPIResponse = postDataToSurkus(questionOptionRatingJSONData, RATING_QUESTIONS_URL+ surkusToken);
+		return surkusAPIResponse;
+
+	}
 }

@@ -103,5 +103,9 @@
     </string-array>
 
     <string name="submit">Submit</string>
-
+    
+    <string name="rating_alert">Please rate all questions.</string>
+    <string name="category_not_found">Category Not Found</string>
+    <string name="submitting_rating_msg">Submitting ratings&#8230;</string>
+    
 </resources>

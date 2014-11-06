@@ -51,9 +51,18 @@ public class CSRWebConstants {
 	// URL
 	public static String USER_INFO_URL_KEY = "user_info_url";
 	
-	//Rating KEYS
+	//GET Rating KEYS
 
 	public static String HYPEN_V_KEY = "__v";	
 	public static String DISPLAY_TYPE_KEY = "display_type";	
 	public static String VALUES_KEY = "values";	
+	
+	// Post Rating KEYS
+	public static String VALUE_KEY = "value";	
+	public static String RATING_KEY = "rating";	
+	
+	//GET user info key
+	public static String CATEGORY_KEY = "categories";	
+	
+	
 }

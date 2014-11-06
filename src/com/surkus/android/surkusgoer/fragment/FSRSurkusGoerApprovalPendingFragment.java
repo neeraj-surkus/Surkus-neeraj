@@ -227,7 +227,7 @@ void dismissFetchSurkusGoerInfoDialog()
 	          break;
 	    
 	    case R.id.twitter_share_imageview:
-	    	 CSRUtils.shareOnTwitterEmail(getActivity(),"Get Paid to Party with SURKUS! — ", CSRWebServices.SHARE_URL);    	
+	    	 CSRUtils.shareOnTwitterEmail(getActivity(),"Get Paid to Party with SURKUS! \n Here's an exclusive invite for you to join SURKUS so you can get paid to party too! Sign-up at https://app.surkus.com", CSRWebServices.SHARE_URL);    	
 		     break;
 	     
 	    default:

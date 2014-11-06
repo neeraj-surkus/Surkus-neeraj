@@ -6,8 +6,10 @@ import java.util.List;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,6 +35,11 @@ public class CSRSurkusGoerRatingQuestionsAdapter extends BaseAdapter{
 		notifyDataSetChanged();
 	}
 	
+	public ArrayList<CSRRatingQuestion> getRatingQuestions()
+	{
+		return mRatingQuestionList;
+	}
+	
 	@Override
 	public int getCount() {
 		
@@ -50,6 +57,23 @@ public class CSRSurkusGoerRatingQuestionsAdapter extends BaseAdapter{
 	@Override
 	public long getItemId(int position) {
 		return mRatingQuestionList.get(position).hashCode();
+	}
+	
+	public boolean isAllQuestionsAnswered()
+	{
+		for(int i=0;i<mRatingQuestionList.size();i++)
+		{
+			 CSRRatingQuestion ratingQuestion = mRatingQuestionList.get(i);
+			 ArrayList<CSRRatingOption> ratingOptionList = ratingQuestion.getRatingOptionList();
+			 
+			 for(int j=0;j<ratingOptionList.size();j++)
+			 {
+				  CSRRatingOption ratingOption =  ratingOptionList.get(j);
+				  if(ratingOption.getRating() == 0)
+					  return false;
+			 }
+		}
+		return true;
 	}
 
 	@Override
@@ -84,16 +108,71 @@ public class CSRSurkusGoerRatingQuestionsAdapter extends BaseAdapter{
         for(int i=0;i<ratingOptionList.size();i++)
         {
         	
-        	 RelativeLayout ratingOptionLayout = ((RelativeLayout) inflator.inflate(R.layout.rating_option_item, null));
+        	 final RelativeLayout ratingOptionLayout = ((RelativeLayout) inflator.inflate(R.layout.rating_option_item, null));
         	 
-        	 CSRRatingOption ratingOption =  ratingOptionList.get(i);
-        	 
-        	/* for(int j=0;j< ratingOption.getRating();j++)
+        	 final CSRRatingOption ratingOption =  ratingOptionList.get(i);
+    
+        	 int rating = ratingOption.getRating();
+        	 if(rating == 3)
         	 {
-        	
-        	 }*/
-      	 
-      
+        	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_1_imageview)).setSelected(true);
+        	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_2_imageview)).setSelected(true);
+        	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_3_imageview)).setSelected(true);        	 
+        	 }
+        	 else  if(rating == 2)
+        	 {
+        	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_1_imageview)).setSelected(true);
+          	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_2_imageview)).setSelected(true);
+          	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_3_imageview)).setSelected(false); 
+        		 
+        	 }else if(rating == 1)
+        	 {
+        		  ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_1_imageview)).setSelected(true);
+             	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_2_imageview)).setSelected(false);
+             	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_3_imageview)).setSelected(false); 
+        	 }
+        	 else
+        	 {
+        		  ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_1_imageview)).setSelected(false);
+            	  ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_2_imageview)).setSelected(false);
+            	  ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_3_imageview)).setSelected(false); 
+        	 }
+        	 
+        	 ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_1_imageview)).setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					
+					ratingOption.setRating(1);
+					updateRatings(ratingOption, ratingOptionLayout);
+					//notifyDataSetInvalidated();
+					
+				}
+			});
+        	 
+        	 ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_2_imageview)).setOnClickListener(new OnClickListener() {
+ 				
+ 				@Override
+ 				public void onClick(View v) {
+ 				
+ 					ratingOption.setRating(2);
+ 					updateRatings(ratingOption, ratingOptionLayout);
+ 					//notifyDataSetInvalidated();
+ 				}
+ 			});
+        	 
+        	 
+        	 ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_3_imageview)).setOnClickListener(new OnClickListener() {
+ 				
+ 				@Override
+ 				public void onClick(View v) {
+ 				
+ 					ratingOption.setRating(3);
+ 					updateRatings(ratingOption, ratingOptionLayout);
+ 					//notifyDataSetInvalidated();
+ 				}
+ 			});
+        	 
         	 ((TextView)ratingOptionLayout.findViewById(R.id.row_title_textview)).setText(ratingOption.getTitle());
         	 
         	 ratingQuestionHolder.mRatingOptionsLayout.addView(ratingOptionLayout);
@@ -102,6 +181,35 @@ public class CSRSurkusGoerRatingQuestionsAdapter extends BaseAdapter{
       return convertView;
 	}
 	
+	
+	void updateRatings(CSRRatingOption ratingOption,  RelativeLayout ratingOptionLayout)
+	{
+		 int rating = ratingOption.getRating();
+    	 if(rating == 3)
+    	 {
+    	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_1_imageview)).setSelected(true);
+    	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_2_imageview)).setSelected(true);
+    	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_3_imageview)).setSelected(true);        	 
+    	 }
+    	 else  if(rating == 2)
+    	 {
+    	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_1_imageview)).setSelected(true);
+      	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_2_imageview)).setSelected(true);
+      	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_3_imageview)).setSelected(false); 
+    		 
+    	 }else if(rating == 1)
+    	 {
+    		  ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_1_imageview)).setSelected(true);
+         	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_2_imageview)).setSelected(false);
+         	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_3_imageview)).setSelected(false); 
+    	 }
+    	 else
+    	 {
+    		  ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_1_imageview)).setSelected(false);
+        	  ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_2_imageview)).setSelected(false);
+        	  ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_3_imageview)).setSelected(false); 
+    	 }
+	}
 	
 	private class RatingQuestionHolder
 	{

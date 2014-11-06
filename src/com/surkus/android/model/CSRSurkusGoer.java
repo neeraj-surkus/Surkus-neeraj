@@ -15,6 +15,7 @@ public class CSRSurkusGoer  {
 	private String updatedOn;
 	private String status;
 	private String apiResponse;
+	private boolean hasCategories;
 
 	public String getId() {
 		return id;
@@ -102,6 +103,14 @@ public class CSRSurkusGoer  {
 
 	public void setApiResponse(String apiResponse) {
 		this.apiResponse = apiResponse;
+	}
+
+	public boolean isHasCategories() {
+		return hasCategories;
+	}
+
+	public void setHasCategories(boolean hasCategories) {
+		this.hasCategories = hasCategories;
 	}
 
 }
