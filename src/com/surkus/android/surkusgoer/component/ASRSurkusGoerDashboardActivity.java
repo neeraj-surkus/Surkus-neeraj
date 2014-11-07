@@ -14,14 +14,14 @@ import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.WebDialog;
 import com.facebook.widget.WebDialog.OnCompleteListener;
 import com.surkus.android.R;
+import com.surkus.android.listener.ISRShareOnFacebookInterface;
 import com.surkus.android.networking.CSRWebServices;
 import com.surkus.android.surkusgoer.fragment.FSRSurkusGoerApprovalPendingFragment;
 import com.surkus.android.surkusgoer.fragment.FSRSurkusGoerRatingQuestionsFragment;
 import com.surkus.android.utils.CSRConstants;
-import com.surkus.android.utils.CSRUtils.ShareOnFacebookInterface;
+import com.surkus.android.utils.CSRUtils;
 
-public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements
-		ShareOnFacebookInterface {
+public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements ISRShareOnFacebookInterface {
 	private UiLifecycleHelper uiHelper;
 	boolean mbIsOpenedShareDialog;
 	boolean bIsFacebookShare;
@@ -33,8 +33,7 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sukurs_goer_dashboard);
 		
-		getSupportFragmentManager().beginTransaction().add(R.id.container, new FSRSurkusGoerRatingQuestionsFragment()).commit(); // new FSRSurkusGoerApprovalPendingFragment(
-				
+		getSupportFragmentManager().beginTransaction().add(R.id.container, new FSRSurkusGoerRatingQuestionsFragment()).commit(); // new FSRSurkusGoerApprovalPendingFragment(		
 
 		uiHelper = new UiLifecycleHelper(this, staus);
 		uiHelper.onCreate(savedInstanceState);
@@ -51,7 +50,8 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements
 			getSupportFragmentManager().beginTransaction().add(R.id.container, new FSRSurkusGoerRatingQuestionsFragment()).commit(); // new FSRSurkusGoerApprovalPendingFragment(
 			
 		}
-
+     
+		CSRUtils.createBooleanSharedPref(this, CSRConstants.IS_USER_LOGGED_IN, true);
 	}
 	
 	public void setHasCategories(boolean isCategoriesAvailable)

@@ -1,11 +1,16 @@
 package com.surkus.android.parser;
 
+import java.util.ArrayList;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
 
 import com.surkus.android.model.CSRFacebookUserInfo;
+import com.surkus.android.model.CSRRatingOption;
+import com.surkus.android.model.CSRRatingQuestion;
 import com.surkus.android.model.CSRSurkusGoer;
 import com.surkus.android.model.CSRSurkusUserAddress;
 import com.surkus.android.networking.CSRWebConstants;
@@ -116,8 +121,38 @@ public class CSRSurkusGoerParser {
 			if (surkusGoerJSONObject.has(CSRWebConstants.CATEGORY_KEY))
 			{
 				if(surkusGoerJSONObject.getJSONArray(CSRWebConstants.CATEGORY_KEY) != null && surkusGoerJSONObject.getJSONArray(CSRWebConstants.CATEGORY_KEY).length() > 0)
-					surkusUser.setHasCategories(true);
+				{
+					ArrayList<CSRRatingOption> ratedCategories = new ArrayList<CSRRatingOption>();
 					
+					 JSONArray categoriesArray = surkusGoerJSONObject.getJSONArray(CSRWebConstants.CATEGORY_KEY);
+					
+				   for(int i=0;i<categoriesArray.length();i++)
+					{
+					      CSRRatingOption category =  new CSRRatingOption();
+						  JSONObject categoryJsonObj = categoriesArray.getJSONObject(i);
+						  
+						  if (categoryJsonObj.has(CSRWebConstants.NAME_KEY)) {
+							  category.setRatingQuestion(categoryJsonObj.getString(CSRWebConstants.NAME_KEY));
+						  }
+						  
+						  if (categoryJsonObj.has(CSRWebConstants.VALUE_KEY)) {
+							  category.setCategory(categoryJsonObj.getString(CSRWebConstants.VALUE_KEY));
+						  }
+						  
+						  if (categoryJsonObj.has(CSRWebConstants.RATING_KEY)) {
+							  category.setRatingString(categoryJsonObj.getString(CSRWebConstants.RATING_KEY));
+						  }
+						  
+						  if (categoryJsonObj.has(CSRWebConstants._ID_KEY)) {
+							  category.setId(categoryJsonObj.getString(CSRWebConstants._ID_KEY));
+						  }
+						  
+						  ratedCategories.add(category);
+					}
+					
+				    surkusUser.setRatedQuestionOptions(ratedCategories);
+					surkusUser.setHasCategories(true);
+				}	
 			}
 				//return surkusUser;
 		} catch (JSONException e) {

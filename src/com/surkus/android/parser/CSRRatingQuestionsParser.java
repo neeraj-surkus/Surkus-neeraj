@@ -61,7 +61,7 @@ public class CSRRatingQuestionsParser {
 					for(int j=0;j<optionsJSONArray.length();j++)
 					{
 						CSRRatingOption ratingOption = new CSRRatingOption();
-						ratingOption.setTitle(optionsJSONArray.getString(j));
+						ratingOption.setCategory(optionsJSONArray.getString(j));
 						ratingOptions.add(ratingOption);
 					}
 					

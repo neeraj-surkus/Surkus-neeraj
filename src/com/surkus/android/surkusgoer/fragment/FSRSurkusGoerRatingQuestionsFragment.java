@@ -26,6 +26,8 @@ import com.facebook.Session;
 import com.surkus.android.R;
 import com.surkus.android.adapter.CSRSurkusGoerRatingQuestionsAdapter;
 import com.surkus.android.component.ASRLoginActivity;
+import com.surkus.android.listener.ISRPostRatingForCategoryInterface;
+import com.surkus.android.listener.ISRShareOnFacebookInterface;
 import com.surkus.android.model.CSRRatingOption;
 import com.surkus.android.model.CSRRatingQuestion;
 import com.surkus.android.model.CSRSurkusApiResponse;
@@ -36,10 +38,8 @@ import com.surkus.android.networking.CSRWebServices;
 import com.surkus.android.surkusgoer.component.ASRSurkusGoerDashboardActivity;
 import com.surkus.android.utils.CSRConstants;
 import com.surkus.android.utils.CSRUtils;
-import com.surkus.android.utils.CSRUtils.ShareOnFacebookInterface;
 
-public class FSRSurkusGoerRatingQuestionsFragment extends Fragment implements
-		OnClickListener {
+public class FSRSurkusGoerRatingQuestionsFragment extends Fragment implements ISRPostRatingForCategoryInterface , OnClickListener {
 
 	private CSRWebServices mWebServiceSingletonObject;
 	private GetRatingQuestionsTask mGetSurkusGoerInfoTask;
@@ -72,8 +72,7 @@ public class FSRSurkusGoerRatingQuestionsFragment extends Fragment implements
 				R.layout.fragment_sukurs_goer_rating_questionst, container,
 				false);
 
-		mRatingQuestionsAdapter = new CSRSurkusGoerRatingQuestionsAdapter(
-				getActivity());
+		mRatingQuestionsAdapter = new CSRSurkusGoerRatingQuestionsAdapter(getActivity(),this);
 
 		((ListView) rootView.findViewById(R.id.rating_questions_list))
 				.setAdapter(mRatingQuestionsAdapter);
@@ -134,6 +133,56 @@ public class FSRSurkusGoerRatingQuestionsFragment extends Fragment implements
 		}
 		}
 	}
+	//Clear rating from share pref
+	
+	void refreshRatedQuestionsAnswesrRating(ArrayList<CSRRatingQuestion> ratingQuestions)
+	{
+		ArrayList<CSRRatingOption> userRatedOptions = mSurkusGoerUser.getRatedQuestionOptions();
+		
+		for(int i=0;i<ratingQuestions.size();i++)
+			{
+				CSRRatingQuestion ratingQuestion = ratingQuestions.get(i);
+				String ratingQuestionStr  = ratingQuestion.getRatingQuestion();
+			    ArrayList<CSRRatingOption> ratingOptions =  ratingQuestion.getRatingOptionList();
+			    
+			    for(int j=0;j<ratingOptions.size();j++)
+			    {
+			    	CSRRatingOption ratingOption = ratingOptions.get(j);
+			    	
+			    	for(int k=0;k<userRatedOptions.size();k++)
+			    	{
+			    		CSRRatingOption ratedOption = userRatedOptions.get(k);
+			    		if(ratedOption.getRatingQuestion().equalsIgnoreCase(ratingQuestionStr) && ratedOption.geCategory().equalsIgnoreCase(ratingOption.geCategory()))
+			    		{
+			    			try
+			    			{
+			    			    ratingOption.setRating(Integer.parseInt(ratedOption.getRatingString()));
+			    			}
+			    			catch(NumberFormatException e)
+			    			{
+			    				
+			    			}
+			    			break;
+			    		}
+			    		
+			    	}
+			    }
+			
+			}				
+	
+	//	return ratingQuestions;
+	}
+	
+	void saveNumberOfCategoriesInPref(ArrayList<CSRRatingQuestion> ratingQuestions)
+	{
+		int totalCategories = 0;
+		for(int i=0;i<ratingQuestions.size();i++)
+		{
+			totalCategories += ratingQuestions.get(i).getRatingOptionList().size();
+		}	
+		
+		CSRUtils.createIntSharedPref(getActivity(), CSRConstants.NUMBER_OF_CATEGORIES, totalCategories);
+	}
 
 	void dismissFetchSurkusGoerInfoOrSubmitDialog() {
 		if (mFetchSurkusGoerInfoOrSubmitDialog != null) {
@@ -164,8 +213,18 @@ public class FSRSurkusGoerRatingQuestionsFragment extends Fragment implements
 			CSRUtils.createStringSharedPref(getActivity(),
 					CSRConstants.SURKUS_USER_NAME, mSurkusGoerUser
 							.getFacebookUserInfo().getName());
+			
 			ArrayList<CSRRatingQuestion> ratingQuestions = mWebServiceSingletonObject
 					.getRatingQuestions(mSurkusToken);
+			
+		//	saveNumberOfCategoriesInPref(ratingQuestions);			
+			
+			ArrayList<CSRRatingOption> userRatedOptions = mSurkusGoerUser.getRatedQuestionOptions();
+			
+			if(userRatedOptions != null && userRatedOptions.size() >0)
+			{
+			     refreshRatedQuestionsAnswesrRating(ratingQuestions);
+			}
 
 			return ratingQuestions;
 
@@ -190,6 +249,15 @@ public class FSRSurkusGoerRatingQuestionsFragment extends Fragment implements
 			AsyncTask<String, Integer, CSRSurkusGoerSurkusToken> {
 
 		String mSurkusToken;
+		CSRRatingOption mRatingOption;
+		String mRatingQuestion;
+			
+		UpdateSurkusTokenTask(String surkusToken,CSRRatingOption ratingOption,String ratingQuestion) {
+			mSurkusToken = surkusToken;
+			mRatingOption = ratingOption;
+		    mRatingQuestion = ratingQuestion;
+
+		}
 		
 		@Override
 		protected CSRSurkusGoerSurkusToken doInBackground(String... args) {
@@ -216,9 +284,8 @@ public class FSRSurkusGoerRatingQuestionsFragment extends Fragment implements
 						CSRWebConstants.NO_RESPONSE_FROM_SERVER);
 
 			} else if (surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_200) {
-				// dismissRegisterSurkusGoerDiloag();
-				
-				new SubmitRatingQuestionTask(mSurkusToken, mRatingQuestionsAdapter.getRatingQuestions()).execute();;
+				// dismissRegisterSurkusGoerDiloag();				
+				new SubmitRatingQuestionTask(mSurkusToken, mRatingOption,mRatingQuestion).execute();
 			}
 		}
 	}
@@ -226,14 +293,15 @@ public class FSRSurkusGoerRatingQuestionsFragment extends Fragment implements
 	private class SubmitRatingQuestionTask extends
 			AsyncTask<String, Integer, Boolean> {
 
-		String mSurkusToken;
-		ArrayList<CSRRatingQuestion> mRatingQuestions;
-
-
+		String mSurkusToken;	
+		CSRRatingOption mRatingOption;
+		String mRatingQuestion;
+		
 		SubmitRatingQuestionTask(String surkusToken,
-				ArrayList<CSRRatingQuestion> ratingQuestions) {
+				CSRRatingOption ratingOption,String ratingQuestion) {
 			mSurkusToken = surkusToken;
-			mRatingQuestions = ratingQuestions;
+			mRatingOption = ratingOption;
+		    mRatingQuestion = ratingQuestion;
 
 		}
 
@@ -247,29 +315,16 @@ public class FSRSurkusGoerRatingQuestionsFragment extends Fragment implements
 		@Override
 		protected Boolean doInBackground(String... args) {
 		    boolean isAllRatnigsPosted = true;
-			boolean isSubmitTaskCancelled = false;
-
-			for (int i = 0; i < mRatingQuestions.size(); i++) {
-				
-				if(isSubmitTaskCancelled)
-					break;
-				
-				CSRRatingQuestion ratingQuestion = mRatingQuestions.get(i);
-				String ratingQuestionStr = ratingQuestion.getRatingQuestion();
-				ArrayList<CSRRatingOption> ratingOptionList = ratingQuestion
-						.getRatingOptionList();
-
-				for (int j = 0; j < ratingOptionList.size(); j++) {
-			
-					try {
-						CSRRatingOption ratingOption = ratingOptionList.get(j);
+		
+				try {
+						
 						JSONObject ratingOptionsJsonData = new JSONObject();
 						ratingOptionsJsonData.put(CSRWebConstants.NAME_KEY,
-								ratingQuestionStr);
+								mRatingQuestion);
 						ratingOptionsJsonData.put(CSRWebConstants.VALUE_KEY,
-								ratingOption.getTitle());
+								mRatingOption.geCategory());
 						ratingOptionsJsonData.put(CSRWebConstants.RATING_KEY,
-								ratingOption.getRating());
+								mRatingOption.getRating());
 
 						CSRSurkusApiResponse surkusAPIResponse = mWebServiceSingletonObject
 								.postQuestionOptionRating(mSurkusToken,
@@ -280,25 +335,19 @@ public class FSRSurkusGoerRatingQuestionsFragment extends Fragment implements
 						if (responseCode == CSRWebConstants.STATUS_CODE_401)
 						{
 							isAllRatnigsPosted = false;
-							new UpdateSurkusTokenTask().execute(Session.getActiveSession().getAccessToken());
-							isSubmitTaskCancelled = true;
-							break;
+							new UpdateSurkusTokenTask(mSurkusToken,mRatingOption,mRatingQuestion).execute(Session.getActiveSession().getAccessToken());					
 						}
 						else if (responseCode == CSRWebConstants.STATUS_CODE_400)
 						{
 							isAllRatnigsPosted = false;
 							dismissFetchSurkusGoerInfoOrSubmitDialog();
-							CSRUtils.showAlertDialog(getActivity(),CSRWebConstants.SERVER_ERROR,getString(R.string.category_not_found));
-							isSubmitTaskCancelled = true;
-							break;
+							CSRUtils.showAlertDialog(getActivity(),CSRWebConstants.SERVER_ERROR,getString(R.string.category_not_found));					
 						}
 						else if (responseCode == CSRWebConstants.STATUS_CODE_500)
 						{
 							isAllRatnigsPosted = false;
 							dismissFetchSurkusGoerInfoOrSubmitDialog();
 							CSRUtils.showAlertDialog(getActivity(),CSRWebConstants.SERVER_ERROR,getString(R.string.server_error_msg));
-							isSubmitTaskCancelled = true;
-							break;
 						}
 						else if (responseCode == CSRWebConstants.STATUS_CODE_200)
 						{
@@ -309,35 +358,29 @@ public class FSRSurkusGoerRatingQuestionsFragment extends Fragment implements
 
 					}
 
-				}
-			}
-	
-			dismissFetchSurkusGoerInfoOrSubmitDialog();
 			return isAllRatnigsPosted;
 
 		}
 
 		@Override
-		protected void onPostExecute(Boolean isAllRatnigsPosted) {
-			
+		protected void onPostExecute(Boolean isAllRatnigsPosted) {	
 			if(isAllRatnigsPosted)
-			{
+			dismissFetchSurkusGoerInfoOrSubmitDialog();
+		}
+	}
+	
+	
+	void submitRatingQuestionAnswers() {
+		if(mRatingQuestionsAdapter.getCount() > 0)
+		{
+		  if (mRatingQuestionsAdapter.isAllQuestionsAnswered()) {
+			  
                 ((ASRSurkusGoerDashboardActivity)getActivity()).setHasCategories(true);
 				FSRSurkusGoerApprovalPendingFragment surkusGoerDashboardFragment = new FSRSurkusGoerApprovalPendingFragment();	
 				Bundle currentMenuPositionBundle = new Bundle();
 				currentMenuPositionBundle.putInt(CSRConstants.SURKUS_USER_MENU_INDEX, 0);
 				surkusGoerDashboardFragment.setArguments(currentMenuPositionBundle);
 				fragmentManager.beginTransaction().replace(R.id.container, surkusGoerDashboardFragment).commit();
-			}
-		}
-	}
-
-	void submitRatingQuestionAnswers() {
-		if(mRatingQuestionsAdapter.getCount() > 0)
-		{
-		  if (mRatingQuestionsAdapter.isAllQuestionsAnswered()) {
-			
-			new SubmitRatingQuestionTask(mSurkusToken, mRatingQuestionsAdapter.getRatingQuestions()).execute();
 
 		  } else {
 			CSRUtils.showAlertDialog(getActivity(),
@@ -388,7 +431,7 @@ public class FSRSurkusGoerRatingQuestionsFragment extends Fragment implements
 			break;
 
 		case R.id.facebook_share_imageview:
-			((ShareOnFacebookInterface) getActivity()).shareOnFacebook();
+			((ISRShareOnFacebookInterface) getActivity()).shareOnFacebook();
 			break;
 
 		case R.id.twitter_share_imageview:
@@ -400,6 +443,13 @@ public class FSRSurkusGoerRatingQuestionsFragment extends Fragment implements
 			break;
 		}
 
+	}
+
+
+	@Override
+	public void postOrUpdateRatingQuestionWithAnswer(
+			CSRRatingOption ratingOption, String ratingQuestion) {	
+		new SubmitRatingQuestionTask(mSurkusToken,ratingOption,ratingQuestion).execute();		
 	}
 
 }

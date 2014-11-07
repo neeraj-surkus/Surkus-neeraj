@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.surkus.android.R;
+import com.surkus.android.listener.ISRPostRatingForCategoryInterface;
 import com.surkus.android.model.CSRRatingOption;
 import com.surkus.android.model.CSRRatingQuestion;
 
@@ -23,10 +24,11 @@ public class CSRSurkusGoerRatingQuestionsAdapter extends BaseAdapter{
 	List<String> list;
 	private LayoutInflater inflator = null;
 	private ArrayList<CSRRatingQuestion> mRatingQuestionList;
+	ISRPostRatingForCategoryInterface mPostRatingForCategoryInterface;
 		 
-	public CSRSurkusGoerRatingQuestionsAdapter(Context activity){
-		
+	public CSRSurkusGoerRatingQuestionsAdapter(Context activity,ISRPostRatingForCategoryInterface postRatingForCategoryInterface){		
 		inflator = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mPostRatingForCategoryInterface = postRatingForCategoryInterface;
 	}
 	
 	public void setRatingQuestions(ArrayList<CSRRatingQuestion> ratingQuestionList)
@@ -79,7 +81,7 @@ public class CSRSurkusGoerRatingQuestionsAdapter extends BaseAdapter{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 	
-        CSRRatingQuestion ratingQuestion = mRatingQuestionList.get(position);
+        final CSRRatingQuestion ratingQuestion = mRatingQuestionList.get(position);
 		RatingQuestionHolder ratingQuestionHolder = null;
 		
         if (convertView == null) {
@@ -112,8 +114,8 @@ public class CSRSurkusGoerRatingQuestionsAdapter extends BaseAdapter{
         	 
         	 final CSRRatingOption ratingOption =  ratingOptionList.get(i);
     
-        	 int rating = ratingOption.getRating();
-        	 if(rating == 3)
+        	// int rating = ratingOption.getRating();
+        	/* if(rating == 3)
         	 {
         	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_1_imageview)).setSelected(true);
         	   ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_2_imageview)).setSelected(true);
@@ -136,15 +138,17 @@ public class CSRSurkusGoerRatingQuestionsAdapter extends BaseAdapter{
         		  ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_1_imageview)).setSelected(false);
             	  ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_2_imageview)).setSelected(false);
             	  ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_3_imageview)).setSelected(false); 
-        	 }
+        	 }*/
+        	 
+        	 updateRatings(ratingOption, ratingOptionLayout);
         	 
         	 ((ImageView)ratingOptionLayout.findViewById(R.id.row_rate_1_imageview)).setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					
 					ratingOption.setRating(1);
 					updateRatings(ratingOption, ratingOptionLayout);
+					mPostRatingForCategoryInterface.postOrUpdateRatingQuestionWithAnswer(ratingOption, ratingQuestion.getRatingQuestion());
 					//notifyDataSetInvalidated();
 					
 				}
@@ -157,6 +161,7 @@ public class CSRSurkusGoerRatingQuestionsAdapter extends BaseAdapter{
  				
  					ratingOption.setRating(2);
  					updateRatings(ratingOption, ratingOptionLayout);
+ 					mPostRatingForCategoryInterface.postOrUpdateRatingQuestionWithAnswer(ratingOption, ratingQuestion.getRatingQuestion());
  					//notifyDataSetInvalidated();
  				}
  			});
@@ -169,11 +174,12 @@ public class CSRSurkusGoerRatingQuestionsAdapter extends BaseAdapter{
  				
  					ratingOption.setRating(3);
  					updateRatings(ratingOption, ratingOptionLayout);
+ 					mPostRatingForCategoryInterface.postOrUpdateRatingQuestionWithAnswer(ratingOption, ratingQuestion.getRatingQuestion());
  					//notifyDataSetInvalidated();
  				}
  			});
         	 
-        	 ((TextView)ratingOptionLayout.findViewById(R.id.row_title_textview)).setText(ratingOption.getTitle());
+        	 ((TextView)ratingOptionLayout.findViewById(R.id.row_title_textview)).setText(ratingOption.geCategory());
         	 
         	 ratingQuestionHolder.mRatingOptionsLayout.addView(ratingOptionLayout);
         }

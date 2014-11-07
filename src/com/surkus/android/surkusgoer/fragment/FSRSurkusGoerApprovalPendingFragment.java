@@ -20,13 +20,12 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.surkus.android.R;
-import com.surkus.android.component.ASRLoginActivity;
+import com.surkus.android.listener.ISRShareOnFacebookInterface;
 import com.surkus.android.model.CSRSurkusGoer;
 import com.surkus.android.networking.CSRWebServices;
 import com.surkus.android.utils.CSRConstants;
 import com.surkus.android.utils.CSRImageLoader;
 import com.surkus.android.utils.CSRUtils;
-import com.surkus.android.utils.CSRUtils.ShareOnFacebookInterface;
 
 public class FSRSurkusGoerApprovalPendingFragment extends Fragment implements OnClickListener{
 	
@@ -223,7 +222,7 @@ void dismissFetchSurkusGoerInfoDialog()
 		break;
 		
 	    case R.id.facebook_share_imageview:
-	    	 ((ShareOnFacebookInterface)getActivity()).shareOnFacebook();
+	    	 ((ISRShareOnFacebookInterface)getActivity()).shareOnFacebook();
 	          break;
 	    
 	    case R.id.twitter_share_imageview:

@@ -12,10 +12,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.surkus.android.R;
+import com.surkus.android.listener.ISRShareOnFacebookInterface;
 import com.surkus.android.networking.CSRWebServices;
 import com.surkus.android.utils.CSRConstants;
 import com.surkus.android.utils.CSRUtils;
-import com.surkus.android.utils.CSRUtils.ShareOnFacebookInterface;
 
 public class FSRSurkusGoerShareFragment extends Fragment implements OnClickListener{
 	private Button mMenuButton;
@@ -80,7 +80,7 @@ public class FSRSurkusGoerShareFragment extends Fragment implements OnClickListe
 		
 	     case R.id.share_facbook_layout:
 	   
-	    	 ((ShareOnFacebookInterface)getActivity()).shareOnFacebook();	
+	    	 ((ISRShareOnFacebookInterface)getActivity()).shareOnFacebook();	
 	   
 	    	break;
 	    	 

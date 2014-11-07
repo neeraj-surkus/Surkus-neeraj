@@ -28,6 +28,8 @@ import com.facebook.widget.FacebookDialog;
 import com.surkus.android.R;
 import com.surkus.android.adapter.CSRAboutSurkusAdapter;
 import com.surkus.android.entity.CirclePageIndicator;
+import com.surkus.android.model.CSRRatingOption;
+import com.surkus.android.model.CSRRatingQuestion;
 import com.surkus.android.model.CSRSurkusGoer;
 import com.surkus.android.model.CSRSurkusGoerSurkusToken;
 import com.surkus.android.networking.CSRWebConstants;
@@ -73,8 +75,8 @@ public class ASRLoginActivity extends FragmentActivity {
 		});
 
 		uiHelper = new UiLifecycleHelper(this, staus);
-		uiHelper.onCreate(savedInstanceState);		
-	//	CSRUtils.getHashKey(this);
+		uiHelper.onCreate(savedInstanceState);
+		// CSRUtils.getHashKey(this);
 		webServiceSingletonObject = CSRWebServices.getSingletonRef();
 	}
 
@@ -87,10 +89,12 @@ public class ASRLoginActivity extends FragmentActivity {
 
 				if (bIsUserLoggedInToFacebook) {
 					displayGetSurkusGoerTokenDialog();
-				/*	new CreateSurkusUserAndGenerateTokenTask(true, 0)
-							.execute(session.getAccessToken());*/
+					/*
+					 * new CreateSurkusUserAndGenerateTokenTask(true, 0)
+					 * .execute(session.getAccessToken());
+					 */
 					registerSurkusUser();
-					//bIsUserLoggedInToFacebook = false;
+					// bIsUserLoggedInToFacebook = false;
 				}
 			}
 
@@ -148,7 +152,8 @@ public class ASRLoginActivity extends FragmentActivity {
 				new CreateSurkusUserAndGenerateTokenTask(false,
 						CSRWebConstants.STATUS_CODE_400).execute(Session
 						.getActiveSession().getAccessToken());
-			} else if (surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_401 || surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_500) {
+			} else if (surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_401
+					|| surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_500) {
 				dismissFetchSurkusGoerInfoDialog();
 				CSRUtils.facebookLogout(ASRLoginActivity.this);
 				facebookLogin();
@@ -161,18 +166,17 @@ public class ASRLoginActivity extends FragmentActivity {
 						CSRWebConstants.SERVER_ERROR,
 						CSRWebConstants.NO_RESPONSE_FROM_SERVER);
 
-			} else if (surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_200) 
-			{
-			    //dismissFetchSurkusGoerInfoDialog();
-				//new  DeleteSurkusUserTask(surkusTokenResponse.getSurkusToken()).execute();
+			} else if (surkusTokenResponse.getStatusCode() == CSRWebConstants.STATUS_CODE_200) {
+			/*	 dismissFetchSurkusGoerInfoDialog();
+				 new DeleteSurkusUserTask(surkusTokenResponse.getSurkusToken()).execute();*/
+				
 				// Storing Surkus token for future API calls.
-				CSRUtils.createStringSharedPref(ASRLoginActivity.this,
-						CSRConstants.SURKUS_TOKEN_SHARED_PREFERENCE_KEY,
-						surkusTokenResponse.getSurkusToken());
+				CSRUtils.createStringSharedPref(ASRLoginActivity.this,CSRConstants.SURKUS_TOKEN_SHARED_PREFERENCE_KEY,surkusTokenResponse.getSurkusToken());
 
-				if (miStatusCode == CSRWebConstants.STATUS_CODE_400) {					
-					new GetSurkusGoerInfoTask(surkusTokenResponse.getSurkusToken()).execute();											
-					
+				if (miStatusCode == CSRWebConstants.STATUS_CODE_400) {
+					new GetSurkusGoerInfoTask(
+							surkusTokenResponse.getSurkusToken()).execute();
+
 				} else {
 					dismissFetchSurkusGoerInfoDialog();
 					Intent surkusGoerRegistrationIntent = new Intent(
@@ -184,19 +188,77 @@ public class ASRLoginActivity extends FragmentActivity {
 		}
 	}
 
-
-	private class GetSurkusGoerInfoTask extends AsyncTask<String, Integer, CSRSurkusGoer> {
+	private class GetRatingQuestionsTask extends
+			AsyncTask<String, Integer,Integer> {
 
 		String mSurkusToken;
-		GetSurkusGoerInfoTask(String surkusToken) {
-		     mSurkusToken = surkusToken;
+		CSRSurkusGoer mSurkusGoerUser;
+
+		GetRatingQuestionsTask(String surkusToken,CSRSurkusGoer surkusGoerUser) {
+			mSurkusToken = surkusToken;
+			mSurkusGoerUser = surkusGoerUser;
 		}
-		
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+		}
+
+	    @Override
+	    protected Integer doInBackground(String... params) {
+
+	     ArrayList<CSRRatingQuestion> ratingQuestions = webServiceSingletonObject.getRatingQuestions(mSurkusToken);
+			
+			if(ratingQuestions != null && ratingQuestions.size() >0)
+			{
+			  int totalCategories = 0;
+		      for(int i=0;i<ratingQuestions.size();i++)
+			  {
+				totalCategories += ratingQuestions.get(i).getRatingOptionList().size();
+			  }
+		      
+		      return totalCategories;
+			}
+			else
+				return 0;
+	 
+	    }
+	    
+	    
+	    @Override
+	    protected void onPostExecute(Integer result) {
+	    	super.onPostExecute(result);
+	    	
+	    	dismissFetchSurkusGoerInfoDialog();
+	    	
+	    	Intent surkusGoerDashboardIntent = new Intent(ASRLoginActivity.this,ASRSurkusGoerDashboardActivity.class);
+
+			if (mSurkusGoerUser.getRatedQuestionOptions() != null && mSurkusGoerUser.getRatedQuestionOptions().size() == result) 
+			{
+				surkusGoerDashboardIntent.putExtra(CSRConstants.IS_CATEGORY_AVAILABLE, true);
+			} 
+			else
+				surkusGoerDashboardIntent.putExtra(CSRConstants.IS_CATEGORY_AVAILABLE, false);
+			
+			   startActivity(surkusGoerDashboardIntent);
+	    	
+	    }
+	}
+	
+	private class GetSurkusGoerInfoTask extends
+			AsyncTask<String, Integer, CSRSurkusGoer> {
+
+		String mSurkusToken;
+
+		GetSurkusGoerInfoTask(String surkusToken) {
+			mSurkusToken = surkusToken;
+		}
+
 		@Override
 		protected void onPreExecute() {
 			// TODO Auto-generated method stub
 			super.onPreExecute();
-		
+
 		}
 
 		@Override
@@ -206,23 +268,28 @@ public class ASRLoginActivity extends FragmentActivity {
 		}
 
 		@Override
-		protected void onPostExecute(CSRSurkusGoer surkusGoerUser) {	
-			dismissFetchSurkusGoerInfoDialog();
-			if(surkusGoerUser == null || (surkusGoerUser != null && (surkusGoerUser.getCellPhone() == null || TextUtils.isEmpty(surkusGoerUser.getCellPhone()) || surkusGoerUser.getAddress().getZipCode() == null || TextUtils.isEmpty(surkusGoerUser.getAddress().getZipCode()))))
-			{
-				Intent surkusGoerRegistrationIntent = new Intent(ASRLoginActivity.this,ASRSurkusGoerRegistrationActivity.class);
+		protected void onPostExecute(CSRSurkusGoer surkusGoerUser) {
+		
+			if (surkusGoerUser == null
+					|| (surkusGoerUser != null && (surkusGoerUser
+							.getCellPhone() == null
+							|| TextUtils.isEmpty(surkusGoerUser.getCellPhone())
+							|| surkusGoerUser.getAddress().getZipCode() == null || TextUtils
+								.isEmpty(surkusGoerUser.getAddress()
+										.getZipCode())))) {
+				dismissFetchSurkusGoerInfoDialog();
+				Intent surkusGoerRegistrationIntent = new Intent(
+						ASRLoginActivity.this,
+						ASRSurkusGoerRegistrationActivity.class);
 				startActivity(surkusGoerRegistrationIntent);
-			}
-			else
-			{
-				Intent surkusGoerDashboardIntent = new Intent(ASRLoginActivity.this,ASRSurkusGoerDashboardActivity.class);
-				surkusGoerDashboardIntent.putExtra(CSRConstants.IS_CATEGORY_AVAILABLE, surkusGoerUser.isHasCategories());				
-				startActivity(surkusGoerDashboardIntent);
+			} else {
+				
+				
+				new GetRatingQuestionsTask(mSurkusToken,surkusGoerUser).execute();
 			}
 
 		}
 	}
-
 
 	@Override
 	protected void onResume() {
@@ -274,29 +341,25 @@ public class ASRLoginActivity extends FragmentActivity {
 					}
 				});
 	}
-	
-	
-	void registerSurkusUser()
-	{		
-		 Session session = Session.getActiveSession();
-		 String[] PERMISSION_ARRAY_READ = {"email"};
-		 List<String> permissionList = Arrays.asList(PERMISSION_ARRAY_READ);
+
+	void registerSurkusUser() {
+		Session session = Session.getActiveSession();
+		String[] PERMISSION_ARRAY_READ = { "email" };
+		List<String> permissionList = Arrays.asList(PERMISSION_ARRAY_READ);
 		// If all required permissions are available...
-		 bIsUserLoggedInToFacebook = false;
-		if(session.getPermissions().containsAll(permissionList))
-		{
-			
-	        new CreateSurkusUserAndGenerateTokenTask(true, 0).execute(Session.getActiveSession().getAccessToken());           	 
-		}
-		else
-		{
+		bIsUserLoggedInToFacebook = false;
+		if (session.getPermissions().containsAll(permissionList)) {
+
+			new CreateSurkusUserAndGenerateTokenTask(true, 0).execute(Session
+					.getActiveSession().getAccessToken());
+		} else {
 			dismissFetchSurkusGoerInfoDialog();
 			bIsUserLoggedInToFacebook = true;
-			session.requestNewReadPermissions(new Session.NewPermissionsRequest(this, permissionList)); 
-		}		
+			session.requestNewReadPermissions(new Session.NewPermissionsRequest(
+					this, permissionList));
+		}
 	}
-	
-	
+
 	void facebookLogin() {
 		Session currentSession = Session.getActiveSession();
 		if (currentSession == null || currentSession.getState().isClosed()) {
@@ -312,10 +375,12 @@ public class ASRLoginActivity extends FragmentActivity {
 		// session. Otherwise ask for user credentials.
 		if (currentSession.isOpened()) {
 			displayGetSurkusGoerTokenDialog();
-		/*	new CreateSurkusUserAndGenerateTokenTask(true, 0)
-					.execute(currentSession.getAccessToken());*/
+			/*
+			 * new CreateSurkusUserAndGenerateTokenTask(true, 0)
+			 * .execute(currentSession.getAccessToken());
+			 */
 			registerSurkusUser();
-		//	bIsUserLoggedInToFacebook = false;
+			// bIsUserLoggedInToFacebook = false;
 			// meFbSignIn();
 		} else {
 			// Ask for username and password
@@ -326,7 +391,7 @@ public class ASRLoginActivity extends FragmentActivity {
 			op.setCallback(null);
 			// set permissions.
 			List<String> permissions = new ArrayList<String>();
-			permissions.add("email"); //user_birthday
+			permissions.add("email"); // user_birthday
 			/*
 			 * permissions.add("user_birthday");
 			 * permissions.add("user_location"); permissions.add("user_likes");
@@ -338,11 +403,12 @@ public class ASRLoginActivity extends FragmentActivity {
 
 		}
 	}
-@Override
-public void onBackPressed() {
-	super.onBackPressed();
-   
-	bIsUserLoggedInToFacebook = false;
-}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+
+		bIsUserLoggedInToFacebook = false;
+	}
 
 }

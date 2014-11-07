@@ -1,5 +1,7 @@
 package com.surkus.android.model;
 
+import java.util.ArrayList;
+
 
 public class CSRSurkusGoer  {
 
@@ -16,6 +18,10 @@ public class CSRSurkusGoer  {
 	private String status;
 	private String apiResponse;
 	private boolean hasCategories;
+	
+	private ArrayList<CSRRatingOption> ratedQuestionOptions;
+
+
 
 	public String getId() {
 		return id;
@@ -111,6 +117,14 @@ public class CSRSurkusGoer  {
 
 	public void setHasCategories(boolean hasCategories) {
 		this.hasCategories = hasCategories;
+	}
+	
+	public ArrayList<CSRRatingOption> getRatedQuestionOptions() {
+		return ratedQuestionOptions;
+	}
+
+	public void setRatedQuestionOptions(ArrayList<CSRRatingOption> ratingOptions) {
+		this.ratedQuestionOptions = ratingOptions;
 	}
 
 }

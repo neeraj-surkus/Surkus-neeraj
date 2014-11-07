@@ -27,13 +27,6 @@ import com.facebook.Session;
 import com.surkus.android.networking.CSRWebServices;
 
 public class CSRUtils {
-	
-	public interface ShareOnFacebookInterface
-	{
-		public void shareOnFacebook();
-	}
-	
-	
 
 	public static boolean isNetworkOn(Context context) {
 		if (context == null)
@@ -125,6 +118,31 @@ public class CSRUtils {
 	public static String getStringSharedPref(Context context,String key) {
 		SharedPreferences appShPref = context.getSharedPreferences(CSRConstants.SURKUS_APP_PREFERENCE, Context.MODE_PRIVATE);
 		return appShPref.getString(key, "");
+	}
+	
+	public static void createIntSharedPref(Context context,String key,int value){
+		SharedPreferences appShPref = context.getSharedPreferences(CSRConstants.SURKUS_APP_PREFERENCE, Context.MODE_PRIVATE);
+		Editor mEditor = appShPref.edit();
+		mEditor.putInt(key, value);
+		mEditor.commit();
+	}
+	
+	public static int getIntSharedPref(Context context,String key) {
+		SharedPreferences appShPref = context.getSharedPreferences(CSRConstants.SURKUS_APP_PREFERENCE, Context.MODE_PRIVATE);
+		return appShPref.getInt(key, 0);
+	}
+	
+	
+	public static void createBooleanSharedPref(Context context,String key,boolean value){
+		SharedPreferences appShPref = context.getSharedPreferences(CSRConstants.SURKUS_APP_PREFERENCE, Context.MODE_PRIVATE);
+		Editor mEditor = appShPref.edit();
+		mEditor.putBoolean(key, value);
+		mEditor.commit();
+	}
+	
+	public static boolean getBooleanSharedPref(Context context,String key) {
+		SharedPreferences appShPref = context.getSharedPreferences(CSRConstants.SURKUS_APP_PREFERENCE, Context.MODE_PRIVATE);
+		return appShPref.getBoolean(key, false);
 	}
 	
 	public static void logoutSurkusUser(Context context) {

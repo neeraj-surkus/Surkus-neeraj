@@ -22,4 +22,11 @@ public class CSRConstants {
 	public static char US_MOBILE_NUMBER_SEPRATOR = '-';
 	
 	public static String IS_CATEGORY_AVAILABLE = "is_category_available";
+	
+	
+	// User logged in status
+	public static String IS_USER_LOGGED_IN = "is_user_logged_in";
+	
+	// Number of rating answers
+	public static String NUMBER_OF_CATEGORIES = "number_of_categories";
 }
