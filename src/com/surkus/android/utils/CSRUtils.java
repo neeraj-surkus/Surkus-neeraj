@@ -22,6 +22,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 
 import com.facebook.Session;
 import com.surkus.android.networking.CSRWebServices;
@@ -202,5 +204,10 @@ public class CSRUtils {
 	}
 	
 	
+	 public static void clearSessionCookie(Context context) {
+	    	CookieSyncManager.createInstance(context);
+		    CookieManager cookieManager = CookieManager.getInstance();
+		    cookieManager.removeSessionCookie();
+	    }
 	
 }
