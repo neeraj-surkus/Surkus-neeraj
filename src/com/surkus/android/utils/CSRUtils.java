@@ -29,6 +29,8 @@ import com.facebook.Session;
 import com.surkus.android.networking.CSRWebServices;
 
 public class CSRUtils {
+	
+	private static boolean bisUserLoggedIn = false;
 
 	public static boolean isNetworkOn(Context context) {
 		if (context == null)
@@ -75,7 +77,19 @@ public class CSRUtils {
 		   }
 		 }*/
 	}
+	
+	public static boolean isUserLoggedIn()
+	{
+		
+		return bisUserLoggedIn;
+	}
 
+	public static void setUserLoggedIn(boolean isUserLoggedIn)
+	{	
+		 bisUserLoggedIn = isUserLoggedIn;
+	}
+
+	
 	public static void getHashKey(Context inContext) {
 		try {
 			PackageInfo info = inContext.getPackageManager().getPackageInfo(
@@ -209,5 +223,4 @@ public class CSRUtils {
 		    CookieManager cookieManager = CookieManager.getInstance();
 		    cookieManager.removeSessionCookie();
 	    }
-	
 }
