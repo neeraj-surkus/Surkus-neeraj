@@ -28,7 +28,6 @@ import com.facebook.widget.FacebookDialog;
 import com.surkus.android.R;
 import com.surkus.android.adapter.CSRAboutSurkusAdapter;
 import com.surkus.android.entity.CirclePageIndicator;
-import com.surkus.android.model.CSRRatingOption;
 import com.surkus.android.model.CSRRatingQuestion;
 import com.surkus.android.model.CSRSurkusGoer;
 import com.surkus.android.model.CSRSurkusGoerSurkusToken;
@@ -56,8 +55,7 @@ public class ASRLoginActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
-		mAdapter = new CSRAboutSurkusAdapter(getSupportFragmentManager(),
-				CSRConstants.NO_OF_ABOUT_SURKUS_PAGES);
+		mAdapter = new CSRAboutSurkusAdapter(this,getSupportFragmentManager());
 		mPager = (ViewPager) findViewById(R.id.about_surkus_viewpager);
 		mPager.setAdapter(mAdapter);
 
@@ -241,6 +239,7 @@ public class ASRLoginActivity extends FragmentActivity {
 				surkusGoerDashboardIntent.putExtra(CSRConstants.IS_CATEGORY_AVAILABLE, false);
 			
 			   startActivity(surkusGoerDashboardIntent);
+			   finish();
 	    	
 	    }
 	}
@@ -295,7 +294,11 @@ public class ASRLoginActivity extends FragmentActivity {
 	protected void onResume() {
 		super.onResume();
 		uiHelper.onResume();
-
+		
+		if(CSRUtils.isUserLoggedIn())
+		{
+			finish();
+		}
 	}
 
 	@Override
