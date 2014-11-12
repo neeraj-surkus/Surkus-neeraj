@@ -18,22 +18,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/facebook_login_layout"
-        android:layout_below="@+id/login_logo_imageview"
-          >
+        android:layout_below="@+id/login_logo_imageview" >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/about_surkus_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-          />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" >
+        </android.support.v4.view.ViewPager>
 
         <com.surkus.android.entity.CirclePageIndicator
             android:id="@+id/indicator"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:padding="@dimen/margin_5" 
-            />
+            android:padding="@dimen/margin_5" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -56,10 +56,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@drawable/facbook_signup_new" 
             android:layout_margin="@dimen/margin_20"
-            
-            />
+            android:background="@drawable/facbook_signup_new" />
     </RelativeLayout>
 
 </RelativeLayout>

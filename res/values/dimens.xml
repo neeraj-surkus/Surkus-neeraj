@@ -9,6 +9,11 @@
     <dimen name="text_size_16">16sp</dimen>
      <dimen name="text_size_18">18sp</dimen>
     <dimen name="text_size_14">14sp</dimen>
+    <dimen name="text_size_12">12sp</dimen>
+    
+    
+      <dimen name="spannable_textsize_15">15dp</dimen>
+    
     <!-- margins -->
     <dimen name="margin_1">1dp</dimen>
     <dimen name="margin_2">2dp</dimen>

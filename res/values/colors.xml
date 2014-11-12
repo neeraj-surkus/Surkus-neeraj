@@ -4,7 +4,7 @@
     <color name="black">#000</color>
     <color name="lignt_blue">#D4EAF8</color>
     <color name="navy_blue">#00A9E2</color>
-    <color name="pink">#EF5152</color>
+    <color name="pink">#ee5052</color>
     <color name="light_blue">#A9DEF0</color>
     <color name="light_white">#FFFBFC</color>
     <color name="alpha_pink">#FDEBEB</color>
@@ -14,5 +14,7 @@
     <color name="white">#ffffff</color>
     <color name="gray">#cccccc</color>
     <color name="transparent_black">#99000000</color>
+    
+    
 
 </resources>

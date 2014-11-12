@@ -9,6 +9,8 @@
     <dimen name="text_size_16">16sp</dimen>
      <dimen name="text_size_18">18sp</dimen>
     <dimen name="text_size_14">14sp</dimen>
+      
+      
     <!-- margins -->
     <dimen name="margin_1">1dp</dimen>
     <dimen name="margin_2">2dp</dimen>

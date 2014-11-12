@@ -8,7 +8,24 @@
         android:id="@+id/about_surkus_imageview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/app_name"  
-      />
+        android:layout_above="@+id/welcome_layout"
+        android:contentDescription="@string/app_name" />
+
+    <LinearLayout
+        android:id="@+id/welcome_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_100"
+        android:layout_alignParentBottom="true"
+        android:background="@color/pink" >
+
+        <TextView
+            android:id="@+id/surkues_goer_info_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_12" />
+    </LinearLayout>
 
 </RelativeLayout>

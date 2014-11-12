@@ -108,4 +108,29 @@
     <string name="category_not_found">Category Not Found</string>
     <string name="submitting_rating_msg">Submitting ratings&#8230;</string>
     
+    <!-- Surkus goer welcome -->
+    
+    <string name="info1">SURKUS is a mobile "crodcasting" platform We enable people who run fun local spots and events to "cast" and <b>pay you</b> to simply attend and become a part of their "crowd".</string>
+    
+    <string name="info_2a">SURKUS mathches your social life preferences and </string>
+    
+    
+    <string name="info_2b">Sends You Invitations + Payment Offers </string>
+    <string name="info_2c">to visit upcoming social events at fun local spots.</string>
+    
+    
+    <string name="info_3">Accept or Decline the event + payment offer</string>
+    <string name="info_4">If accepted", You Attend the Event, check in upon arrival and get paid the approved amount immediately via PayPal</string>
+    <string name="info_5">Log-in with Facebook and Become a SURKUSgoer</string>
+    
+    
+      <string-array name="welcome_info">
+        <item>SURKUS is a mobile \"crodcasting\" platform We enable people who run fun local spots and events to \"cast\" and <b>pay you</b> to simply attend and become a part of their \"crowd\".</item>
+        <item>SURKUS mathches your social life preferences and Sends You Invitations + Payment Offers to visit upcoming social events at fun local spots.</item>
+        <item>Accept or Decline the event + payment offer</item>
+        <item >If \"accepted\", You Attend the Event, check in upon arrival and get paid the approved amount immediately via PayPal</item>
+        <item>Log-in with Facebook and Become a SURKUSgoer</item>
+    </string-array>
+    
+    
 </resources>
