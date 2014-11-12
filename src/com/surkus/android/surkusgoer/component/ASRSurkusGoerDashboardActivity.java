@@ -42,8 +42,7 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements 
 		
 		if(mbHasCategoriesAvailable)
 		{
-			getSupportFragmentManager().beginTransaction().add(R.id.container, new FSRSurkusGoerApprovalPendingFragment()).commit(); // new FSRSurkusGoerApprovalPendingFragment(
-			
+			getSupportFragmentManager().beginTransaction().add(R.id.container, new FSRSurkusGoerApprovalPendingFragment()).commit(); // new FSRSurkusGoerApprovalPendingFragment(		
 		}
 		else
 		{
@@ -51,7 +50,8 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements 
 			
 		}
      
-		CSRUtils.createBooleanSharedPref(this, CSRConstants.IS_USER_LOGGED_IN, true);
+		//CSRUtils.createBooleanSharedPref(this, CSRConstants.IS_USER_LOGGED_IN, true);
+		CSRUtils.setUserLoggedIn(true);
 	}
 	
 	public void setHasCategories(boolean isCategoriesAvailable)
@@ -166,7 +166,8 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements 
 
 	@Override
 	public void onBackPressed() {	
-		try
+		super.onBackPressed();
+		/*try
 		{
 			FragmentManager fm = getSupportFragmentManager();
 			int count = fm.getBackStackEntryCount();	
@@ -182,7 +183,7 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements 
 			
 		}
 		catch (Exception e) {
-		}
+		}*/
 	
 	
 	}
