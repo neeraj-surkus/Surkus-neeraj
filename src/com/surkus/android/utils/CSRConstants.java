@@ -3,7 +3,8 @@ package com.surkus.android.utils;
 public class CSRConstants {
 
 	public static String LOGIN_IMAGE_DRAWABLE = "login_image_drawable";
-	public static int NO_OF_ABOUT_SURKUS_PAGES = 5; 
+	public static String LOGIN_WELCOME_INFO = "login_welcome_info";
+	public static String LOGIN_SURKUS_GOER_CURRENT_PAGE = "login_surkus_goer_current_page"; 
 	
 	//Facbook user constants	
 	public static String USER_NAME = "name";
@@ -25,7 +26,7 @@ public class CSRConstants {
 	
 	
 	// User logged in status
-	public static String IS_USER_LOGGED_IN = "is_user_logged_in";
+	//public static String IS_USER_LOGGED_IN = "is_user_logged_in";
 	
 	// Number of rating answers
 	public static String NUMBER_OF_CATEGORIES = "number_of_categories";
