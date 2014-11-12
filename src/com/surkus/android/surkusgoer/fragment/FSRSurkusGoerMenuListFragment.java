@@ -177,12 +177,14 @@ public class FSRSurkusGoerMenuListFragment extends ListFragment implements
 	}
 
 	void clearUserDataAndLaunchLoginActivity() {
+		CSRUtils.setUserLoggedIn(false);
 		CSRUtils.facebookLogout(getActivity());
 		CSRUtils.logoutSurkusUser(getActivity());
 	//    new  DeleteSurkusUserTask(CSRUtils.getStringSharedPref(getActivity(), CSRConstants.SURKUS_TOKEN_SHARED_PREFERENCE_KEY)).execute();
 		Intent loginIntent = new Intent(getActivity(), ASRLoginActivity.class);
 		loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(loginIntent);
+		getActivity().finish();
 	}
 
 }
