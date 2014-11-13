@@ -52,7 +52,6 @@ public class CSRWebConstants {
 	public static String USER_INFO_URL_KEY = "user_info_url";
 	
 	//GET Rating KEYS
-
 	public static String HYPEN_V_KEY = "__v";	
 	public static String DISPLAY_TYPE_KEY = "display_type";	
 	public static String VALUES_KEY = "values";	
@@ -63,6 +62,18 @@ public class CSRWebConstants {
 	
 	//GET user info key
 	public static String CATEGORY_KEY = "categories";	
+	
+	// Device registration
+	public static String TOKEN_KEY = "token";
+	public static String DEVICE_ID_KEY = "device_id";
+	public static String OS_NAME_KEY = "os_name";
+	public static String OS_VERSION_KEY = "os_version";
+	public static String MANUFACTURER_KEY = "manufacturer";
+	public static String MODEL_KEY = "model";
+	public static String ADDED_ON_KEY = "added_on";
+	
+	public static String UID_KEY = "model";
+
 	
 	
 }

@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+     <string name="project_number">703520530847</string>
     <string name="app_id">302258396626501</string>
+     <string name="preferences">PreferencesFile</string>
+     <string name="first_launch">First Launch</string>
+    <string name="num_of_missed_messages">MissedMessageCount</string>
+    <string name="lines_of_message_count">LinesOfMessageCount</string>
+    <string name="notification_number">1337</string>
+     
     <string name="app_name">Surkus</string>
     <string name="facebook_user_msg">We will not post anything to your account without permission.</string>
     <string name="user_what_are_you_msg">We\'ve Revolutionized The Way That The Movers Communicate With The Shakers. </string>
@@ -132,5 +139,6 @@
         <item>Log-in with Facebook and Become a SURKUSgoer</item>
     </string-array>
     
+    <string name="no_device_found">No Device Found</string>
     
 </resources>

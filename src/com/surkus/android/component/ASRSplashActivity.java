@@ -3,39 +3,52 @@ package com.surkus.android.component;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.text.TextUtils;
 
 import com.surkus.android.R;
+import com.surkus.android.listener.ISRNotifySplashInterface;
 import com.surkus.android.model.CSRRatingQuestion;
 import com.surkus.android.model.CSRSurkusGoer;
 import com.surkus.android.networking.CSRWebServices;
+import com.surkus.android.pushnotification.CSRMessageReceivingService;
+import com.surkus.android.pushnotification.CSRMessageReceivingService.MessageReceivingServiceBinder;
 import com.surkus.android.surkusgoer.component.ASRSurkusGoerDashboardActivity;
 import com.surkus.android.surkusgoer.component.ASRSurkusGoerRegistrationActivity;
 import com.surkus.android.utils.CSRConstants;
 import com.surkus.android.utils.CSRUtils;
 
-public class ASRSplashActivity extends Activity {
+public class ASRSplashActivity extends Activity implements ISRNotifySplashInterface{
 
 	Thread watingThread;
 	boolean bHasSplashIsRunning = true;
 	private CSRWebServices webServiceSingletonObject;
-
+	String mSurkusToken;
+	private boolean bound = false;
+	
+	CSRMessageReceivingService registerService;
+	
+	//public static Boolean inBackground = true;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
-		
-		String mSurkusToken = CSRUtils.getStringSharedPref(this, CSRConstants.SURKUS_TOKEN_SHARED_PREFERENCE_KEY);
+	    mSurkusToken = CSRUtils.getStringSharedPref(this,
+				CSRConstants.SURKUS_TOKEN_SHARED_PREFERENCE_KEY);
 		webServiceSingletonObject = CSRWebServices.getSingletonRef();
 
-		if (mSurkusToken != null && !TextUtils.isEmpty(mSurkusToken)) {		
-		   new GetSurkusGoerInfoTask(mSurkusToken).execute();
-			
-		} else {
+		if (mSurkusToken != null && !TextUtils.isEmpty(mSurkusToken)) {
+		    //new GetSurkusGoerInfoTask(mSurkusToken).execute();	
+			registerDeviceID();
 
+		} else {
 
 			watingThread = new Thread(new Runnable() {
 
@@ -62,9 +75,58 @@ public class ASRSplashActivity extends Activity {
 				}
 			});
 			watingThread.start();
-		}
-
+		}		
 	}
+	  
+	@Override
+    public void onResume(){
+        super.onResume();
+      //  inBackground = false;
+    }
+	
+	@Override
+    public void onNewIntent(Intent intent){
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+	
+	@Override
+    public void onStop(){
+        super.onStop();
+       // inBackground = true;
+        
+        // Unbind from service
+        if (bound) {
+        	registerService.setCallbacks(null); // unregister
+            unbindService(serviceConnection);
+            bound = false;
+        }
+    }
+
+	void registerDeviceID() {
+		
+		  bindService(new Intent(this, CSRMessageReceivingService.class),serviceConnection, Context.BIND_AUTO_CREATE);
+	}
+	
+	  /** Callbacks for service binding, passed to bindService() */
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                IBinder service) {
+            // cast the IBinder and get MyService instance
+        	MessageReceivingServiceBinder binder = (MessageReceivingServiceBinder) service;
+        	registerService = binder.getService();
+            bound = true;
+            registerService.setCallbacks(ASRSplashActivity.this); // register
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            bound = false;
+        }
+    };
+
 
 	private class GetSurkusGoerInfoTask extends
 			AsyncTask<String, Integer, CSRSurkusGoer> {
@@ -104,7 +166,7 @@ public class ASRSplashActivity extends Activity {
 						ASRSurkusGoerRegistrationActivity.class);
 				startActivity(surkusGoerRegistrationIntent);
 				finish();
-				
+
 			} else {
 
 				new GetRatingQuestionsTask(mSurkusToken, surkusGoerUser)
@@ -153,16 +215,17 @@ public class ASRSplashActivity extends Activity {
 		protected void onPostExecute(Integer result) {
 			super.onPostExecute(result);
 
-			Intent surkusGoerDashboardIntent = new Intent(ASRSplashActivity.this, ASRSurkusGoerDashboardActivity.class);
+			Intent surkusGoerDashboardIntent = new Intent(
+					ASRSplashActivity.this,
+					ASRSurkusGoerDashboardActivity.class);
 
-			if (mSurkusGoerUser.getRatedQuestionOptions() != null&& mSurkusGoerUser.getRatedQuestionOptions().size() == result)
-			{
+			if (mSurkusGoerUser.getRatedQuestionOptions() != null
+					&& mSurkusGoerUser.getRatedQuestionOptions().size() == result) {
 				surkusGoerDashboardIntent.putExtra(
 						CSRConstants.IS_CATEGORY_AVAILABLE, true);
 			} else
 				surkusGoerDashboardIntent.putExtra(
 						CSRConstants.IS_CATEGORY_AVAILABLE, false);
-
 
 			startActivity(surkusGoerDashboardIntent);
 			finish();
@@ -181,4 +244,10 @@ public class ASRSplashActivity extends Activity {
 		super.onBackPressed();
 		bHasSplashIsRunning = false;
 	}
+
+	@Override
+	public void notifySplash() {
+		new GetSurkusGoerInfoTask(mSurkusToken).execute();		
+	}
+
 }

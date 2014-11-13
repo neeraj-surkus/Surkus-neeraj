@@ -5,12 +5,12 @@ import android.os.AsyncTask;
 import com.surkus.android.model.CSRSurkusGoer;
 import com.surkus.android.networking.CSRWebServices;
 
-public class DeleteSurkusUserTask extends AsyncTask<String, Integer, CSRSurkusGoer> {
+public class CSRDeleteSurkusUserTask extends AsyncTask<String, Integer, CSRSurkusGoer> {
 
 	private String mSurkusToken;
 	private CSRWebServices webServiceSingletonObject;
 
-	public DeleteSurkusUserTask(String surkusToken) {
+	public CSRDeleteSurkusUserTask(String surkusToken) {
 		mSurkusToken = surkusToken;
 		webServiceSingletonObject = CSRWebServices.getSingletonRef();
 	}

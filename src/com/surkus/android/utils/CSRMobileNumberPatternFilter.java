@@ -6,11 +6,11 @@ import java.util.regex.Pattern;
 import android.text.InputFilter;
 import android.text.Spanned;
 
-public class MobileNumberPatternFilter implements InputFilter {
+public class CSRMobileNumberPatternFilter implements InputFilter {
 
 	private Pattern mPattern;
 
-	public MobileNumberPatternFilter(String pattern) {
+	public CSRMobileNumberPatternFilter(String pattern) {
 		mPattern = Pattern.compile(pattern);
 	}
 

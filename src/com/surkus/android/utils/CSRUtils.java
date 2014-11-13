@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.UUID;
 
 import android.app.Activity;
 import android.app.AlertDialog.Builder;
@@ -20,13 +21,16 @@ import android.content.pm.Signature;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
+import android.provider.Settings.Secure;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
 import com.facebook.Session;
-import com.surkus.android.networking.CSRWebServices;
 
 public class CSRUtils {
 	
@@ -222,5 +226,28 @@ public class CSRUtils {
 	    	CookieSyncManager.createInstance(context);
 		    CookieManager cookieManager = CookieManager.getInstance();
 		    cookieManager.removeSessionCookie();
+	    }
+	 
+	 public static String getDeviceID(Context context) {
+		    String deviceID  = "";  
+		    TelephonyManager telephonyMgr = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE); 
+		   
+		    if(telephonyMgr.getDeviceId() != null && !TextUtils.isEmpty(telephonyMgr.getDeviceId()))
+		       deviceID = telephonyMgr.getDeviceId();
+		    else if(Secure.getString(context.getContentResolver(), Secure.ANDROID_ID) != null && !TextUtils.isEmpty(Secure.getString(context.getContentResolver(), Secure.ANDROID_ID)))
+		    	deviceID = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
+		    else
+		    {
+		    	  WifiManager wifiManager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);   
+		    	  
+		    	  if(wifiManager.getConnectionInfo().getMacAddress() != null && !TextUtils.isEmpty(wifiManager.getConnectionInfo().getMacAddress()))
+		    	     deviceID = wifiManager.getConnectionInfo().getMacAddress();
+		    	  else  if(telephonyMgr.getSimSerialNumber() != null && !TextUtils.isEmpty(telephonyMgr.getSimSerialNumber()))
+		    			  deviceID = telephonyMgr.getSimSerialNumber();
+		    	  else 
+		    		  deviceID = UUID.randomUUID().toString();
+		    }
+		    
+		    return deviceID;
 	    }
 }
