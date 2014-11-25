@@ -43,10 +43,10 @@ public class ASRSplashActivity extends Activity implements ISRNotifySplashInterf
 	    mSurkusToken = CSRUtils.getStringSharedPref(this,
 				CSRConstants.SURKUS_TOKEN_SHARED_PREFERENCE_KEY);
 		webServiceSingletonObject = CSRWebServices.getSingletonRef();
-
+	
 		if (mSurkusToken != null && !TextUtils.isEmpty(mSurkusToken)) {
-		    //new GetSurkusGoerInfoTask(mSurkusToken).execute();	
-			registerDeviceID();
+		    new GetSurkusGoerInfoTask(mSurkusToken).execute();	
+			//registerDeviceID();
 
 		} else {
 

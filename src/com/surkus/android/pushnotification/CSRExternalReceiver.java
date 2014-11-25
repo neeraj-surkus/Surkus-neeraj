@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.surkus.android.component.ASRSplashActivity;
+import com.surkus.android.utils.CSRUtils;
 
 public class CSRExternalReceiver extends BroadcastReceiver {
 
@@ -14,12 +15,13 @@ public class CSRExternalReceiver extends BroadcastReceiver {
         if(intent!=null){
             Bundle extras = intent.getExtras();
             Toast.makeText(context, "notification received", 2000).show();
-       /*     if(!ASRSplashActivity.inBackground){
-                CSRMessageReceivingService.sendToApp(extras, context);
-            }
+           
+            if(CSRUtils.isAppForground(context)){
+            	 CSRMessageReceivingService.saveToLog(extras, context);
+           }
             else{
-                CSRMessageReceivingService.saveToLog(extras, context);
-            }*/
+            	CSRMessageReceivingService.sendToApp(extras, context);
+            }
         }
     }
 }

@@ -4,9 +4,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -265,4 +269,24 @@ public class CSRUtils {
 		 return appShPref.getString(CSRConstants.KEY_GCM_TOKEN, "");
 		 
 	 }
+	 
+	 
+	 public static  boolean isAppForground(Context c) {
+
+	        ActivityManager mActivityManager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
+	        List<RunningAppProcessInfo> l = mActivityManager
+	                .getRunningAppProcesses();
+	        Iterator<RunningAppProcessInfo> i = l.iterator();
+	        while (i.hasNext()) {
+	            RunningAppProcessInfo info = i.next();
+
+	            if (info.uid == c.getApplicationInfo().uid && info.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND) 
+	                {
+	                    return true;
+	               }
+	           }
+	        return false;
+	    }
+
+
 }

@@ -40,13 +40,13 @@ public class CSRMessageReceivingService extends Service{
     
     private final IBinder binder = new MessageReceivingServiceBinder();
 
-/*    public static void sendToApp(Bundle extras, Context context){
+   public static void sendToApp(Bundle extras, Context context){
         Intent newIntent = new Intent();
         newIntent.setClass(context, ASRSplashActivity.class);
         newIntent.putExtras(extras);
         newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(newIntent);
-    }*/
+    }
     
     
     
@@ -111,6 +111,7 @@ public class CSRMessageReceivingService extends Service{
         mNotificationManager.notify(R.string.notification_number, notification);
     }
 
+	@SuppressWarnings("unchecked")
 	private void register() {
 		
         new AsyncTask(){
@@ -138,7 +139,7 @@ public class CSRMessageReceivingService extends Service{
             protected void onPostExecute(Object result) 
             {
             CSRSurkusApiResponse response=(CSRSurkusApiResponse) result;
-            if(response.getStatusCode()==CSRWebConstants.STATUS_CODE_200)
+            //if(response.getStatusCode()==CSRWebConstants.STATUS_CODE_200)
             	if(notifySplash != null)
             	   notifySplash.notifySplash();
             };

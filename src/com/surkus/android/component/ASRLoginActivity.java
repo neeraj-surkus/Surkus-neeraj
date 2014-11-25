@@ -365,6 +365,13 @@ public class ASRLoginActivity extends FragmentActivity {
 
 	void facebookLogin() {
 		Session currentSession = Session.getActiveSession();
+		if (currentSession != null) {
+
+	        if (!currentSession.isClosed()) {
+	        	currentSession.closeAndClearTokenInformation();
+	            //clear your preferences if saved
+	        }
+		}
 		if (currentSession == null || currentSession.getState().isClosed()) {
 			// create a new session.
 			Session session = new Session.Builder(getApplicationContext())
