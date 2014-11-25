@@ -1,5 +1,5 @@
 package com.surkus.android.component;
-/*commint 24-11-2014*/
+/*commit 24-11-2014*/
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

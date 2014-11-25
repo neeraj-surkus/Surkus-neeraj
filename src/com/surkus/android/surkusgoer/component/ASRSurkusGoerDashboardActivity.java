@@ -1,9 +1,14 @@
 package com.surkus.android.surkusgoer.component;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.widget.Toast;
 
 import com.facebook.FacebookException;
 import com.facebook.Session;
@@ -14,20 +19,25 @@ import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.WebDialog;
 import com.facebook.widget.WebDialog.OnCompleteListener;
 import com.surkus.android.R;
+import com.surkus.android.component.ASRSplashActivity;
+import com.surkus.android.listener.ISRNotifySplashInterface;
 import com.surkus.android.listener.ISRShareOnFacebookInterface;
 import com.surkus.android.networking.CSRWebServices;
+import com.surkus.android.pushnotification.CSRMessageReceivingService;
+import com.surkus.android.pushnotification.CSRMessageReceivingService.MessageReceivingServiceBinder;
 import com.surkus.android.surkusgoer.fragment.FSRSurkusGoerApprovalPendingFragment;
 import com.surkus.android.surkusgoer.fragment.FSRSurkusGoerRatingQuestionsFragment;
 import com.surkus.android.utils.CSRConstants;
 import com.surkus.android.utils.CSRUtils;
 
-public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements ISRShareOnFacebookInterface {
+public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements ISRShareOnFacebookInterface,ISRNotifySplashInterface {
 	private UiLifecycleHelper uiHelper;
 	boolean mbIsOpenedShareDialog;
 	boolean bIsFacebookShare;
 	Session mSession;
 	boolean mbHasCategoriesAvailable;
-
+	CSRMessageReceivingService registerService;
+	private boolean bound = false;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,6 +62,11 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements 
      
 		//CSRUtils.createBooleanSharedPref(this, CSRConstants.IS_USER_LOGGED_IN, true);
 		CSRUtils.setUserLoggedIn(true);
+		if(isGmcTokenExists()){
+			
+		}else{
+			registerDeviceID();
+		}
 	}
 	
 	public void setHasCategories(boolean isCategoriesAvailable)
@@ -199,6 +214,45 @@ public class ASRSurkusGoerDashboardActivity extends FragmentActivity implements 
 			bIsFacebookShare = false;
 		}
 
+	}
+	
+	private boolean isGmcTokenExists(){
+		
+		String token=CSRUtils.getGcmToken(this);
+		if(token.length()>0)return true;
+		
+		return false;
+	}
+	
+	
+	void registerDeviceID() {
+		
+		  bindService(new Intent(this, CSRMessageReceivingService.class),serviceConnection, Context.BIND_AUTO_CREATE);
+	}
+	
+	  /** Callbacks for service binding, passed to bindService() */
+  private ServiceConnection serviceConnection = new ServiceConnection() {
+
+      @Override
+      public void onServiceConnected(ComponentName className,
+              IBinder service) {
+          // cast the IBinder and get MyService instance
+      	MessageReceivingServiceBinder binder = (MessageReceivingServiceBinder) service;
+      	registerService = binder.getService();
+          bound = true;
+          registerService.setCallbacks(ASRSurkusGoerDashboardActivity.this); // register
+      }
+
+      @Override
+      public void onServiceDisconnected(ComponentName arg0) {
+          bound = false;
+      }
+  };
+	@Override
+	public void notifySplash() {
+		// TODO Auto-generated method stub
+		Toast.makeText(this, "gcm token registered", 2000).show();
+		
 	}
 
 }

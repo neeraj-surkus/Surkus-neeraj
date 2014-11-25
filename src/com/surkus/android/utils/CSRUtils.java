@@ -250,4 +250,19 @@ public class CSRUtils {
 		    
 		    return deviceID;
 	    }
+	 
+	 public static void setGcmToken(Context context,String gcmToken){
+		 
+		 SharedPreferences appShPref = context.getSharedPreferences(CSRConstants.SURKUS_APP_PREFERENCE, Context.MODE_PRIVATE);
+			Editor mEditor = appShPref.edit();
+			mEditor.putString(CSRConstants.KEY_GCM_TOKEN, gcmToken);
+			mEditor.commit();
+		 
+	 }
+	 
+	 public static String getGcmToken(Context context){
+		 SharedPreferences appShPref = context.getSharedPreferences(CSRConstants.SURKUS_APP_PREFERENCE, Context.MODE_PRIVATE);
+		 return appShPref.getString(CSRConstants.KEY_GCM_TOKEN, "");
+		 
+	 }
 }

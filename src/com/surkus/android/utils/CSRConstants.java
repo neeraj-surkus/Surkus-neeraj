@@ -30,4 +30,6 @@ public class CSRConstants {
 	
 	// Number of rating answers
 	public static String NUMBER_OF_CATEGORIES = "number_of_categories";
+	
+	public static String KEY_GCM_TOKEN="GCM_TOKEN";
 }

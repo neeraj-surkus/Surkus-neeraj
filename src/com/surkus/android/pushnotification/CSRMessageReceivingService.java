@@ -21,6 +21,8 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.surkus.android.R;
 import com.surkus.android.component.ASRSplashActivity;
 import com.surkus.android.listener.ISRNotifySplashInterface;
+import com.surkus.android.model.CSRSurkusApiResponse;
+import com.surkus.android.networking.CSRWebConstants;
 import com.surkus.android.networking.CSRWebServices;
 import com.surkus.android.utils.CSRConstants;
 import com.surkus.android.utils.CSRUtils;
@@ -110,9 +112,11 @@ public class CSRMessageReceivingService extends Service{
     }
 
 	private void register() {
+		
         new AsyncTask(){
             protected Object doInBackground(final Object... params) {
                 String token;
+                CSRSurkusApiResponse surkusApiResponse = null;
                 try {
                     
                 	token = gcm.register(getString(R.string.project_number));                    
@@ -120,7 +124,7 @@ public class CSRMessageReceivingService extends Service{
                  	boolean bisDeviceRegsitered = webServiceSingletonObject.isDeviceRegisterd(getApplicationContext(), mSurkusToken, token);
                 	if(!bisDeviceRegsitered)
                 	{
-                		webServiceSingletonObject.registerDevice(getApplicationContext(), mSurkusToken, token);
+                		surkusApiResponse=webServiceSingletonObject.registerDevice(getApplicationContext(), mSurkusToken, token);
                 	}
                      
                     Log.i("registrationId", token);
@@ -128,11 +132,13 @@ public class CSRMessageReceivingService extends Service{
                 catch (IOException e) {
                     Log.i("Registration Error", e.getMessage());
                 }
-                return true;
+                return surkusApiResponse;
             }
             
             protected void onPostExecute(Object result) 
             {
+            CSRSurkusApiResponse response=(CSRSurkusApiResponse) result;
+            if(response.getStatusCode()==CSRWebConstants.STATUS_CODE_200)
             	if(notifySplash != null)
             	   notifySplash.notifySplash();
             };

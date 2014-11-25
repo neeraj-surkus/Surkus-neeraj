@@ -335,12 +335,12 @@ public class CSRWebServices {
 		   {
 		      JSONObject jObject = new JSONObject();
 		      jObject.put(CSRWebConstants.TOKEN_KEY, token);
-		      jObject.put(CSRWebConstants.DEVICE_ID_KEY, deviceID);
+		    //  jObject.put(CSRWebConstants.DEVICE_ID_KEY, deviceID);
 		      jObject.put(CSRWebConstants.OS_NAME_KEY, androidOSName);
 		      jObject.put(CSRWebConstants.OS_VERSION_KEY, androidOSVersion);
 		      jObject.put(CSRWebConstants.MANUFACTURER_KEY, devicemanufacturer);
 		      jObject.put(CSRWebConstants.MODEL_KEY, deviceModel);
-		      jObject.put(CSRWebConstants.ADDED_ON_KEY, formattedTime);		   
+		    //  jObject.put(CSRWebConstants.ADDED_ON_KEY, formattedTime);		   
 		      surkusAPIResponse = postDataToSurkus(jObject.toString(), DEVICES_URL+ surkusToken);
 		      
 		   }catch(JSONException e)
