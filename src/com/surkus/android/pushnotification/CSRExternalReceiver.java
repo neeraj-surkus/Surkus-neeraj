@@ -14,7 +14,8 @@ public class CSRExternalReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if(intent!=null){
             Bundle extras = intent.getExtras();
-            Toast.makeText(context, "notification received", 2000).show();
+           String  message = intent.getStringExtra("message");
+            Toast.makeText(context, "notification received "+message, 5000).show();
            
             if(CSRUtils.isAppForground(context)){
             	 CSRMessageReceivingService.saveToLog(extras, context);

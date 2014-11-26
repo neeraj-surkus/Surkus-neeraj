@@ -120,13 +120,15 @@ public class CSRMessageReceivingService extends Service{
                 CSRSurkusApiResponse surkusApiResponse = null;
                 try {
                     
-                	token = gcm.register(getString(R.string.project_number));                    
+                	token = gcm.register(getString(R.string.project_number));  
+                	CSRUtils.log("gcm token "+token);
                 	CSRWebServices webServiceSingletonObject = CSRWebServices.getSingletonRef();
-                 	boolean bisDeviceRegsitered = webServiceSingletonObject.isDeviceRegisterd(getApplicationContext(), mSurkusToken, token);
-                	if(!bisDeviceRegsitered)
-                	{
+                 	//boolean bisDeviceRegsitered = webServiceSingletonObject.isDeviceRegisterd(getApplicationContext(), mSurkusToken, token);
+                	//if(!bisDeviceRegsitered)
+                	//{
                 		surkusApiResponse=webServiceSingletonObject.registerDevice(getApplicationContext(), mSurkusToken, token);
-                	}
+                		CSRUtils.log("user gcm register"+surkusApiResponse);
+                	//}
                      
                     Log.i("registrationId", token);
                 } 
@@ -139,9 +141,12 @@ public class CSRMessageReceivingService extends Service{
             protected void onPostExecute(Object result) 
             {
             CSRSurkusApiResponse response=(CSRSurkusApiResponse) result;
+            CSRUtils.log("user gcm register"+response.getSurkusAPIResponse().toString());
             //if(response.getStatusCode()==CSRWebConstants.STATUS_CODE_200)
-            	if(notifySplash != null)
-            	   notifySplash.notifySplash();
+            	if(notifySplash != null){
+            	 CSRUtils.log("user gcm register"+response.getSurkusAPIResponse());
+            		notifySplash.notifySplash();
+            	}
             };
             
         }.execute(null, null, null);

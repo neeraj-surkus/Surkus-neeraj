@@ -24,6 +24,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.util.Log;
 
+import com.facebook.android.Util;
 import com.surkus.android.R;
 import com.surkus.android.model.CSRDeviceInformation;
 import com.surkus.android.model.CSRRatingQuestion;
@@ -51,7 +52,7 @@ public class CSRWebServices {
 	private String RATING_QUESTIONS_URL = SURKUS_USER_URL+ "category/"; 
 
 	
-	private String DEVICES_URL = SURKUS_USER_URL+ "device/"; 
+	private String DEVICES_URL = SURKUS_USER_URL+ "device/";
 	
 	private static CSRWebServices mSingletonRef;
 
@@ -66,7 +67,7 @@ public class CSRWebServices {
 		String jsonString = "";
 		int statusCode = 0;
 		CSRSurkusApiResponse surkusAPIResponse = new CSRSurkusApiResponse();
-		
+		CSRUtils.log("getDataFromSurkus"+dataURL);
 		try {
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpGet httpGet = new HttpGet(dataURL);
@@ -83,7 +84,7 @@ public class CSRWebServices {
 				dataBuffer.append(currentDataLine);
 			}
 			jsonString = dataBuffer.toString();
-			
+			CSRUtils.log("getDataFromSurkus"+jsonString);
 			surkusAPIResponse.setSurkusAPIResponse(jsonString);
 			surkusAPIResponse.setStatusCode(statusCode);
 			
@@ -113,7 +114,7 @@ public class CSRWebServices {
 		String jsonString = "";
 		String newdatacheck = "";
 		CSRSurkusApiResponse surkusAPIResponse = new CSRSurkusApiResponse();
-
+CSRUtils.log("postData  "+postData);
 		try {
 
 			httpPost.addHeader("content-type", "application/json");
@@ -131,6 +132,7 @@ public class CSRWebServices {
 			}
 
 			jsonString = res_builder.toString();
+			CSRUtils.log("response "+jsonString);
 
 			surkusAPIResponse.setSurkusAPIResponse(jsonString);
 			surkusAPIResponse.setStatusCode(statusCode);
@@ -234,7 +236,7 @@ public class CSRWebServices {
 		
 		CSRSurkusApiResponse surkusAPIResponse;
 		CSRSurkusGoerSurkusToken surkusGoerSurkusToken = null;
-		
+		CSRUtils.log("accessToken"+fbToken);
 		if(bIsNewSurkusUser)
 			surkusAPIResponse = postDataToSurkus("",SURKUS_USER_URL + fbToken);
 		else
@@ -340,6 +342,7 @@ public class CSRWebServices {
 		      jObject.put(CSRWebConstants.OS_VERSION_KEY, androidOSVersion);
 		      jObject.put(CSRWebConstants.MANUFACTURER_KEY, devicemanufacturer);
 		      jObject.put(CSRWebConstants.MODEL_KEY, deviceModel);
+		      CSRUtils.log("object while register gcm"+jObject.toString());
 		    //  jObject.put(CSRWebConstants.ADDED_ON_KEY, formattedTime);		   
 		      surkusAPIResponse = postDataToSurkus(jObject.toString(), DEVICES_URL+ surkusToken);
 		      

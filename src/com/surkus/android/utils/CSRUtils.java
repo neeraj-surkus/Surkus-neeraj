@@ -37,7 +37,7 @@ import android.webkit.CookieSyncManager;
 import com.facebook.Session;
 
 public class CSRUtils {
-	
+	public static final String TAG="DEBUGGING";
 	private static boolean bisUserLoggedIn = false;
 
 	public static boolean isNetworkOn(Context context) {
@@ -287,6 +287,11 @@ public class CSRUtils {
 	           }
 	        return false;
 	    }
+	 
+	 public static void log(String msg){
+		 
+		 Log.d(TAG, msg);
+	 }
 
 
 }

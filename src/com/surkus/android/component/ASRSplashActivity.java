@@ -40,13 +40,18 @@ public class ASRSplashActivity extends Activity implements ISRNotifySplashInterf
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
+		
+		String sksToken="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiI1NDcxZmEwNDRjM"+
+"TA3MzU1NjYyNWIwMjYiLCJleHAiOiIyMDE0LTExLTI2VDIxOjMyOjEwLjI0Mloi"+
+"LCJ2IjoiMS4wIn0.93I7e-m9bX74xmHH3CbZjR1cDtVkn06Z7WxtbB6Lo00";
+		//CSRUtils.createStringSharedPref(this,CSRConstants.SURKUS_TOKEN_SHARED_PREFERENCE_KEY,sksToken);
 	    mSurkusToken = CSRUtils.getStringSharedPref(this,
 				CSRConstants.SURKUS_TOKEN_SHARED_PREFERENCE_KEY);
 		webServiceSingletonObject = CSRWebServices.getSingletonRef();
 	
 		if (mSurkusToken != null && !TextUtils.isEmpty(mSurkusToken)) {
-		    new GetSurkusGoerInfoTask(mSurkusToken).execute();	
-			//registerDeviceID();
+		   // new GetSurkusGoerInfoTask(mSurkusToken).execute();	
+			registerDeviceID();
 
 		} else {
 
@@ -146,6 +151,7 @@ public class ASRSplashActivity extends Activity implements ISRNotifySplashInterf
 
 		@Override
 		protected CSRSurkusGoer doInBackground(String... args) {
+			CSRUtils.log("inside GetSurkusGoerInfoTask()");
 			return webServiceSingletonObject.getSurkusUserInfo(mSurkusToken);
 
 		}
@@ -247,7 +253,10 @@ public class ASRSplashActivity extends Activity implements ISRNotifySplashInterf
 
 	@Override
 	public void notifySplash() {
-		new GetSurkusGoerInfoTask(mSurkusToken).execute();		
+		new GetSurkusGoerInfoTask(mSurkusToken).execute();
+		/*Intent surkusGoerDashboardIntent = new Intent(
+				ASRSplashActivity.this,
+				ASRSurkusGoerDashboardActivity.class);*/
 	}
 
 }

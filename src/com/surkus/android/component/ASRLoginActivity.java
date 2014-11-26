@@ -135,7 +135,7 @@ public class ASRLoginActivity extends FragmentActivity {
 		protected CSRSurkusGoerSurkusToken doInBackground(String... args) {
 
 			String accessToken = args[0];
-
+			CSRUtils.log("accessToken"+accessToken);
 			return webServiceSingletonObject.getSurkusToken(accessToken,
 					mbIsNewSurkusUser);
 
@@ -355,6 +355,7 @@ public class ASRLoginActivity extends FragmentActivity {
 
 			new CreateSurkusUserAndGenerateTokenTask(true, 0).execute(Session
 					.getActiveSession().getAccessToken());
+			CSRUtils.log(Session.getActiveSession().getAccessToken());
 		} else {
 			dismissFetchSurkusGoerInfoDialog();
 			bIsUserLoggedInToFacebook = true;
@@ -412,6 +413,7 @@ public class ASRLoginActivity extends FragmentActivity {
 			bIsUserLoggedInToFacebook = true;
 
 		}
+		CSRUtils.log(currentSession.getActiveSession().getAccessToken());
 	}
 
 	@Override
